@@ -1,6 +1,6 @@
 /**
  * 
- * GUI main dependencies
+ * GUI main module (dependencies)
  * @copyright: Spryker Systems GmbH
  *
  */
@@ -24,14 +24,14 @@ require('nestable');
 require('select2');
 
 // inspinia
-require('../../Inspinia/inspinia');
-require('../../Inspinia/img/profile_small.jpg');
-require('../../Inspinia/img/dashbard4_1.jpg');
-require('../../Inspinia/img/dashbard4_2.jpg');
-require('../../Inspinia/img/full_height.jpg');
-require('../../Inspinia/img/off_canvas.jpg');
+require('../../../Inspinia/inspinia');
+require('../../../Inspinia/img/profile_small.jpg');
+require('../../../Inspinia/img/dashbard4_1.jpg');
+require('../../../Inspinia/img/dashbard4_2.jpg');
+require('../../../Inspinia/img/full_height.jpg');
+require('../../../Inspinia/img/off_canvas.jpg');
 
 // spryker customization
-require('../sass/main.scss');
+require('../../sass/main.scss');
 require('./legacy/fixHeight');
 require('./init');
