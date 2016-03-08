@@ -1,15 +1,15 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ */
+
 'use strict';
 
-function SprykerAjaxCallbacks() {
+module.exports = new function() {
     var self = this;
 
     /* HTML success code */
     self.codeSuccess = 200;
-
-    /**
-     * @type {SprykerAjax}
-     */
-    self.spyAj = new SprykerAjax();
 
     /**
      * Response:
@@ -30,5 +30,4 @@ function SprykerAjaxCallbacks() {
             self.alerter.error(ajaxResponse.message);
         }
     };
-
-}
+};

@@ -1,6 +1,13 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ */
+
 'use strict';
 
-function SprykerAjax() {
+var SprykerAjaxCallbacks = require('./SprykerAjaxCallbacks');
+
+module.exports = new function() {
     var self = this;
 
     /** if ajax url is null, the action will be in the same page */
@@ -26,16 +33,11 @@ function SprykerAjax() {
         return self;
     };
 
-    /**
-     * makes Ajax call and then call a callback function with the response as parameter
-     *
-     * @param json object options
-     * @param callbackFunction
-     */
-    self.ajaxSubmit = function(options, callbackFunction, parameters) {
-        $.ajax({
+    self.ajaxSubmit = function(options, callbackFunction, parameters, isGet) {
+        var callType = (!!isGet) ? 'get' : 'post';
+        return $.ajax({
             url: this.url,
-            type: 'post',
+            type: callType,
             dataType: this.dataType,
             data: options
         })
@@ -43,8 +45,7 @@ function SprykerAjax() {
             if (typeof callbackFunction === 'function') {
                 return callbackFunction(response, parameters);
             } else if (typeof callbackFunction === 'string') {
-                var call = new SprykerAjaxCallbacks();
-                return call[callbackFunction](response, parameters);
+                return SprykerAjaxCallbacks[callbackFunction](response, parameters);
             } else {
                 return response;
             }
@@ -58,5 +59,4 @@ function SprykerAjax() {
         };
         self.ajaxSubmit(options, 'changeStatusMarkInGrid');
     };
-
-}
+};
