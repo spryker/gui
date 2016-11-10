@@ -12,8 +12,13 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class Select2ComboBoxType extends AbstractType
+class ImageType extends AbstractType
 {
+
+    const OPTION_IMAGE_WIDTH = 'image_width';
+    const OPTION_IMAGE_HEIGHT = 'image_height';
+    const OPTION_IMAGE_TITLE = 'image_title';
+    const OPTION_IMAGE_URL = 'image_url';
 
     /**
      * @param \Symfony\Component\Form\FormView $view
@@ -24,8 +29,10 @@ class Select2ComboBoxType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['placeholder'] = $options['placeholder'];
-        $view->vars['tags'] = $options['tags'];
+        $view->vars[self::OPTION_IMAGE_WIDTH] = $options[self::OPTION_IMAGE_WIDTH];
+        $view->vars[self::OPTION_IMAGE_HEIGHT] = $options[self::OPTION_IMAGE_HEIGHT];
+        $view->vars[self::OPTION_IMAGE_TITLE] = $options[self::OPTION_IMAGE_TITLE];
+        $view->vars[self::OPTION_IMAGE_URL] = $options[self::OPTION_IMAGE_URL];
     }
 
     /**
@@ -36,9 +43,10 @@ class Select2ComboBoxType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'choices' => [],
-            'tags' => false,
-            'placeholder' => '-Select value-',
+            self::OPTION_IMAGE_WIDTH => null,
+            self::OPTION_IMAGE_HEIGHT => null,
+            self::OPTION_IMAGE_TITLE => null,
+            self::OPTION_IMAGE_URL => null,
         ]);
     }
 
@@ -47,7 +55,7 @@ class Select2ComboBoxType extends AbstractType
      */
     public function getParent()
     {
-        return 'choice';
+        return 'form';
     }
 
     /**
@@ -55,7 +63,7 @@ class Select2ComboBoxType extends AbstractType
      */
     public function getName()
     {
-        return 'select2';
+        return 'image';
     }
 
 }
