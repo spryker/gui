@@ -9,10 +9,10 @@ namespace Spryker\Shared\Gui\Plugin\FormExtension;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
-use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
+use Spryker\Shared\Gui\Form\Type\Extension\NoValidateTypeExtension;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 
-class NoValidateTypeFormExtensionPlugin implements FormPluginInterface
+class NoValidateTypeFormPlugin implements FormPluginInterface
 {
     /**
      * {@inheritdoc}
