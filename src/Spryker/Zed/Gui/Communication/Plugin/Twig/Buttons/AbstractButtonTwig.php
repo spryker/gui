@@ -7,31 +7,48 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons;
 
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\AbstractButtonTwig` instead.
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  */
-abstract class AbstractButtonFunction extends TwigFunction
+abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginInterface
 {
-    public const DEFAULT_CSS_CLASSES = 'undefined';
+    protected const DEFAULT_CSS_CLASSES = 'undefined';
 
     /**
      * @return string
      */
-    abstract protected function getButtonClass();
+    abstract protected function getFunctionName(): string;
 
     /**
      * @return string
      */
-    abstract protected function getIcon();
+    abstract protected function getButtonClass(): string;
 
     /**
-     * @return callable
+     * @return string
      */
-    protected function getFunction()
+    abstract protected function getIcon(): string;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Twig\Environment
+     */
+    public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        return function ($url, $title, $options = []) {
+        $twig->addFunction(new TwigFunction($this->getFunctionName(), function (string $url, string $title, array $options = []) {
             if (!array_key_exists(ButtonUrlGenerator::ICON, $options)) {
                 $options[ButtonUrlGenerator::ICON] = $this->getIcon();
             }
@@ -47,7 +64,9 @@ abstract class AbstractButtonFunction extends TwigFunction
             $button = $this->createButtonUrlGenerator($url, $title, $options);
 
             return $button->generate();
-        };
+        }));
+
+        return $twig;
     }
 
     /**

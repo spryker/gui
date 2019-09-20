@@ -7,27 +7,43 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\ListGroupTwigPlugin` instead.
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  */
-class ListGroupFunction extends TwigFunction
+class ListGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    public const FUNCTION_NAME_LIST_GROUP = 'listGroup';
+
     /**
-     * @return string
+     * {@inheritDoc}
+     *
+     * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Twig\Environment
+     *
+     * @api
      */
-    protected function getFunctionName()
+    public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        return 'listGroup';
+        $twig->addFunction($this->getZedListGroupFunction());
+
+        return $twig;
     }
 
     /**
-     * @return callable
+     * @return \Twig\TwigFunction
      */
-    protected function getFunction()
+    protected function getZedListGroupFunction(): TwigFunction
     {
-        return function (array $items) {
+        return new TwigFunction(static::FUNCTION_NAME_LIST_GROUP, function (array $items) {
             if (is_array(array_values($items)[0])) {
                 $html = '<div class="list-group">';
 
@@ -80,6 +96,6 @@ class ListGroupFunction extends TwigFunction
             }
 
             return $html;
-        };
+        });
     }
 }
