@@ -7,12 +7,9 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action;
 
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonTwig;
 
-/**
- * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\AbstractActionButtonTwig` instead.
- */
-abstract class AbstractActionButtonFunction extends AbstractButtonFunction
+abstract class AbstractActionButtonTwig extends AbstractButtonTwig
 {
     public const DEFAULT_CSS_CLASSES = 'btn-sm btn-outline safe-submit';
 }

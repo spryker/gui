@@ -7,27 +7,43 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\PanelTwigPlugin` instead.
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  */
-class PanelFunction extends TwigFunction
+class PanelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    public const FUNCTION_NAME_PANEL = 'panel';
+
     /**
-     * @return string
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Twig\Environment
      */
-    protected function getFunctionName()
+    public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        return 'panel';
+        $twig->addFunction($this->getZedPanelFunction());
+
+        return $twig;
     }
 
     /**
-     * @return callable
+     * @return \Twig\TwigFunction
      */
-    protected function getFunction()
+    protected function getZedPanelFunction(): TwigFunction
     {
-        return function ($title, $content, ?array $options = null, $footer = null) {
+        return new TwigFunction(static::FUNCTION_NAME_PANEL, function (string $title, string $content, ?array $options = null, ?string $footer = null) {
             $defaultOptions = [
                 'class' => 'default',
                 'id' => false,
@@ -74,6 +90,6 @@ class PanelFunction extends TwigFunction
             $html .= '</section>';
 
             return $html;
-        };
+        });
     }
 }

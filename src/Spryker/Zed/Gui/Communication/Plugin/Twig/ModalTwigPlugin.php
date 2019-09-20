@@ -7,28 +7,45 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\ModalTwigPlugin` instead.
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  */
-class ModalFunction extends TwigFunction
+class ModalTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    public const FUNCTION_NAME_MODAL = 'modal';
+
     /**
-     * @return string
+     * {@inheritDoc}
+     *
+     * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Twig\Environment
+     *
+     * @api
      */
-    protected function getFunctionName()
+    public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        return 'modal';
+        $twig->addFunction($this->getZedModalFunction());
+
+        return $twig;
     }
 
     /**
-     * @return callable
+     * @return \Twig\TwigFunction
      */
-    protected function getFunction()
+    protected function getZedModalFunction(): TwigFunction
     {
-        return function ($title, $content, $footer = null, $extraData = null) {
+        return new TwigFunction(static::FUNCTION_NAME_MODAL, function (string $title, string $content, ?string $footer = null, ?array $extraData = null) {
             $extras = '';
+
             if (is_array($extraData)) {
                 foreach ($extraData as $key => $value) {
                     $extras .= ' ' . $key . '="' . htmlentities($value) . '"';
@@ -53,6 +70,6 @@ class ModalFunction extends TwigFunction
             $html .= '</div>';
 
             return $html;
-        };
+        });
     }
 }
