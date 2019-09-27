@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormFactoryBuilderInterface;
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
-class NoValidateTypeFormPlugin extends AbstractPlugin implements FormPluginInterface
+class NoValidateFormTypeExtensionFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
     /**
      * {@inheritdoc}
