@@ -6,7 +6,7 @@
         "@spryker/nestable": "~1.1.1",
         "animate.css": "~3.5.1",
         "bootstrap-sass": "~3.4.1",
-        "codemirror": "~5.12.0",
+        "codemirror": "~5.58.2",
         "datatables.net": "~1.10.13",
         "datatables.net-bs": "~1.10.10",
         "datatables.net-buttons": "~1.2.3",
