@@ -13,3 +13,7 @@ composer require spryker/gui
 ## Documentation
 
 [Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+
+y este texto de prueba.
+otr más :D
+test added
