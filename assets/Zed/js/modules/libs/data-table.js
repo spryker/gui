@@ -22,7 +22,7 @@ if (translationObj.sSearch) {
 
 var defaultConfiguration = {
     scrollX: 'auto',
-    autoWidth: false,
+    autoWidth: true,
     language: translationObj,
     dom:
         "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'f>>" +
@@ -34,7 +34,7 @@ var noSearchConfiguration = {
     bFilter: false,
     bInfo: false,
     scrollX: 'auto',
-    autoWidth: false,
+    autoWidth: true,
 };
 
 function setTableErrorMode(errorMode) {
