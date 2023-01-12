@@ -4,6 +4,9 @@
 
 Gui provides the main logic for GUI functionality across all modules.
 
+**DEPRECATED - This module is not continued at this point.**
+Please use [spryker-sdk/spryk](https://github.com/spryker-sdk/spryk) instead.
+
 ## Installation
 
 ```
