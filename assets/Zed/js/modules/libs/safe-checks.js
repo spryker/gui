@@ -12,7 +12,7 @@ function addSafeSubmitCheck() {
         var isValid = true;
 
         function disableTrigger() {
-            $item.prop('disabled', true).addClass('disabled').off('click');
+            $('form').find(safeSubmitSelector).prop('disabled', true).addClass('disabled').off('click');
         }
 
         if ($forms.length > 0) {
