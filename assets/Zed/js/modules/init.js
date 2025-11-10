@@ -24,6 +24,7 @@ import { DownloadAction } from './libs/download-action';
 import { CopyAction } from './libs/copy-action';
 import { Table } from './libs/table/table';
 import FormWithExternalFields from './form-with-external-fields';
+import InternalMenuFilter from './libs/internal-api/internal-menu-filter';
 
 var dataTablesSearchDelay = function () {
     var dataTablesWrapper = $('.dataTables_wrapper');
@@ -268,6 +269,7 @@ $(document).ready(function () {
     new CopyAction();
     new DownloadAction();
     new Table();
+    new InternalMenuFilter();
 });
 
 $(window).on('load', function () {

@@ -4,16 +4,16 @@
     {%- if node is defined %}
         {%- if menu_highlight is defined -%}
             {%- if menu_highlight == node.uri -%}
-                <li class="item active">
+                <li class="item active" data-qa="menu-item">
             {%- else -%}
-                <li class="item">
+                <li class="item" data-qa="menu-item">
             {%- endif -%}
         {%- else-%}
-            <li class="item{{ node.is_active is defined and node.is_active ? " active" : "" }}">
+            <li class="item{{ node.is_active is defined and node.is_active ? " active" : "" }}" data-qa="menu-item">
         {%- endif -%}
-        <a href="{{ node.uri }}"{% if node.shortcut is defined %} data-hotkey="{{ node.shortcut }}"{% endif %}>
+        <a href="{{ node.uri }}"{% if node.shortcut is defined %} data-hotkey="{{ node.shortcut }}"{% endif %} data-qa="menu-item-link">
             {{ menu.getNodeIcon(node) }}
-            <span class="nav-label">{{ node.label | trans }}</span>
+            <span class="nav-label" data-qa="menu-item-label">{{ node.label | trans }}</span>
         </a>
         </li>
     {% endif -%}
@@ -23,14 +23,14 @@
     {%- import _self as menu -%}
 
     {%- if node is defined %}
-        <li class="{{ node.is_active is defined and node.is_active ? " active" : "" }}">
-            <a href="javascript:void(0)">
+        <li class="{{ node.is_active is defined and node.is_active ? " active" : "" }}" data-qa="menu-parent-item">
+            <a href="javascript:void(0)" data-qa="menu-parent-link">
                 {{ menu.getNodeIcon(node) }}
-                <span class="nav-label">{{ node.label | trans }}</span>
+                <span class="nav-label" data-qa="menu-item-label">{{ node.label | trans }}</span>
                 <span class="fa arrow"></span>
             </a>
 
-            <ul class="nav nav-second-level collapse">
+            <ul class="nav nav-second-level collapse" data-qa="menu-submenu">
                 {{ menu.tree(node.children, (depth + 1)) }}
             </ul>
         </li>
@@ -59,9 +59,9 @@
 {%- endmacro -%}
 
 {%- import _self as menu -%}
-<nav class="navbar-default navbar-static-side" role="navigation">
+<nav class="navbar-default navbar-static-side" role="navigation" data-qa="backoffice-navigation">
     <div class="sidebar-collapse">
-        <ul tabindex="0" class="nav metismenu" id="side-menu">
+        <ul tabindex="0" class="nav metismenu navigation-menu js-navigation-menu" id="side-menu" data-qa="navigation-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
 
@@ -73,6 +73,18 @@
                 </div>
                 <div class="logo-element">
                     SP
+                </div>
+            </li>
+            <li class="menu-filter-container" data-qa="menu-filter-container">
+                <div class="menu-filter-wrapper">
+                    <input
+                        type="text"
+                        id="menu-filter-input"
+                        class="menu-filter-input js-menu-filter-input form-control"
+                        placeholder="{{ 'Filter' | trans }}"
+                        autocomplete="off"
+                        data-qa="menu-filter-input"
+                    />
                 </div>
             </li>
             {{ menu.tree(navigation.menu) }}

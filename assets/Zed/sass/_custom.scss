@@ -2096,4 +2096,63 @@ form .horizontal-form {
         width: auto;
     }
 }
+
+.menu-filter {
+    &-container {
+        padding: 10px 15px;
+        background-color: transparent;
+        border-bottom: 1px solid $grey-dark;
+    }
+
+    &-wrapper {
+        position: relative;
+    }
+
+    &-input {
+        width: 100%;
+        color: $grey-base;
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 13px;
+
+        &::placeholder {
+            color: $grey-base;
+        }
+
+        &:focus {
+            border-color: $green-base;
+            outline: none;
+        }
+    }
+}
+
+.navigation-menu {
+    &.filtered {
+        > li:not(.matched):not(.menu-filter-container):not(.nav-header) {
+            display: none;
+        }
+
+        > li.matched {
+            display: block;
+
+            > a .fa.arrow {
+                &:before {
+                    content: '\f106';
+                }
+            }
+
+            > .nav-second-level {
+                display: block !important;
+
+                li:not(.matched) {
+                    display: none;
+                }
+
+                li.matched {
+                    display: block;
+                }
+            }
+        }
+    }
+}
 // [END] Drop with bootstrap 4
