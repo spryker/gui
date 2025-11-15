@@ -23,10 +23,7 @@ var translationObj = getTranslation(locale);
 var defaultConfiguration = {
     scrollX: true,
     language: translationObj,
-    dom:
-        "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'f>>" +
-        "<'row'<'col-sm-12'tr>>" +
-        "<'alt-row'<'alt-row__left'l><'alt-row__center'p>>",
+    dom: "<'row'<'col-md-6'i><'col-md-6'f>>" + "<'row'<'col'tr>>" + "<'alt-row'<'alt-row__left'l><'alt-row__center'p>>",
 };
 
 var noSearchConfiguration = {

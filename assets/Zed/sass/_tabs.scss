@@ -1,0 +1,75 @@
+.tabs-container {
+    margin-bottom: 20px;
+    background: $white;
+
+    .nav-tabs {
+        border-bottom: 2px solid $grey-light;
+        font-size: 14px;
+
+        li {
+            border: 0 !important;
+            margin-bottom: -2px;
+
+            &.error {
+                a {
+                    color: $brown !important;
+                }
+            }
+
+            &.error:not(.active) {
+                a {
+                    border-color: $red-lightest;
+                    background-color: $white-red;
+                }
+            }
+
+            a {
+                color: $grey-base;
+                display: block;
+                border-width: 0 0 2px !important;
+                border-bottom: 2px solid transparent;
+                margin: 0;
+                transition: border-color 0.2s linear, color 0.2s linear, background 0.2s linear;
+                font-weight: 500;
+                padding: 12px 20px 10px 25px;
+
+                &:hover {
+                    color: $grey2;
+                    border-color: $grey-dark;
+                }
+
+                &:focus {
+                    background-color: transparent;
+                }
+            }
+
+            &.active {
+                pointer-events: none;
+                & > a {
+                    color: $green-default;
+                    border-color: $green-default;
+
+                    &:hover {
+                        pointer-events: none;
+                    }
+
+                    &:focus {
+                        border-color: $green-default;
+                    }
+                }
+            }
+        }
+    }
+
+    .panel-body {
+        border: 0;
+        border-radius: 10px;
+    }
+}
+
+.tabs-footer {
+    color: inherit;
+    border: 0;
+    background: $white;
+    padding: 10px 15px;
+}

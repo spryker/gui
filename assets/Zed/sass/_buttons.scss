@@ -1,0 +1,230 @@
+.btn {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 500;
+    padding: 6px 15px;
+    background: $green-default;
+    border-color: $green-default;
+    color: $white;
+    transition: background 0.2s linear, border-color 0.2s linear, color 0.2s linear, box-shadow 0.2s linear;
+
+    &.btn-view {
+        white-space: nowrap;
+    }
+
+    .fa,
+    .fas,
+    .far,
+    .fal,
+    .fad,
+    .fab {
+        vertical-align: middle;
+    }
+
+    .fa-angle-down {
+        margin: 0 0 0 0.6em;
+        font-size: 1.5em;
+        line-height: 1;
+    }
+
+    .fa-angle-left,
+    .fa-angle-right {
+        font-size: 1.4em;
+        margin: 0 2px 2px 0;
+    }
+
+    .fa-angle-right {
+        margin: 0 0 2px 2px;
+    }
+
+    &,
+    &.btn-primary,
+    &.btn-success {
+        &:hover {
+            background: $green-default;
+            color: $white;
+            box-shadow: $box-shadow-green-hover;
+        }
+
+        &:focus {
+            box-shadow: $box-shadow-green-focused;
+        }
+
+        &:active {
+            background: $green-dark;
+            border-color: $green-dark;
+            box-shadow: none;
+        }
+    }
+
+    &.btn-outline {
+        background: $white;
+        color: $green-default !important;
+        border-color: $green-default;
+
+        &:hover {
+            background: $white;
+            border-color: $green-default;
+        }
+
+        &:active {
+            background: $grey-lighter;
+            border-color: $green-default;
+            box-shadow: none;
+        }
+    }
+
+    &-sm {
+        padding: 6px 15px;
+
+        .fa-angle-left,
+        .fa-angle-right {
+            font-size: 1.3em;
+            margin: 0 2px 2px 0;
+        }
+
+        .fa-angle-right {
+            margin: 0 0 2px 2px;
+        }
+    }
+
+    &-xs {
+        font-size: 12px;
+        line-height: 16px;
+        padding: 2px 8px;
+
+        .fa-angle-down {
+            margin: 0 0 0 2px;
+            font-size: 1em;
+        }
+
+        .fa-angle-left,
+        .fa-chevron-right {
+            font-size: 1em;
+            margin: 0;
+        }
+    }
+
+    &.btn-remove,
+    &.btn-danger {
+        background: $red-default;
+        border-color: $red-default;
+        color: $white !important;
+
+        &:hover {
+            background: $red-lighter;
+            box-shadow: $box-shadow-red-hover;
+        }
+
+        &:focus {
+            box-shadow: $box-shadow-red-focused;
+        }
+
+        &:active {
+            background: $red-dark;
+            box-shadow: none;
+            border-color: $red-dark;
+        }
+
+        &.btn-outline {
+            background: $white;
+            color: $red-default !important;
+            border-color: $red-default;
+
+            &:hover {
+                background: $white;
+            }
+            &:focus {
+                color: $red-default;
+            }
+            &:active {
+                background: $grey-lighter;
+                box-shadow: none;
+                border-color: $red-default;
+            }
+        }
+    }
+
+    &.btn-view {
+        &.btn-outline {
+            background: $white;
+            border-color: $grey;
+            color: $grey-dark !important;
+
+            &:hover {
+                background: $white;
+                border-color: $grey;
+                box-shadow: $box-shadow-green-hover;
+            }
+
+            &:focus {
+                box-shadow: $box-shadow-green-focused;
+            }
+
+            &:active {
+                background: $grey-lighter;
+                border-color: $grey;
+                box-shadow: none;
+            }
+        }
+    }
+
+    &.btn-link {
+        border-radius: 0;
+        background: transparent;
+        padding: 0;
+        color: $grey-dark;
+        border: none;
+        box-shadow: none;
+        line-height: 1;
+        text-transform: none;
+
+        &:hover {
+            background: transparent;
+            box-shadow: none;
+            color: #121212;
+        }
+
+        &.btn-danger {
+            color: $red-default !important;
+        }
+    }
+
+    &.navbar-minimalize {
+        border-radius: 4px;
+        padding: 2px 12px;
+        margin-top: 2px;
+
+        .fa-bars {
+            font-size: 12px;
+        }
+    }
+
+    &.note-btn {
+        @include button-variant($btn-default-bg, $btn-default-border, $btn-default-color, $grey3);
+        background: var(--bs-btn-bg);
+        color: var(--bs-btn-color);
+        font-size: 12px;
+        line-height: 1.5;
+        padding: 5px 10px;
+        min-height: 31px;
+
+        &:hover {
+            box-shadow: none;
+            background-color: var(--bs-btn-hover-bg);
+        }
+
+        &.active {
+            box-shadow: 0 2px 5px rgba($black, 0.15) inset;
+        }
+    }
+
+    &--label-margin-top {
+        margin-top: 29px;
+    }
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}

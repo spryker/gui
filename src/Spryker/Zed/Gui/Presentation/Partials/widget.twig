@@ -2,14 +2,13 @@
     {% if row_id is defined and row_id is not empty %}id="{{ row_id }}"{% endif %}>
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
-            <div class="ibox-title">
+            <div class="ibox-title clearfix">
                 {% block widget_title -%}
                     <h5>{{ widget_title | default('') | trans }}</h5>
                 {%- endblock %}
-                <div class="pull-right">
+                <div class="float-end">
                     {% block widget_header_content -%}{%- endblock %}
                 </div>
-                <div class="clearfix"></div>
             </div>
             <div class="ibox-content">
 

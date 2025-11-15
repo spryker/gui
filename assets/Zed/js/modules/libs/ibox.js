@@ -10,7 +10,7 @@ Ibox.prototype.checkErrors = function () {
     var self = this;
 
     $(self.selector + '[data-auto-errors="true"]').each(function (i, element) {
-        var hasError = $(element).find('.has-error').length;
+        var hasError = $(element).find('.is-invalid').length;
 
         if (hasError) {
             $(element).addClass('error');

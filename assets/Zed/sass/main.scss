@@ -8,7 +8,8 @@ $icon-font-path: '../../fonts/bootstrap/';
 
 // external dependencies
 @import '~jquery-ui/themes/base/all.css';
-@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~animate.css/animate';
 @import '~metismenu/src/metisMenu';
@@ -18,9 +19,8 @@ $icon-font-path: '../../fonts/bootstrap/';
 @import '~datatables.net-select-bs/css/select.bootstrap';
 @import '~select2/dist/css/select2';
 @import '~codemirror/lib/codemirror';
-@import '~summernote/dist/summernote';
+@import '~summernote/dist/summernote-bs5.min.css';
 @import '~sweetalert/dist/sweetalert';
-@import '~highlight.js/styles/default.css';
 
 // inspinia
 @import '../../Inspinia/css/style';
@@ -39,3 +39,8 @@ $icon-font-path: '../../fonts/bootstrap/';
 @import 'popover';
 @import 'form';
 @import 'image-uploader';
+@import 'buttons';
+@import 'tabs';
+@import 'menu';
+@import 'pagination';
+@import 'alert';

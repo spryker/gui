@@ -10,9 +10,8 @@
      data-auto-errors="{{ tabsViewTransfer.autoErrors is null or tabsViewTransfer.autoErrors ? 'true' : 'false' }}">
     <ul class="nav nav-tabs">
         {% for tab in tabsViewTransfer.tabs %}
-            {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
             <li class="{% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}" data-bs-toggle="tab" data-bs-target="#tab-content-{{ tab.name }}" data-tab-content-id="tab-content-{{ tab.name }}" data-qa="tab-{{ tab.name }}">
-                <a href="#tab-content-{{ tab.name }}" data-toggle="tab">{{ tab.title | trans }}</a>
+                <a href="#tab-content-{{ tab.name }}">{{ tab.title | trans }}</a>
             </li>
         {% endfor %}
     </ul>
@@ -34,7 +33,7 @@
             {% endif %}
 
             {% if tabsViewTransfer.isNavigable %}
-                <span class="tabs-navigation pull-right">
+                <span class="tabs-navigation float-end">
                     <a href="#" class="btn btn-tab-previous btn-outline btn-view"><i class="fa fa-angle-left"></i> {{ 'Previous' | trans }}</a>
                     <a href="#" class="btn btn-tab-next btn-outline btn-view">{{ 'Next' | trans }} <i class="fa fa-angle-right"></i></a>
                 </span>

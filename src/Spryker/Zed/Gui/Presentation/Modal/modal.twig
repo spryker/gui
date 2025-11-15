@@ -8,9 +8,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <header class="modal-header">
-                {# @deprecated html attribute "data-dismiss" is deprecated use "data-bs-dismiss" instead #}
-                <button type="button" class="close" data-bs-dismiss="modal" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">{{ title }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'global.close' | trans }}"></button>
             </header>
             <div class="modal-body">{{ content }}</div>
 

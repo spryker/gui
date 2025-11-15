@@ -236,13 +236,9 @@ $(document).ready(function () {
         item.tabsInstance = new Tabs(item, dataTable.onTabChange);
     });
 
-    if (window.spryker?.isBootstrapVersionLatest) {
-        $('a[data-toggle="tab"]').on('click', function (event) {
-            event.preventDefault();
-        });
-    } else {
-        $('.dropdown-toggle').dropdown();
-    }
+    $('a[data-toggle="tab"]').on('click', function (event) {
+        event.preventDefault();
+    });
 
     /* Init translation copy fields */
     new TranslationCopyFields();

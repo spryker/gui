@@ -1,6 +1,7 @@
 'use strict';
 
 // TODO: add support for multi-tab navigation hash handling (e.g "/#tab1=tab-content-foo&tab2=tab-content-bar")
+var bootstrap = require('bootstrap');
 
 function Tabs(selector, onTabChange) {
     this.currentTabPosition = 0;
@@ -11,7 +12,26 @@ function Tabs(selector, onTabChange) {
 
     this.checkErrors();
     this.setNavigation();
+    this.mapChangeEvent();
 }
+
+Tabs.prototype.mapChangeEvent = function () {
+    const tabElms = Array.from(this.tabsContainer.find('[data-bs-toggle="tab"]'));
+    var eventDispatcher = function (element) {
+        document.dispatchEvent(
+            new CustomEvent('TABS-CHANGE-EVENT', {
+                detail: {
+                    id: element.target.getAttribute('data-bs-target'),
+                },
+                bubbles: true,
+            }),
+        );
+    };
+
+    tabElms.forEach(function (tabElm) {
+        tabElm.addEventListener('shown.bs.tab', eventDispatcher);
+    });
+};
 
 Tabs.prototype.checkErrors = function () {
     var self = this;
@@ -23,11 +43,7 @@ Tabs.prototype.checkErrors = function () {
     self.tabsContainer.find('.tab-content .tab-pane').each(function (i, tab) {
         var hasError = $(tab).find('.has-error, .alert-danger').length;
 
-        if (window.spryker?.isBootstrapVersionLatest) {
-            var tabHeader = self.tabsContainer.find('.nav-tabs li[data-bs-target="' + tab.id + '"]');
-        } else {
-            var tabHeader = self.tabsContainer.find('.nav-tabs li[data-tab-content-id="' + tab.id + '"]');
-        }
+        var tabHeader = self.tabsContainer.find('.nav-tabs li[data-bs-target="#' + tab.id + '"]');
 
         if (hasError) {
             tabHeader.addClass('error');
@@ -39,24 +55,6 @@ Tabs.prototype.checkErrors = function () {
 
 Tabs.prototype.setNavigation = function () {
     var self = this;
-    var eventDispatcher = function (element) {
-        document.dispatchEvent(
-            new CustomEvent('TABS-CHANGE-EVENT', {
-                detail: {
-                    id: element.target.getAttribute('href'),
-                },
-                bubbles: true,
-            }),
-        );
-    };
-
-    if (window.spryker?.isBootstrapVersionLatest) {
-        Array.from(self.tabUrls).forEach((tab) => {
-            tab.addEventListener('shown.bs.tab', eventDispatcher);
-        });
-    } else {
-        $(self.tabUrls).on('shown.bs.tab', eventDispatcher);
-    }
 
     if (self.tabsContainer.data('isNavigable') !== true) {
         return;
@@ -142,13 +140,8 @@ Tabs.prototype.changeTabsOnClick = function () {
 Tabs.prototype.activateTab = function (element, hash) {
     window.history.pushState(null, null, hash);
 
-    if (window.spryker?.isBootstrapVersionLatest) {
-        var bootstrap = window.spryker.bootstrap;
-        var tab = bootstrap.Tab.getOrCreateInstance(element[0]?.parentNode);
-        tab?.show();
-    } else {
-        element.tab('show');
-    }
+    var tab = bootstrap.Tab.getOrCreateInstance(element[0]?.parentNode);
+    tab?.show();
 
     this.onTabChange(element.attr('href'));
 };
@@ -171,14 +164,9 @@ Tabs.prototype.showHideNavigationButtons = function () {
 Tabs.prototype.navigateElement = function () {
     var self = this;
 
-    if (window.spryker?.isBootstrapVersionLatest) {
-        var tab = self.tabsContainer.find('[data-bs-toggle="tab"]:eq(' + this.currentTabPosition + ')');
-        var element = tab.find('a');
-        var hash = tab.attr('data-bs-target');
-    } else {
-        var element = self.tabsContainer.find('[data-toggle="tab"]:eq(' + this.currentTabPosition + ')');
-        var hash = element.attr('href');
-    }
+    var tab = self.tabsContainer.find('[data-bs-toggle="tab"]:eq(' + this.currentTabPosition + ')');
+    var element = tab.find('a');
+    var hash = tab.attr('data-bs-target');
 
     this.proceedChange(element, hash);
 };

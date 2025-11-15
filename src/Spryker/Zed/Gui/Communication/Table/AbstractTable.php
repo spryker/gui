@@ -32,7 +32,6 @@ use Spryker\Zed\Gui\Communication\Exception\TableException;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -767,22 +766,6 @@ abstract class AbstractTable
     }
 
     /**
-     * Retrieving non-string values using InputBag::get() was deprecated in symfony/http-foundation:5.1
-     * Using the InputBag::all() method with an argument was introduced in symfony/http-foundation:5.0
-     *
-     * The method UploadedFile::getClientSize() was removed in symfony/http-foundation:5.0.
-     *
-     * To find which way to use we check for the existence of the UploadedFile::getClientSize(), when the method does
-     * not exist we have symfony/http-foundation:5.0 or higher installed.
-     *
-     * @return bool
-     */
-    protected function isSymfonyHttpFoundationVersion5OrHigher(): bool
-    {
-        return !method_exists(UploadedFile::class, 'getClientSize');
-    }
-
-    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -870,11 +853,7 @@ abstract class AbstractTable
      */
     protected function getSearchParameter(): array
     {
-        if ($this->isSymfonyHttpFoundationVersion5OrHigher()) {
-            return $this->request->query->all('search');
-        }
-
-        return (array)$this->request->query->get('search');
+        return $this->request->query->all('search');
     }
 
     /**

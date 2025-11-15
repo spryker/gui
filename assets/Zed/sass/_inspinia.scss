@@ -7,12 +7,10 @@
     width: 100% !important;
 }
 
-.sweet-alert {
-    font-family: 'Lato', Helvetica, Arial, sans-serif;
-}
-
 .note-editor.note-frame {
-    border: 1px solid $gray-lighter;
+    border: 1px solid $grey-lighter;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 1px rgba($ink-base, 0.15);
 }
 
 .ui-state-highlight,

@@ -22,7 +22,7 @@ class GuiConfig extends AbstractBundleConfig
      */
     protected const FORM_DEFAULT_TEMPLATE_FILE_NAMES = [
         'form_div_layout.html.twig',
-        'bootstrap_3_layout.html.twig',
+        'bootstrap_5_layout.html.twig',
     ];
 
     /**

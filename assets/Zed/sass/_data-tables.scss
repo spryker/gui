@@ -2,6 +2,137 @@ $data-table-selected-row-bg-color: rgba(#0088cc, 0.15);
 $data-table-selected-row-border-size: 1px;
 $data-table-selected-row-border-color: rgba(#0088cc, 1);
 
+.dataTable {
+    border-spacing: 0;
+
+    .sorting:after,
+    .sorting_asc:after,
+    .sorting_desc:after,
+    .sorting_asc_disabled:after,
+    .sorting_desc_disabled:after {
+        position: static !important;
+        width: 16px;
+        height: 16px;
+        display: inline-block !important;
+        vertical-align: middle;
+        font-family: inherit;
+        opacity: 1 !important;
+        content: '' !important;
+        margin: -2px -20px 0 0;
+
+        .dataTables_scrollBody & {
+            content: none !important;
+        }
+    }
+
+    .sorting:after {
+        background: url('../img/sort@2x.png') 3px 0px/10px 15px no-repeat !important;
+    }
+
+    .sorting_asc:after {
+        background: url('../img/sort-arrow-up@2x.png') 3px 0px/10px 15px no-repeat !important;
+    }
+
+    .sorting_desc:after {
+        background: url('../img/sort-arrow-down@2x.png') 3px 0px/10px 15px no-repeat !important;
+    }
+
+    .sorting_asc_disabled:after,
+    .sorting_desc_disabled:after {
+        color: $grey3;
+    }
+
+    tr.selected {
+        background-color: rgba($blue2, 0.1) !important;
+
+        & > td {
+            background-color: transparent;
+        }
+    }
+
+    td {
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.07px;
+        line-height: 22px;
+        vertical-align: middle !important;
+        padding: 8px;
+        min-height: 70px;
+    }
+
+    td,
+    th {
+        font-weight: 500;
+        min-height: 70px;
+        vertical-align: middle;
+    }
+
+    .btn .fa {
+        display: none;
+    }
+
+    .alt-row {
+        margin: 5px 0 20px;
+
+        &:after {
+            clear: both;
+            content: '';
+            display: table;
+            width: 100%;
+        }
+
+        .dataTables_length {
+            float: none;
+        }
+
+        &__center {
+            margin: 0 30%;
+            @media only screen and (max-width: $desktop) {
+                margin: 0;
+                float: right;
+            }
+            @media only screen and (max-width: $tablet) {
+                float: none;
+            }
+        }
+
+        &__left {
+            float: left;
+            width: 30%;
+            @media only screen and (max-width: $tablet) {
+                float: none;
+                width: auto;
+                text-align: center;
+                margin: 0 0 10px;
+            }
+        }
+    }
+}
+
+.dataTables_scroll {
+    background: #f8f8f8;
+    padding: 0 6px;
+    margin: 5px 0;
+    border-radius: 5px;
+
+    .table {
+        min-width: 1000px;
+    }
+
+    tr:first-child {
+        th,
+        td {
+            &:first-child {
+                border-top-left-radius: 5px;
+            }
+
+            &:last-child {
+                border-top-right-radius: 5px;
+            }
+        }
+    }
+}
+
 .dataTables_scrollHeadInner,
 .dataTables_scrollBody {
     & > .table {
@@ -49,5 +180,74 @@ table.dataTable tbody > tr {
                 }
             }
         }
+    }
+}
+
+/* Data Table Pagination */
+.dataTables_wrapper {
+    .dataTables_paginate {
+        text-align: center;
+
+        .pagination {
+            margin: 0 !important;
+        }
+    }
+
+    .alt-row__center .dataTables_paginate {
+        text-align: center;
+    }
+
+    .dataTables_info {
+        padding: 6px 0;
+        font-weight: 500;
+    }
+
+    .dataTables_filter {
+        input {
+            min-width: 174px;
+            padding-left: 28px;
+            margin: 0 !important;
+        }
+
+        label {
+            white-space: nowrap;
+            text-align: left;
+            font-size: 0;
+            position: relative;
+            margin: 0 0 0 5px;
+
+            &:before {
+                position: absolute;
+                z-index: 3;
+                top: 50%;
+                left: 8px;
+                font-size: 14px;
+                line-height: 1;
+                margin: -7px 0 0;
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                content: '\f002';
+                pointer-events: none;
+                color: $grey-base;
+            }
+        }
+    }
+
+    .dataTables_length {
+        select {
+            margin: 0 3px;
+            width: auto;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        label {
+            font-weight: 500 !important;
+            margin: 0;
+        }
+    }
+
+    .dataTables_scrollFoot {
+        margin-bottom: 24px;
     }
 }

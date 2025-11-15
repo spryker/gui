@@ -101,17 +101,22 @@ h5 {
     font-size: 12px;
     left: 0;
     list-style: none outside none;
-    padding: 0;
+    padding: 4px;
     position: absolute;
     text-shadow: none;
     top: 100%;
     z-index: 1000;
 }
+.dropdown-menu .divider {
+    background-color: #e5e5e5;
+    height: 1px;
+    margin: 4px 0;
+    overflow: hidden;
+}
 .dropdown-menu > li > a {
     border-radius: 3px;
     color: inherit;
     line-height: 25px;
-    margin: 4px;
     text-align: left;
     font-weight: normal;
 }
@@ -1077,7 +1082,6 @@ button.dim:active:before {
 .label {
     background-color: #d1dade;
     color: #5e5e5e;
-    font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 600;
     padding: 3px 8px;
     text-shadow: none;
@@ -1089,7 +1093,6 @@ button.dim:active:before {
 .badge {
     background-color: #d1dade;
     color: #5e5e5e;
-    font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: 600;
     padding-bottom: 4px;
@@ -1637,23 +1640,6 @@ a.list-group-item.active:focus {
     margin-top: 15px;
     position: relative;
 }
-/* DATATABLES */
-table.dataTable thead .sorting,
-table.dataTable thead .sorting_asc:after,
-table.dataTable thead .sorting_desc,
-table.dataTable thead .sorting_asc_disabled,
-table.dataTable thead .sorting_desc_disabled {
-    background: transparent;
-}
-.dataTables_wrapper {
-    padding-bottom: 30px;
-}
-.dataTables_length {
-    float: left;
-}
-.dataTables_filter label {
-    margin-right: 5px;
-}
 .html5buttons {
     float: right;
 }
@@ -1678,9 +1664,6 @@ div.dt-button-info {
     .html5buttons {
         float: none;
         margin-top: 10px;
-    }
-    .dataTables_length {
-        float: none;
     }
 }
 /* CIRCLE */
@@ -3499,7 +3482,6 @@ body.tour-open .animated {
     border-bottom: 1px solid #e7eaec;
 }
 body {
-    font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: #f8f8f8;
     font-size: 13px;
     color: #676a6c;
@@ -3750,38 +3732,6 @@ body.body-small .footer.fixed {
 .panel-heading h1,
 .panel-heading h2 {
     margin-bottom: 5px;
-}
-/* TABLES */
-.table-bordered {
-    border: 1px solid #ebebeb;
-}
-.table-bordered > thead > tr > th,
-.table-bordered > thead > tr > td {
-    background-color: #f5f5f6;
-    border-bottom-width: 1px;
-}
-.table-bordered > thead > tr > th,
-.table-bordered > tbody > tr > th,
-.table-bordered > tfoot > tr > th,
-.table-bordered > thead > tr > td,
-.table-bordered > tbody > tr > td,
-.table-bordered > tfoot > tr > td {
-    border: 1px solid #e7e7e7;
-}
-.table > thead > tr > th {
-    border-bottom: 1px solid #dddddd;
-    vertical-align: bottom;
-}
-.table > thead > tr > th,
-.table > tbody > tr > th,
-.table > tfoot > tr > th,
-.table > thead > tr > td,
-.table > tbody > tr > td,
-.table > tfoot > tr > td {
-    border-top: 1px solid #e7eaec;
-    line-height: 1.42857;
-    padding: 8px;
-    vertical-align: top;
 }
 /* PANELS */
 .panel.blank-panel {

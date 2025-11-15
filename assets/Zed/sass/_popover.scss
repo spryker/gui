@@ -52,3 +52,9 @@ body:has(.modal-popover:popover-open) {
         pointer-events: auto;
     }
 }
+
+.modal-backdrop {
+    background-color: $black;
+    opacity: 0.5;
+    cursor: auto;
+}

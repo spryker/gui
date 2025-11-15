@@ -1,6 +1,11 @@
 <div class="btn-group dropdown">
-    {# @deprecated html attribute "data-toggle" is deprecated use "data-bs-toggle" instead #}
-    <button data-toggle="dropdown" data-bs-toggle="dropdown" class="btn btn-xs btn-outline {{ class }} dropdown-toggle" aria-expanded="true" {{ parameters }}>{{ icon | raw}} {{ title | trans }}
+    <button
+        data-bs-toggle="dropdown"
+        class="btn btn-xs btn-outline {{ class }} dropdown-toggle"
+        aria-expanded="true" {{ parameters }}
+        data-qa="table-actions-dropdown-toggler"
+    >
+        {{ icon | raw}} {{ title | trans }}
         <span class="fa fa-angle-down"></span>
     </button>
     <ul class="dropdown-menu">
@@ -9,7 +14,7 @@
                 <li class="divider"></li>
             {% endif %}
             <li>
-                <a href="{{ button.url }}" {{ button.params }}>{{ button.title | trans }}</a>
+                <a class="dropdown-item" href="{{ button.url }}" {{ button.params }}>{{ button.title | trans }}</a>
             </li>
         {% endfor %}
     </ul>

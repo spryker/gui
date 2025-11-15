@@ -42,8 +42,8 @@ export class Table {
                 scrollX: true,
                 language: getTranslations(),
                 dom:
-                    "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-md-6'i><'col-md-6'f>>" +
+                    "<'row'<'col'tr>>" +
                     "<'alt-row'<'alt-row__left'l><'alt-row__center'p>>",
             },
             noSearch: {

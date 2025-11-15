@@ -23,15 +23,15 @@ require('jquery-ui/ui/widgets/autocomplete');
 require('jquery-ui/ui/widgets/button');
 require('jquery-ui/ui/widgets/sortable');
 require('jquery-ui/ui/widgets/tooltip');
-require('bootstrap-sass');
 require('metismenu');
 require('pace');
 require('@spryker/nestable');
 require('select2');
 window.CodeMirror = require('codemirror');
 require('codemirror/mode/htmlmixed/htmlmixed.js');
-require('summernote');
+require('summernote/dist/summernote-bs5.min');
 require('sweetalert');
+require('bootstrap');
 
 XMLHttpRequest.prototype = Object.getPrototypeOf(new XMLHttpRequest());
 

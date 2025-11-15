@@ -6,6 +6,8 @@
  * version 2.7.1
  */
 
+var bootstrap = require('bootstrap');
+
 $(document).ready(function () {
     // Add body-small class if window less than 768px
     if ($(this).width() < 769) {
@@ -75,13 +77,6 @@ $(document).ready(function () {
         return false;
     });
 
-    // Append config box / Only for demo purpose
-    // Uncomment on server mode to enable XHR calls
-    //$.get("skin-config.html", function (data) {
-    //    if (!$('body').hasClass('no-skin-config'))
-    //        $('body').append(data);
-    //});
-
     // Minimalize menu
     $('.navbar-minimalize').on('click', function (event) {
         event.preventDefault();
@@ -137,13 +132,9 @@ $(document).ready(function () {
         }
     });
 
-    if (window.spryker?.isBootstrapVersionLatest) {
-        const bootstrap = window.spryker.bootstrap;
-        const dropdowns = document.querySelectorAll('[data-toggle=popover]');
-        const dropdown = [...dropdowns].map((dropdownToggleEl) => new bootstrap.Dropdown(dropdownToggleEl));
-    } else {
-        $('[data-toggle=popover]').popover();
-    }
+    const dropdowns = document.querySelectorAll('[data-toggle=popover]');
+
+    [...dropdowns].map((dropdownToggleEl) => new bootstrap.Dropdown(dropdownToggleEl));
 });
 
 // Minimalize menu when screen is less than 768px
@@ -158,6 +149,9 @@ $(window).bind('resize', function () {
 // Local Storage functions
 // Set proper body class and plugins based on user configuration
 $(document).ready(function () {
+    if (!localStorageSupport()) {
+        return;
+    }
     if (localStorageSupport()) {
         var collapse = localStorage.getItem('collapse_menu');
         var fixedsidebar = localStorage.getItem('fixedsidebar');
@@ -199,22 +193,6 @@ function localStorageSupport() {
     return 'localStorage' in window && window['localStorage'] !== null;
 }
 
-// For demo purpose - animation css script
-function animationHover(element, animation) {
-    element = $(element);
-    element.hover(
-        function () {
-            element.addClass('animated ' + animation);
-        },
-        function () {
-            //wait for animation to finish before removing classes
-            window.setTimeout(function () {
-                element.removeClass('animated ' + animation);
-            }, 2000);
-        },
-    );
-}
-
 function SmoothlyMenu() {
     if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
         // Hide menu in order to smoothly turn on when maximize menu
@@ -232,20 +210,4 @@ function SmoothlyMenu() {
         // Remove all inline style from jquery fadeIn function to reset menu state
         $('#side-menu').removeAttr('style');
     }
-}
-
-// Dragable panels
-function WinMove() {
-    var element = '[class*=col]';
-    var handle = '.ibox-title';
-    var connect = '[class*=col]';
-    $(element)
-        .sortable({
-            handle: handle,
-            connectWith: connect,
-            tolerance: 'pointer',
-            forcePlaceholderSize: true,
-            opacity: 0.8,
-        })
-        .disableSelection();
 }
