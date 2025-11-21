@@ -14,6 +14,7 @@ var safeChecks = require('./libs/safe-checks');
 var initFormattedNumber = require('./libs/formatted-number-input');
 var initFormattedMoney = require('./libs/formatted-money-input');
 var select2combobox = require('./libs/select2-combobox');
+var bootstrap = require('bootstrap');
 var timeoutId = 0;
 import { Dropzone } from './libs/dropzone';
 import { FormSubmitter } from './libs/form-submitter';
@@ -62,9 +63,15 @@ var editorInit = function () {
     });
 };
 
+var tooltipInit = function () {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
+};
+
 $(document).ready(function () {
     // editor
     editorInit();
+    tooltipInit();
 
     /* Data tables custom error handling */
     dataTable.setTableErrorMode('none');
@@ -236,26 +243,14 @@ $(document).ready(function () {
         item.tabsInstance = new Tabs(item, dataTable.onTabChange);
     });
 
-    $('a[data-toggle="tab"]').on('click', function (event) {
-        event.preventDefault();
-    });
-
-    /* Init translation copy fields */
-    new TranslationCopyFields();
-
-    /* Init iboxes */
-    new Ibox();
-
     safeChecks.addSafeSubmitCheck();
     safeChecks.addSafeDatetimeCheck();
 
     initFormattedNumber();
     initFormattedMoney();
 
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-
+    new TranslationCopyFields();
+    new Ibox();
     new DatePicker();
     new Dropzone();
     new FormSubmitter();

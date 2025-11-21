@@ -31,6 +31,7 @@ window.CodeMirror = require('codemirror');
 require('codemirror/mode/htmlmixed/htmlmixed.js');
 require('summernote/dist/summernote-bs5.min');
 require('sweetalert');
+require('@popperjs/core');
 require('bootstrap');
 
 XMLHttpRequest.prototype = Object.getPrototypeOf(new XMLHttpRequest());
