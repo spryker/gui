@@ -44,6 +44,6 @@ class CreateActionButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getButtonDefaultClass(): string
     {
-        return 'btn-sm safe-submit';
+        return 'btn-sm';
     }
 }

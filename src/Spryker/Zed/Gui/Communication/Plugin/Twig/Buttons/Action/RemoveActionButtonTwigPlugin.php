@@ -44,6 +44,6 @@ class RemoveActionButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getButtonDefaultClass(): string
     {
-        return 'btn-sm btn-outline safe-submit';
+        return 'btn-sm btn-outline';
     }
 }

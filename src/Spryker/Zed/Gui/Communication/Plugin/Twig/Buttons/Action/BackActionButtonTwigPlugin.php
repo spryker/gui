@@ -44,6 +44,6 @@ class BackActionButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getButtonDefaultClass(): string
     {
-        return 'btn-sm btn-view btn-outline safe-submit';
+        return 'btn-sm btn-view btn-outline';
     }
 }

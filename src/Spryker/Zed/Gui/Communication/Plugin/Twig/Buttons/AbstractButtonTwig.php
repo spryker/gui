@@ -20,6 +20,11 @@ use Twig\TwigFunction;
 abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginInterface
 {
     /**
+     * @var string
+     */
+    protected const IS_SAFE_BUTTON = 'is_safe_button';
+
+    /**
      * @return string
      */
     abstract protected function getFunctionName(): string;
@@ -73,6 +78,11 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
             if (!array_key_exists(ButtonUrlGenerator::DEFAULT_CSS_CLASSES, $options)) {
                 $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] = $this->getButtonDefaultClass();
             }
+
+            if (!isset($options[static::IS_SAFE_BUTTON]) || $options[static::IS_SAFE_BUTTON] !== false) {
+                $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] .= ' safe-submit';
+            }
+            unset($options[static::IS_SAFE_BUTTON]);
 
             $buttonUrlGenerator = $this->createButtonUrlGenerator($url, $title, $options);
 
