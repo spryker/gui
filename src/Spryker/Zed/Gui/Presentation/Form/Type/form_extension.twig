@@ -1,5 +1,32 @@
 {% extends "bootstrap_5_layout.html.twig" %}
 
+
+{%- block form_label_content_sf5 -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    {%- if translation_domain is same as(false) -%}
+        {%- if label_html is same as(false) -%}
+            {{- label -}}
+        {%- else -%}
+            {{- label|raw -}}
+        {%- endif -%}
+    {%- else -%}
+        {%- if label_html is same as(false) -%}
+            {{- label|trans(label_translation_parameters, translation_domain) -}}
+        {%- else -%}
+            {{- label|trans(label_translation_parameters, translation_domain)|raw -}}
+        {%- endif -%}
+    {%- endif -%}
+{%- endblock form_label_content_sf5 -%}
+
  {% block form_label %}
     {% set trim_asterisk = trim_asterisk is defined ? trim_asterisk : true %}
     {% set label_length = label | length %}
@@ -61,8 +88,12 @@
 
         <label{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}>
             {{ widget|raw }}
-            {%- if label is not same as(false) -%}    
-                {{- block('form_label_content') -}}
+            {%- if label is not same as(false) -%}
+                {% if block('form_label_content') is defined %}
+                    {{- block('form_label_content') -}}
+                {% else %}
+                    {{- block('form_label_content_sf5') -}}
+                {% endif %}
             {%- endif -%}
         </label>
     {%- endif -%}
