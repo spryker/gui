@@ -77,6 +77,14 @@ function select2combobox(selector) {
 
                 $selectElement.val(selectedValues.filter?.((value) => value !== idSelected)).trigger('change');
             });
+
+            $selectElement.on('select2:open', function () {
+                var searchField = document.querySelector('.select2-search--dropdown .select2-search__field');
+                if (!searchField) {
+                    return;
+                }
+                searchField.focus();
+            });
         }
 
         if ($parentFields) {
