@@ -152,7 +152,7 @@ textarea {
 
 /* Inputs */
 %input,
-.form-control,
+.form-control:not(.input-dropzone__input),
 .single-line,
 .ibox-content select,
 #builder.query-builder input[type='text'] {
