@@ -61,6 +61,14 @@ var editorInit = function () {
 
         $textarea.summernote(config);
     });
+
+    $.fn.modal = function (config) {
+        return this.each(() => {
+            const modal = bootstrap.Modal.getOrCreateInstance(this[0]);
+            if (config === 'show') modal.show();
+            else if (config === 'hide') modal.hide();
+        });
+    };
 };
 
 var tooltipInit = function () {
