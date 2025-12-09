@@ -1,6 +1,5 @@
 'use strict';
 
-// TODO: add support for multi-tab navigation hash handling (e.g "/#tab1=tab-content-foo&tab2=tab-content-bar")
 var bootstrap = require('bootstrap');
 
 function Tabs(selector, onTabChange) {
@@ -11,6 +10,7 @@ function Tabs(selector, onTabChange) {
     this.onTabChange = onTabChange || function () {};
 
     this.checkErrors();
+    this.checkActivatedTab();
     this.setNavigation();
     this.mapChangeEvent();
 }
@@ -100,12 +100,20 @@ Tabs.prototype.checkActivatedTab = function () {
     var positionChanged = false;
     self.tabUrls.each(function () {
         var element = $(this);
-        if (positionChanged === false && element.attr('href') === self.currentUrlHash) {
+
+        var tabTarget = element.closest(['data-bs-target']).data('bs-target') || element.attr('href');
+        if (
+            positionChanged === false &&
+            (element.attr('href') === self.currentUrlHash || tabTarget === self.currentUrlHash)
+        ) {
             self.currentTabPosition = position;
 
             positionChanged = true;
             self.activateTab(element, self.currentUrlHash);
-            self.showHideNavigationButtons();
+
+            if (self.tabsContainer.data('isNavigable') === true) {
+                self.showHideNavigationButtons();
+            }
         }
         position++;
     });
