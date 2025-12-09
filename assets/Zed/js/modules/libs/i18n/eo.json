@@ -1,5 +1,7 @@
 {
     "sEmptyTable": "Neniuj datumoj en tabelo",
+    "sEmptyTableTitle": "Neniuj datumoj trovitaj",
+    "sEmptyTableText": "Nuntempe ne estas registroj por montri en ĉi tiu tabelo.",
     "sInfo": "Montras _START_ ĝis _END_ el _TOTAL_ vicoj",
     "sInfoEmpty": "Montras 0 ĝis 0 el 0 vicoj",
     "sInfoFiltered": "(filtrita el entute _MAX_ vicoj)",

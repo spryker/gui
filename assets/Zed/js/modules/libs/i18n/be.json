@@ -1,5 +1,8 @@
 {
     "sProcessing": "Пачакайце...",
+    "sEmptyTable": "Запісы адсутнічаюць.",
+    "sEmptyTableTitle": "Дадзеныя не знойдзены",
+    "sEmptyTableText": "У гэтай табліцы няма запісаў для адлюстравання.",
     "sLengthMenu": "Паказваць _MENU_ запісаў",
     "sZeroRecords": "Запісы адсутнічаюць.",
     "sInfo": "Запісы з _START_ па _END_ з _TOTAL_ запісаў",

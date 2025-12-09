@@ -16,5 +16,7 @@
         "sNext": "Selanjutnya",
         "sLast": "Terakhir"
     },
-    "remove": "Hapus"
+    "remove": "Hapus",
+    "sEmptyTableTitle": "Tidak ada data ditemukan",
+    "sEmptyTableText": "Saat ini tidak ada catatan untuk ditampilkan dalam tabel ini."
 }

@@ -1,4 +1,6 @@
 {
+    "sEmptyTableTitle": "Andmeid ei leitud",
+    "sEmptyTableText": "Selles tabelis ei ole praegu kuvamiseks kirjeid.",
     "sProcessing": "Palun oodake, koostan kuvamiseks nimekirja!",
     "sLengthMenu": "N&auml;ita kirjeid _MENU_ kaupa",
     "sZeroRecords": "Otsitavat vastet ei leitud.",

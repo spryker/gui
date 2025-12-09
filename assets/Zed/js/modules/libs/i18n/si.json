@@ -21,5 +21,7 @@
         "sSortAscending": ": තීරුව ආරෝහනව තෝරන්න",
         "sSortDescending": ": තීරුව අවරෝහනව තෝරන්න"
     },
-    "remove": "ඉවත් කරන්න"
+    "remove": "ඉවත් කරන්න",
+    "sEmptyTableTitle": "දත්ත හමු නොවීය",
+    "sEmptyTableText": "මෙම වගුවේ පෙන්වීමට වර්තමානයේ වාර්තා නොමැත."
 }

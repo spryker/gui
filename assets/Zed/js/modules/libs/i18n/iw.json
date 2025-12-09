@@ -17,5 +17,7 @@
         "next": "הבא",
         "last": "אחרון"
     },
-    "remove": "הסר"
+    "remove": "הסר",
+    "sEmptyTableTitle": "לא נמצאו נתונים",
+    "sEmptyTableText": "אין כרגע רשומות להציג בטבלה זו."
 }

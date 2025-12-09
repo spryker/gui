@@ -15,5 +15,7 @@
         "sNext": "Tiếp",
         "sLast": "Cuối"
     },
-    "remove": "Xóa"
+    "remove": "Xóa",
+    "sEmptyTableTitle": "Không tìm thấy dữ liệu",
+    "sEmptyTableText": "Hiện tại không có bản ghi nào để hiển thị trong bảng này."
 }

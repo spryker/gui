@@ -20,5 +20,7 @@
         "sSortAscending": ": activer pour trier la colonne par ordre croissant",
         "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
     },
-    "remove": "Supprimer"
+    "remove": "Supprimer",
+    "sEmptyTableTitle": "Aucune donnée trouvée",
+    "sEmptyTableText": "Il n'y a actuellement aucun enregistrement à afficher dans ce tableau."
 }

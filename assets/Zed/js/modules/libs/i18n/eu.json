@@ -1,4 +1,6 @@
 {
+    "sEmptyTableTitle": "Ez da daturik aurkitu",
+    "sEmptyTableText": "Une honetan ez dago erregistro-rik taula honetan bistaratzeko.",
     "sProcessing": "Prozesatzen...",
     "sLengthMenu": "Erakutsi _MENU_ erregistro",
     "sZeroRecords": "Ez da emaitzarik aurkitu",

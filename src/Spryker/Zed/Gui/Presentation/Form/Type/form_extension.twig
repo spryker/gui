@@ -47,13 +47,13 @@
     {% endfor %}
 
     {% if visibleErrors|length > 0 -%}
-        {% if form.parent is not null %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
         <ul class="list-unstyled">
-        {%- for error in errors -%}
-            <li><span class="fa fa-exclamation-circle"></span> {{ error.message | trans(error.messageParameters) }}</li>
-        {%- endfor -%}
-    </ul>
-        {% if form.parent is not null %}</span>{% else %}</div>{% endif %}
+            {%- for error in errors -%}
+                <li class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">
+                    <span class="fa fa-exclamation-circle"></span> {{ error.message }}
+                </li>
+            {%- endfor -%}
+        </ul>   
     {%- endif %}
 {%- endblock form_errors %}
 

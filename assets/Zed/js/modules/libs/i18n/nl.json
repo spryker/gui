@@ -21,5 +21,7 @@
         "sSortAscending": ": activeer om kolom oplopend te sorteren",
         "sSortDescending": ": activeer om kolom aflopend te sorteren"
     },
-    "remove": "Verwijderen"
+    "remove": "Verwijderen",
+    "sEmptyTableTitle": "Geen gegevens gevonden",
+    "sEmptyTableText": "Er zijn momenteel geen records om in deze tabel weer te geven."
 }

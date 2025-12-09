@@ -21,5 +21,7 @@
         "sSortAscending": ": په صعودي ډول مرتبول",
         "sSortDescending": ": په نزولي ډول مرتبول"
     },
-    "remove": "لرې کړئ"
+    "remove": "لرې کړئ",
+    "sEmptyTableTitle": "هیڅ معلومات ونه موندل شو",
+    "sEmptyTableText": "اوس مهال په دې جدول کې د ښودلو لپاره هیڅ ریکارډ شتون نلري."
 }

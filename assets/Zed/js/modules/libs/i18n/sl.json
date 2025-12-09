@@ -21,5 +21,7 @@
         "sSortAscending": ": vključite za naraščujoči sort",
         "sSortDescending": ": vključite za padajoči sort"
     },
-    "remove": "Odstrani"
+    "remove": "Odstrani",
+    "sEmptyTableTitle": "Ni najdenih podatkov",
+    "sEmptyTableText": "Trenutno ni zapisov za prikaz v tej tabeli."
 }

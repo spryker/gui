@@ -21,5 +21,7 @@
         "sSortAscending": ": virkja til að raða dálki í hækkandi röð",
         "sSortDescending": ": virkja til að raða dálki lækkandi í röð"
     },
-    "remove": "Fjarlægja"
+    "remove": "Fjarlægja",
+    "sEmptyTableTitle": "Engin gögn fundust",
+    "sEmptyTableText": "Það eru engar færslur til að sýna í þessari töflu eins og er."
 }

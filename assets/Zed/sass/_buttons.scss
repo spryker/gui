@@ -48,6 +48,7 @@
 
         &:focus {
             box-shadow: $box-shadow-green-focused;
+            color: $white;
         }
 
         &:active {

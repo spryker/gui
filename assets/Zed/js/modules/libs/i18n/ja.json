@@ -21,5 +21,7 @@
         "sSortAscending": ": 列を昇順に並べ替えるにはアクティブにする",
         "sSortDescending": ": 列を降順に並べ替えるにはアクティブにする"
     },
-    "remove": "削除"
+    "remove": "削除",
+    "sEmptyTableTitle": "データが見つかりません",
+    "sEmptyTableText": "現在、このテーブルに表示するレコードはありません。"
 }

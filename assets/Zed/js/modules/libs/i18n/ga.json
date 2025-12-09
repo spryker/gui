@@ -15,5 +15,7 @@
         "sNext": "Ar Aghaidh",
         "sLast": "Last"
     },
-    "remove": "Bain"
+    "remove": "Bain",
+    "sEmptyTableTitle": "Ní bhfuarthas aon sonraí",
+    "sEmptyTableText": "Níl aon taifid le taispeáint sa tábla seo faoi láthair."
 }

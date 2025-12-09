@@ -21,5 +21,7 @@
         "sSortAscending": ": diaktifkan kepada susunan lajur menaik",
         "sSortDescending": ": diaktifkan kepada susunan lajur menurun"
     },
-    "remove": "Keluarkan"
+    "remove": "Keluarkan",
+    "sEmptyTableTitle": "Tiada data ditemui",
+    "sEmptyTableText": "Tiada rekod untuk dipaparkan dalam jadual ini pada masa ini."
 }

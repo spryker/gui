@@ -20,6 +20,11 @@ var locale = getLocale();
 
 var translationObj = getTranslation(locale);
 
+translationObj.sEmptyTable = `<div class="dataTables_empty-message">
+                <strong>${translationObj.sEmptyTableTitle}</strong>
+                <span>${translationObj.sEmptyTableText}</span>
+            </div>`;
+
 var defaultConfiguration = {
     scrollX: true,
     language: translationObj,

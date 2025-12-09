@@ -1,5 +1,7 @@
 {
     "sEmptyTable": "ባዶ ሰንጠረዥ",
+    "sEmptyTableTitle": "ምንም ውሂብ አልተገኘም",
+    "sEmptyTableText": "በዚህ ሰንጠረዥ ውስጥ የሚታይ ምንም መዝገብ የለም።",
     "sInfo": "ከጠቅላላው _TOTAL_ ዝርዝሮች ውስጥ ከ _START_ እስከ _END_ ያሉት ዝርዝር",
     "sInfoEmpty": "ከጠቅላላው 0 ዝርዝሮች ውስጥ ከ 0 እስከ 0 ያሉት ዝርዝር",
     "sInfoFiltered": "(ከጠቅላላው _MAX_ የተመረጡ ዝርዝሮች)",

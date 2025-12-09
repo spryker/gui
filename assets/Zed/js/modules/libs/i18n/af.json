@@ -1,5 +1,7 @@
 {
     "sEmptyTable": "Geen data beskikbaar in tabel",
+    "sEmptyTableTitle": "Geen data gevind nie",
+    "sEmptyTableText": "Daar is tans geen rekords om in hierdie tabel te vertoon nie.",
     "sInfo": "uitstalling _START_ to _END_ of _TOTAL_ inskrywings",
     "sInfoEmpty": "uitstalling 0 to 0 of 0 inskrywings",
     "sInfoFiltered": "(gefiltreer uit _MAX_ totaal inskrywings)",

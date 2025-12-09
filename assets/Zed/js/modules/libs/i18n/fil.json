@@ -15,5 +15,7 @@
         "sNext": "Susunod",
         "sLast": "Huli"
     },
-    "remove": "Alisin"
+    "remove": "Alisin",
+    "sEmptyTableTitle": "Walang natagpuang data",
+    "sEmptyTableText": "Kasalukuyang walang mga rekord na maipapakita sa talahanayang ito."
 }

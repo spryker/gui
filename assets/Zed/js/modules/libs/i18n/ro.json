@@ -15,5 +15,7 @@
         "sNext": "Următoarea",
         "sLast": "Ultima"
     },
-    "remove": "Elimină"
+    "remove": "Elimină",
+    "sEmptyTableTitle": "Nu s-au găsit date",
+    "sEmptyTableText": "În prezent nu există înregistrări de afișat în acest tabel."
 }

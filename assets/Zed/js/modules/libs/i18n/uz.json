@@ -20,5 +20,7 @@
         "sSortAscending": ": to'g'ri tartiblash",
         "sSortDescending": ": teskari tartiblash"
     },
-    "remove": "O'chirish"
+    "remove": "O'chirish",
+    "sEmptyTableTitle": "Ma'lumot topilmadi",
+    "sEmptyTableText": "Hozirda ushbu jadvalda ko'rsatish uchun yozuvlar mavjud emas."
 }

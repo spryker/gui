@@ -21,5 +21,7 @@
         "sSortAscending": ": aktivera för att sortera kolumnen i stigande ordning",
         "sSortDescending": ": aktivera för att sortera kolumnen i fallande ordning"
     },
-    "remove": "Ta bort"
+    "remove": "Ta bort",
+    "sEmptyTableTitle": "Inga data hittades",
+    "sEmptyTableText": "Det finns för närvarande inga poster att visa i denna tabell."
 }

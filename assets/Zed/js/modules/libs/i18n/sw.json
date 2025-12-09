@@ -21,5 +21,7 @@
         "sSortAscending": ": seti kulainisha sanjari kwa mtindo wa upandaji",
         "sSortDescending": ": seti kulainisha sanjari kwa mtindo wa mteremko"
     },
-    "remove": "Ondoa"
+    "remove": "Ondoa",
+    "sEmptyTableTitle": "Hakuna data iliyopatikana",
+    "sEmptyTableText": "kwa sasa hakuna rekodi za kuonyesha kwenye jedwali hili."
 }

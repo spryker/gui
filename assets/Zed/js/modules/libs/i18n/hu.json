@@ -38,5 +38,7 @@
             "1": "1 sor másolva"
         }
     },
-    "remove": "Eltávolítás"
+    "remove": "Eltávolítás",
+    "sEmptyTableTitle": "Nincs található adat",
+    "sEmptyTableText": "Jelenleg nincsenek megjeleníthető rekordok ebben a táblázatban."
 }

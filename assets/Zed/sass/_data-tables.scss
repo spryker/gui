@@ -251,3 +251,36 @@ table.dataTable tbody > tr {
         margin-bottom: 24px;
     }
 }
+
+.dataTables_empty-message {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    font-size: 14px;
+    padding: 95px 0 35px;
+    background: #fff;
+    min-height: 380px;
+    justify-content: center;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 136px;
+        left: 50%;
+        translate: -50% 0;
+        width: 48px;
+        height: 48px;
+        background: url('../img/cards_stack.svg') center center no-repeat;
+    }
+
+    strong {
+        font-size: 16px;
+    }
+
+    img {
+        width: 48px;
+        margin-bottom: 8px;
+    }
+}

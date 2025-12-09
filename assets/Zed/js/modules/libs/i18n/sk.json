@@ -21,5 +21,7 @@
         "sSortAscending": ": aktivujte na zoradenie stĺpca vzostupne",
         "sSortDescending": ": aktivujte na zoradenie stĺpca zostupne"
     },
-    "remove": "Odstrániť"
+    "remove": "Odstrániť",
+    "sEmptyTableTitle": "Nenašli sa žiadne údaje",
+    "sEmptyTableText": "V tejto tabuľke sa momentálne nenachádzajú žiadne záznamy na zobrazenie."
 }

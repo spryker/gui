@@ -21,5 +21,7 @@
         "sSortAscending": ": aktivizo për të sortuar kolumnin me vlera në ngritje",
         "sSortDescending": ": aktivizo për të sortuar kolumnin me vlera në zbritje"
     },
-    "remove": "Hiq"
+    "remove": "Hiq",
+    "sEmptyTableTitle": "Nuk u gjetën të dhëna",
+    "sEmptyTableText": "Aktualisht nuk ka regjistrime për t'u shfaqur në këtë tabelë."
 }

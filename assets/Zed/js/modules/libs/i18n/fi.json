@@ -37,5 +37,7 @@
         "copyTitle": "Kopioi leikepöydälle",
         "copyKeys": "Paina <i>ctrl</i> tai <i>\u2318</i> + <i>C</i> kopioidaksesi taulukon arvot<br> leikepöydälle. <br><br>Peruuttaaksesi klikkaa tähän tai Esc."
     },
-    "remove": "Poista"
+    "remove": "Poista",
+    "sEmptyTableTitle": "Tietoja ei löytynyt",
+    "sEmptyTableText": "Tässä taulukossa ei ole tällä hetkellä näytettäviä tietueita."
 }

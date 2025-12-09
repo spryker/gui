@@ -21,5 +21,7 @@
         "sSortAscending": ": 오름차순 정렬",
         "sSortDescending": ": 내림차순 정렬"
     },
-    "remove": "제거"
+    "remove": "제거",
+    "sEmptyTableTitle": "데이터를 찾을 수 없습니다",
+    "sEmptyTableText": "현재 이 테이블에 표시할 레코드가 없습니다."
 }

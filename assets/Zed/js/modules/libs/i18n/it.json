@@ -21,5 +21,7 @@
         "sSortAscending": ": attiva per ordinare la colonna in ordine crescente",
         "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
     },
-    "remove": "Rimuovi"
+    "remove": "Rimuovi",
+    "sEmptyTableTitle": "Nessun dato trovato",
+    "sEmptyTableText": "Non ci sono attualmente record da visualizzare in questa tabella."
 }

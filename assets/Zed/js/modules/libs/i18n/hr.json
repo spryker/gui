@@ -17,5 +17,7 @@
         "sNext": "Naprijed",
         "sLast": "Zadnja"
     },
-    "remove": "Ukloni"
+    "remove": "Ukloni",
+    "sEmptyTableTitle": "Nema pronađenih podataka",
+    "sEmptyTableText": "Trenutno nema zapisa za prikaz u ovoj tablici."
 }

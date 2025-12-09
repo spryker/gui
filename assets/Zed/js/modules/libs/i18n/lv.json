@@ -21,5 +21,7 @@
         "sortAscending": ": aktivizēt kolonnu, lai kārtotu augoši",
         "sortDescending": ": aktivizēt kolonnu, lai kārtotu dilstoši"
     },
-    "remove": "Noņemt"
+    "remove": "Noņemt",
+    "sEmptyTableTitle": "Dati nav atrasti",
+    "sEmptyTableText": "Šajā tabulā pašlaik nav ierakstu, ko parādīt."
 }

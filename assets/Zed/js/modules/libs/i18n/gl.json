@@ -22,5 +22,7 @@
         "sSortAscending": ": Activar para ordenar a columna de maneira ascendente",
         "sSortDescending": ": Activar para ordenar a columna de maneira descendente"
     },
-    "remove": "Eliminar"
+    "remove": "Eliminar",
+    "sEmptyTableTitle": "Non se atoparon datos",
+    "sEmptyTableText": "Actualmente non hai rexistros para mostrar nesta táboa."
 }

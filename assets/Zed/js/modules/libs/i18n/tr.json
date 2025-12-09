@@ -29,5 +29,7 @@
             "1": "1 kayıt seçildi"
         }
     },
-    "remove": "Kaldır"
+    "remove": "Kaldır",
+    "sEmptyTableTitle": "Veri bulunamadı",
+    "sEmptyTableText": "Şu anda bu tabloda görüntülenecek kayıt yok."
 }

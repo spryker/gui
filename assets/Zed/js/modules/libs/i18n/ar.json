@@ -1,5 +1,7 @@
 {
     "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+    "sEmptyTableTitle": "لم يتم العثور على بيانات",
+    "sEmptyTableText": "لا توجد سجلات لعرضها في هذا الجدول حالياً.",
     "sLoadingRecords": "جارٍ التحميل...",
     "sProcessing": "جارٍ التحميل...",
     "sLengthMenu": "أظهر _MENU_ مدخلات",

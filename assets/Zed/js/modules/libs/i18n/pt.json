@@ -20,5 +20,7 @@
         "sSortAscending": ": Ordenar colunas de forma ascendente",
         "sSortDescending": ": Ordenar colunas de forma descendente"
     },
-    "remove": "Remover"
+    "remove": "Remover",
+    "sEmptyTableTitle": "Nenhum dado encontrado",
+    "sEmptyTableText": "Não há registros para exibir nesta tabela atualmente."
 }

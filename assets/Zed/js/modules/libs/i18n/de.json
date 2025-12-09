@@ -1,5 +1,7 @@
 {
     "sEmptyTable": "Keine Daten in der Tabelle vorhanden",
+    "sEmptyTableTitle": "Keine Daten gefunden",
+    "sEmptyTableText": "Es gibt derzeit keine Einträge, die in dieser Tabelle angezeigt werden können.",
     "sInfo": "_START_ bis _END_ von _TOTAL_ Einträgen",
     "sInfoEmpty": "Keine Daten vorhanden",
     "sInfoFiltered": "(gefiltert von _MAX_ Einträgen)",

@@ -15,5 +15,7 @@
         "sNext": "اگلا",
         "sLast": "آخري"
     },
-    "remove": "ہٹائیں"
+    "remove": "ہٹائیں",
+    "sEmptyTableTitle": "کوئی ڈیٹا نہیں ملا",
+    "sEmptyTableText": "فی الحال اس جدول میں دکھانے کے لیے kioi rikaard nahi."
 }

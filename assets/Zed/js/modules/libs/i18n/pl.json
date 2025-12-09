@@ -21,5 +21,7 @@
         "sortAscending": ": aktywuj, by posortować kolumnę rosnąco",
         "sortDescending": ": aktywuj, by posortować kolumnę malejąco"
     },
-    "remove": "Usuń"
+    "remove": "Usuń",
+    "sEmptyTableTitle": "Nie znaleziono danych",
+    "sEmptyTableText": "W tej tabeli nie ma obecnie żadnych rekordów do wyświetlenia."
 }

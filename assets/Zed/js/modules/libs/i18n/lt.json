@@ -19,5 +19,7 @@
         "sNext": "Tolimesnis",
         "sLast": "Paskutinis"
     },
-    "remove": "Pašalinti"
+    "remove": "Pašalinti",
+    "sEmptyTableTitle": "Duomenų nerasta",
+    "sEmptyTableText": "Šiuo metu šioje lentelėje nėra įrašų, kuriuos būtų galima rodyti."
 }
