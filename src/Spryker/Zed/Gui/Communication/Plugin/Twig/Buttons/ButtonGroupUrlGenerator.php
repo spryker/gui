@@ -56,7 +56,7 @@ class ButtonGroupUrlGenerator implements UrlGeneratorInterface
         $optionParams = $this->getOptionsParam();
 
         $html = sprintf(
-            '<div class="btn-group"><button data-toggle="dropdown" class="btn btn-sm btn-outline %s dropdown-toggle" aria-expanded="true" %s>%s%s <span class="caret"></span></button>',
+            '<div class="btn-group"><button data-bs-toggle="dropdown" class="btn btn-sm btn-outline %s dropdown-toggle" aria-expanded="true" %s>%s%s <span class="caret"></span></button>',
             $class,
             $optionParams,
             $icon,
