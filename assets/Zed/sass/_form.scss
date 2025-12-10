@@ -38,7 +38,8 @@
         }
     }
 
-    &__input {
+    &__input,
+    &__input.form-control {
         position: absolute;
         top: 0;
         left: 0;
@@ -152,7 +153,7 @@ textarea {
 
 /* Inputs */
 %input,
-.form-control:not(.input-dropzone__input),
+.form-control,
 .single-line,
 .ibox-content select,
 #builder.query-builder input[type='text'] {

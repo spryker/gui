@@ -47,15 +47,39 @@
     {% endfor %}
 
     {% if visibleErrors|length > 0 -%}
+        {% if form is not rootform %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
         <ul class="list-unstyled">
             {%- for error in errors -%}
-                <li class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">
+                <li>
                     <span class="fa fa-exclamation-circle"></span> {{ error.message }}
                 </li>
             {%- endfor -%}
         </ul>   
+        {% if form is not rootform %}</span>{% else %}</div>{% endif %}
     {%- endif %}
 {%- endblock form_errors %}
+
+{%- block form_row -%}
+    {%- if compound is defined and compound -%}
+        {%- set element = 'fieldset' -%}
+    {%- endif -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    {%- set row_class = row_class|default(row_attr.class|default('') ~ ' form-group' ~ ((not compound or force_error|default(false)) and not valid ? ' has-error')) -%}
+    <{{ element|default('div') }}{% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %}>
+        {%- if 'form-floating' in row_class -%}
+            {{- form_widget(form, widget_attr) -}}
+            {{- form_label(form) -}}
+        {%- else -%}
+            {{- form_label(form) -}}
+            {{- form_widget(form, widget_attr) -}}
+        {%- endif -%}
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </{{ element|default('div') }}>
+{%- endblock form_row %}
 
 {% block form_start %}
     {% if form.vars.multiFactorHandlers is defined %}
