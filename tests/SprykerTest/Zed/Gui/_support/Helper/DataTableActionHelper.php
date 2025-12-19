@@ -75,7 +75,7 @@ class DataTableActionHelper extends Module
         $this->clickButton($buttonName, $rowPosition);
 
         $elementInRoot = sprintf(
-            '//body/ul[@class="dropdown-menu"][1]//following::li/a[contains(., "%s")]',
+            '//body/ul[@class="dropdown-menu show"][1]//following::li/a[contains(., "%s")]',
             $linkName,
         );
 
