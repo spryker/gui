@@ -96,42 +96,45 @@ $(document).ready(function () {
     $('.gui-table-data').on('draw.dt', function (e, settings) {
         var windowWidth = $(document).width();
         var windowHeight = $(document).height();
-        var $toggleWrap = $(this).find('.dropdown');
+        var toggleWrap = this.querySelectorAll('.dropdown');
         var $toggleDropdown;
 
-        $toggleWrap.on('show.bs.dropdown', function () {
-            $toggleDropdown = $(this).find('.dropdown-menu');
+        toggleWrap.forEach((toggler) => {
+            toggler.addEventListener('show.bs.dropdown', function () {
+                $toggleDropdown = $(this).find('.dropdown-menu');
 
-            var $button = $(this).find('.dropdown-toggle');
-            var buttonWidth = $button.width();
-            var buttonHeight = $button.height();
-            var buttonTopOffset = $button.offset().top;
-            var buttonLeftOffset = $button.offset().left;
-            var dropdownWidth = $toggleDropdown.width();
-            var dropdownHeight = $toggleDropdown.height();
-            var requiredWidth = buttonLeftOffset + dropdownWidth;
-            var requiredHeight = buttonTopOffset + buttonHeight + dropdownHeight;
-            var dropdownPositionStyles = {
-                top: buttonTopOffset + buttonHeight + 5 + 'px',
-                left: buttonLeftOffset + 'px',
-                display: 'block',
-                zIndex: '10000',
-            };
+                var $button = $(this).find('.dropdown-toggle');
+                var buttonWidth = $button.width();
+                var buttonHeight = $button.height();
+                var buttonTopOffset = $button.offset().top;
+                var buttonLeftOffset = $button.offset().left;
+                var dropdownWidth = $toggleDropdown.width();
+                var dropdownHeight = $toggleDropdown.height();
+                var requiredWidth = buttonLeftOffset + dropdownWidth;
+                var requiredHeight = buttonTopOffset + buttonHeight + dropdownHeight;
+                var dropdownPositionStyles = {
+                    top: buttonTopOffset + buttonHeight + 5 + 'px',
+                    left: buttonLeftOffset + 'px',
+                    display: 'block',
+                    zIndex: '10000',
+                };
 
-            if (requiredWidth >= windowWidth) {
-                dropdownPositionStyles.left = buttonLeftOffset + buttonWidth - dropdownWidth + 'px';
-            }
+                if (requiredWidth >= windowWidth) {
+                    dropdownPositionStyles.left = buttonLeftOffset + buttonWidth - dropdownWidth + 'px';
+                }
 
-            if (requiredHeight >= windowHeight) {
-                dropdownPositionStyles.top = buttonTopOffset - dropdownHeight - 11 + 'px';
-            }
+                if (requiredHeight >= windowHeight) {
+                    dropdownPositionStyles.top = buttonTopOffset - dropdownHeight - 11 + 'px';
+                }
 
-            $('body').append($toggleDropdown.css(dropdownPositionStyles).detach());
+                $('body').append($toggleDropdown.css(dropdownPositionStyles).detach());
+            });
+
+            toggler.addEventListener('hidden.bs.dropdown', function () {
+                $(this).append($toggleDropdown.removeAttr('style').detach());
+            });
         });
 
-        $toggleWrap.on('hidden.bs.dropdown', function () {
-            $(this).append($toggleDropdown.removeAttr('style').detach());
-        });
         var api = new $.fn.dataTable.Api(settings);
         var tableBody = $(e.target).find('tbody');
         var searchRow = '<tr';
