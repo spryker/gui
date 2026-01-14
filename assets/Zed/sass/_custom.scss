@@ -10,7 +10,10 @@ body {
 
 a {
     color: $green-default;
-    transition: color 0.2s linear, background-color 0.2s linear, border-color 0.2s linear;
+    transition:
+        color 0.2s linear,
+        background-color 0.2s linear,
+        border-color 0.2s linear;
     text-decoration: none;
 
     &:hover {
@@ -96,7 +99,9 @@ h3 {
         vertical-align: middle;
 
         a {
-            transition: border-color 0.25s ease-in-out 0s, color 0.25s ease-in-out 0s;
+            transition:
+                border-color 0.25s ease-in-out 0s,
+                color 0.25s ease-in-out 0s;
             border-bottom: 1px solid $white;
             color: $grey-dark;
             line-height: 1;
@@ -235,7 +240,10 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
         border: 1px solid $grey-lighter;
         border-bottom-color: $grey-light;
         border-radius: 10px 10px 0 0;
-        transition: border-radius 0.3s linear, background-color 0.3s linear, border-color 0.3s linear;
+        transition:
+            border-radius 0.3s linear,
+            background-color 0.3s linear,
+            border-color 0.3s linear;
 
         .collapse-link {
             color: inherit;

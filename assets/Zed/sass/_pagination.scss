@@ -19,7 +19,10 @@
             padding: 6px 4px;
             border-radius: 4px;
             overflow: hidden;
-            transition: color 0.2s linear, background-color 0.2s linear, border-color 0.2s linear;
+            transition:
+                color 0.2s linear,
+                background-color 0.2s linear,
+                border-color 0.2s linear;
 
             &:hover {
                 border-color: $grey;

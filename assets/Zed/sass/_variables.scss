@@ -45,10 +45,14 @@ $white-red: #f2dede;
 $black: #000;
 
 $box-shadow-green-hover: 0px 4px 12px 0px rgba($black, 0.15);
-$box-shadow-green-focused: 0 0 0 1px $white, 0 0 3px 1px $green-base;
+$box-shadow-green-focused:
+    0 0 0 1px $white,
+    0 0 3px 1px $green-base;
 
 $box-shadow-red-hover: 0px 4px 12px 0px rgba($black, 0.15);
-$box-shadow-red-focused: 0 0 0 1px $white, 0 0 3px 1px $red-default;
+$box-shadow-red-focused:
+    0 0 0 1px $white,
+    0 0 3px 1px $red-default;
 
 $main-font: var(--bs-body-font-family);
 

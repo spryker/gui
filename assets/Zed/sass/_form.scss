@@ -128,7 +128,8 @@ select {
     padding: 8px 30px 8px 12px;
     appearance: none;
     -webkit-text-size-adjust: none;
-    background: $white #{calc(100% - 10px) 50% / 12px auto} no-repeat url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzIwcHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCAzMjAgNTEyIiB2ZXJzaW9uPSIxLjEiPjxwYXRoIGZpbGw9IiM5ZWExYTciIGQ9Ik0xNDMgMzUyLjNMNyAyMTYuM2MtOS40LTkuNC05LjQtMjQuNiAwLTMzLjlsMjIuNi0yMi42YzkuNC05LjQgMjQuNi05LjQgMzMuOSAwbDk2LjQgOTYuNCA5Ni40LTk2LjRjOS40LTkuNCAyNC42LTkuNCAzMy45IDBsMjIuNiAyMi42YzkuNCA5LjQgOS40IDI0LjYgMCAzMy45bC0xMzYgMTM2Yy05LjIgOS40LTI0LjQgOS40LTMzLjggMHoiPjwvcGF0aD48L3N2Zz4=') !important;
+    background: $white #{calc(100% - 10px) 50% / 12px auto} no-repeat
+        url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzIwcHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCAzMjAgNTEyIiB2ZXJzaW9uPSIxLjEiPjxwYXRoIGZpbGw9IiM5ZWExYTciIGQ9Ik0xNDMgMzUyLjNMNyAyMTYuM2MtOS40LTkuNC05LjQtMjQuNiAwLTMzLjlsMjIuNi0yMi42YzkuNC05LjQgMjQuNi05LjQgMzMuOSAwbDk2LjQgOTYuNCA5Ni40LTk2LjRjOS40LTkuNCAyNC42LTkuNCAzMy45IDBsMjIuNiAyMi42YzkuNCA5LjQgOS40IDI0LjYgMCAzMy45bC0xMzYgMTM2Yy05LjIgOS40LTI0LjQgOS40LTMzLjggMHoiPjwvcGF0aD48L3N2Zz4=') !important;
 
     &::-ms-expand {
         display: none;
@@ -346,7 +347,10 @@ a.label {
         border: 2px solid $grey-light;
         border-radius: 10px !important;
         position: relative;
-        transition: background 0.2s linear, border-color 0.2s linear, color 0.2s linear;
+        transition:
+            background 0.2s linear,
+            border-color 0.2s linear,
+            color 0.2s linear;
 
         .select2-selection__rendered {
             color: $ink-base;
@@ -380,7 +384,9 @@ a.label {
             background: $grey-light;
             font-size: 15px;
             color: $grey2;
-            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+            transition:
+                opacity 0.2s ease-in-out,
+                visibility 0.2s ease-in-out;
             opacity: 0;
             visibility: hidden;
             box-shadow: 0 0 3px 1px $grey-light;
@@ -435,7 +441,9 @@ a.label {
                 background: $grey-light;
                 font-size: 15px;
                 color: $grey2;
-                transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+                transition:
+                    opacity 0.2s ease-in-out,
+                    visibility 0.2s ease-in-out;
                 display: flex;
                 align-items: center;
                 justify-content: center;

@@ -6,7 +6,11 @@
     background: $green-default;
     border-color: $green-default;
     color: $white;
-    transition: background 0.2s linear, border-color 0.2s linear, color 0.2s linear, box-shadow 0.2s linear;
+    transition:
+        background 0.2s linear,
+        border-color 0.2s linear,
+        color 0.2s linear,
+        box-shadow 0.2s linear;
 
     &.btn-view {
         white-space: nowrap;
