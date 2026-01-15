@@ -93,6 +93,7 @@ $btn-danger-border: darken($btn-danger-bg, 5%) !default;
 
 :root {
     scroll-behavior: auto !important;
+    --bs-heading-color: #{$ink-base};
 }
 
 body {

@@ -44,15 +44,8 @@
                     background-color 0.2s linear;
                 display: flex;
                 align-items: center;
-
-                i.icon-fast-forward {
-                    font-size: 8px;
-                    margin-right: 4px;
-                    margin-left: 2px;
-                    font-family: 'fontello';
-                    font-style: normal;
-                    vertical-align: 20%;
-                }
+                justify-content: center;
+                gap: 12px;
 
                 &:focus {
                     color: $ink-base;
@@ -64,14 +57,6 @@
 
                 &:hover {
                     color: $ink-base;
-
-                    .fa {
-                        color: $grey-base;
-
-                        .mini-navbar & {
-                            color: $ink-base;
-                        }
-                    }
                 }
             }
 
@@ -83,17 +68,10 @@
                 & > a {
                     color: $green-dark;
                     background-color: $grey-lighter;
-                    .fa {
-                        color: $green-default !important;
-                    }
 
                     .arrow {
                         color: $grey-base !important;
                     }
-                }
-
-                .fa {
-                    color: $grey-base;
                 }
             }
         }
@@ -103,27 +81,7 @@
 
             a {
                 font-size: 13px;
-                padding: 12px 16px;
-            }
-
-            .fa {
-                font-size: 11px;
-                text-align: center;
-            }
-        }
-
-        .fa {
-            color: $grey-base;
-            transition: color 0.2s linear;
-            min-width: 24px;
-            margin-right: 2px;
-            font-size: 13px;
-            flex: 0 0 auto;
-
-            &.arrow {
-                min-width: 0;
-                float: none;
-                margin: 0 0 0 3px;
+                padding: 12px 16px 12px 20px;
             }
         }
     }
@@ -153,27 +111,9 @@
 
 /* Navigation menu arrow */
 .metismenu {
-    .icon-arrow-left {
-        float: right;
-        line-height: 2;
-        font-size: 10px;
-    }
-
     .active > a {
-        & > .icon-arrow-left:before {
-            content: '\e800';
-        }
-
-        .fa.arrow {
-            &:before {
-                content: '\f106';
-            }
-        }
-    }
-
-    .fa.arrow {
-        &:before {
-            content: '\f107';
+        .arrow-icon {
+            rotate: 180deg;
         }
     }
 }
@@ -239,12 +179,6 @@
         > li.matched {
             display: block;
 
-            > a .fa.arrow {
-                &:before {
-                    content: '\f106';
-                }
-            }
-
             > .nav-second-level {
                 display: block !important;
 
@@ -256,6 +190,19 @@
                     display: block;
                 }
             }
+        }
+    }
+}
+
+.side-menu {
+    &__arrow,
+    &__icon {
+        font-size: 20px;
+    }
+
+    &__arrow {
+        .nav-second-level & {
+            font-size: 13px;
         }
     }
 }
