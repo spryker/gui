@@ -11,14 +11,15 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             
             <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap" />
+            
 
             <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-gui-commons.css') }}">
         {% endblock %}
     </head>
     <body>
         <div id="wrapper">
+
             {% block body_menu %}
                 {% if app.twig.getFunction('navigation') != false %}
                     {% include '@Gui/Partials/navigation.twig' %}
@@ -96,22 +97,23 @@
                         {% endif %}
                     </div>
                 </div>
+                {% endblock %}
                 <div class="wrapper wrapper-content">
                     {% include '@Messenger/Partials/flash-messages.twig' %}
 
                     {% block content -%}
-                {%- endblock %}
-            </div>
-                {% endblock %}
-            <div class="footer">
-                <div>
-                    <strong>Copyright</strong>
-                    Spryker Systems GmbH &copy;
-                    {{ 'now'|date('Y') }}
+                    {%- endblock %}
+                </div>
+            
+                <div class="footer">
+                    <div>
+                        <strong>Copyright</strong>
+                        Spryker Systems GmbH &copy;
+                        {{ 'now'|date('Y') }}
+                    </div>
                 </div>
             </div>
         </div>
-
         <div id="modal-alert" class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content alert" id="modal-content">

@@ -60,6 +60,24 @@ class GuiConfig extends AbstractBundleConfig
      */
     protected const SPRYKER_BUILD_HASH = 'SPRYKER_BUILD_HASH';
 
+    protected const string NAVIGATION_ICONS_TYPE_DEFAULT = 'font-awesome';
+
+    /**
+     * Specification:
+     * - Returns the navigation icons type used in the Back Office interface.
+     * - Determines which icon library is loaded and rendered in navigation menus.
+     * - Supports 'font-awesome' for Font Awesome icons and 'google-material' for Google Material Symbols.
+     * - Can be overridden at project level to switch between icon libraries.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getNavigationIconsType(): string
+    {
+        return static::NAVIGATION_ICONS_TYPE_DEFAULT;
+    }
+
     /**
      * @api
      *

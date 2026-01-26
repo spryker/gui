@@ -1,4 +1,6 @@
-{%- macro leaf(node, depth=0) -%}
+{% set navigationIconsType = navigationIconsType is defined ? navigationIconsType : 'font-awesome' %} {# Available types: 'font-awesome', 'google-material'  #}
+
+{%- macro leaf(node, depth=0, navigationIconsType) -%}
     {%- import _self as menu -%}
 
     {%- if node is defined %}
@@ -12,53 +14,67 @@
             <li class="item{{ node.is_active is defined and node.is_active ? " active" : "" }}" data-qa="menu-item">
         {%- endif -%}
         <a href="{{ node.uri }}"{% if node.shortcut is defined %} data-hotkey="{{ node.shortcut }}"{% endif %} data-qa="menu-item-link">
-            {{ menu.getNodeIcon(node) }}
+            {{ menu.getNodeIcon(node, navigationIconsType) }}
             <span class="nav-label" data-qa="menu-item-label">{{ node.label | trans }}</span>
         </a>
         </li>
     {% endif -%}
 {%- endmacro -%}
 
-{%- macro branch(node, depth=0) -%}
+{%- macro branch(node, depth=0, navigationIconsType) -%}
     {%- import _self as menu -%}
 
     {%- if node is defined %}
         <li class="{{ node.is_active is defined and node.is_active ? " active" : "" }}" data-qa="menu-parent-item">
             <a href="javascript:void(0)" data-qa="menu-parent-link" title="{{ node.label | trans }}">
-                {{ menu.getNodeIcon(node) }}
+                {{ menu.getNodeIcon(node, navigationIconsType) }}
                 <span class="nav-label" data-qa="menu-item-label">{{ node.label | trans }}</span>
-                <span class="side-menu__arrow material-symbols-outlined">keyboard_arrow_down</span>
+                {% if navigationIconsType == 'google-material'  %}
+                    <span class="side-menu__arrow material-symbols-outlined">keyboard_arrow_down</span>
+                {% else %}
+                    <span class="fa arrow"></span>
+                {% endif %}
             </a>
 
             <ul class="nav nav-second-level collapse" data-qa="menu-submenu">
-                {{ menu.tree(node.children, (depth + 1)) }}
+                {{ menu.tree(node.children, navigationIconsType) }}
             </ul>
         </li>
     {% endif -%}
 {%- endmacro -%}
 
-{%- macro tree(root) -%}
+{%- macro tree(root, navigationIconsType) -%}
     {%- import _self as menu -%}
 
     {%- for child in root -%}
         {%- if child.children is defined and child.children is not empty -%}
-            {{ menu.branch(child, 0) }}
+            {{ menu.branch(child, 0, navigationIconsType) }}
         {%- else -%}
-            {{ menu.leaf(child, 0) }}
+            {{ menu.leaf(child, 0, navigationIconsType) }}
         {%- endif -%}
     {%- endfor -%}
 {%- endmacro -%}
 
-{%- macro getNodeIcon(node) -%}
-    {%- set defaultIcon = 'keyboard_double_arrow_right' -%}
-    {%- if node.icon is defined and node.icon != '' -%}
-        <i class="side-menu__icon material-symbols-outlined">{{ node.icon }}</i>
-    {%- else -%}
-        <i class="side-menu__arrow material-symbols-outlined">{{ defaultIcon }}</i>
-    {%- endif -%}
+{%- macro getNodeIcon(node, navigationIconsType) -%}
+    {%- set defaultIcon = navigationIconsType == 'google-material' ? 'keyboard_double_arrow_right' : 'fa-angle-double-right' -%}
+
+    {% if navigationIconsType == 'google-material' %}
+        {%- if node.icon is defined and node.icon != '' -%}
+            <i class="side-menu__icon material-symbols-outlined">{{ node.icon }}</i>
+        {%- else -%}
+            <i class="side-menu__arrow material-symbols-outlined">{{ defaultIcon }}</i>
+        {%- endif -%}
+    {% else %}
+        {%- if node.icon is defined and node.icon != '' -%}
+            <i class="fa {{ node.icon }}"></i>
+        {%- else -%}
+            <i class="fa {{ defaultIcon }}"></i>
+        {%- endif -%}
+    {% endif %}
 {%- endmacro -%}
 
 {%- import _self as menu -%}
+
 <nav class="navbar-default navbar-static-side" role="navigation" data-qa="backoffice-navigation">
     <div class="sidebar-collapse">
         <ul tabindex="0" class="nav metismenu navigation-menu js-navigation-menu" id="side-menu" data-qa="navigation-menu">
@@ -87,7 +103,7 @@
                     />
                 </div>
             </li>
-            {{ menu.tree(navigation.menu) }}
+            {{ menu.tree(navigation.menu, navigationIconsType) }}
         </ul>
     </div>
 </nav>
