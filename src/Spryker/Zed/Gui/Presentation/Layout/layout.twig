@@ -19,7 +19,6 @@
     </head>
     <body>
         <div id="wrapper">
-
             {% block body_menu %}
                 {% if app.twig.getFunction('navigation') != false %}
                     {% include '@Gui/Partials/navigation.twig' %}
@@ -101,8 +100,9 @@
                 <div class="wrapper wrapper-content">
                     {% include '@Messenger/Partials/flash-messages.twig' %}
 
-                    {% block content -%}
-                    {%- endblock %}
+                    <div class="container">
+                        {% block content -%}{%- endblock %}
+                    </div>
                 </div>
             
                 <div class="footer">

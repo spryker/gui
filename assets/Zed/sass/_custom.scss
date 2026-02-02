@@ -586,3 +586,9 @@ pre code {
     white-space: pre-wrap;
     font-size: 13px;
 }
+
+.ui-datepicker .ui-datepicker-title select {
+    padding: 0 3px;
+    height: auto;
+    line-height: 19px;
+}
