@@ -400,6 +400,7 @@ abstract class AbstractTable
      */
     protected function formatCsvRow(ActiveRecordInterface $entity): array
     {
+        /** @phpstan-ignore function.alreadyNarrowedType */
         if (!method_exists($entity, 'toArray')) {
             throw new TableException(sprintf('Missing method `%s::toArray()`.', get_class($entity)));
         }
@@ -910,6 +911,7 @@ abstract class AbstractTable
             'headerAttributes' => [],
         ];
 
+        /** @phpstan-ignore instanceof.alwaysTrue */
         if ($this->getConfiguration() instanceof TableConfiguration) {
             $configTableArray = [
                 'url' => ($this->config->getUrl() === null) ? $this->defaultUrl : $this->config->getUrl(),
@@ -1161,7 +1163,7 @@ abstract class AbstractTable
             $conditions,
         );
 
-        /** @var literal-string $gluedCondition */
+        /** @var literal-string $gluedCondition - @phpstan-ignore varTag.nativeType */
         $gluedCondition = '(' . $gluedCondition . ')';
 
         if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
@@ -1635,6 +1637,7 @@ abstract class AbstractTable
     protected function generateButtonOptions(array $defaultOptions, array $options = [])
     {
         $buttonOptions = $defaultOptions;
+        /** @phpstan-ignore function.alreadyNarrowedType */
         if (is_array($options)) {
             $buttonOptions = array_merge($defaultOptions, $options);
         }
