@@ -1163,7 +1163,8 @@ abstract class AbstractTable
             $conditions,
         );
 
-        /** @var literal-string $gluedCondition - @phpstan-ignore varTag.nativeType */
+        /** @var literal-string $gluedCondition */
+        /** @phpstan-ignore varTag.nativeType */
         $gluedCondition = '(' . $gluedCondition . ')';
 
         if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
