@@ -11,6 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Twig\Environment;
 use Twig\TwigFunction;
@@ -68,6 +69,7 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                 if ($container->has(static::SERVICE_ROUTER)) {
                     /** @var \Symfony\Cmf\Component\Routing\ChainRouter $router */
                     $router = $container->get(static::SERVICE_ROUTER);
+                    $url = $this->getUrl($router, $url);
                     $url = $router->generate($url, $query);
 
                     $charset = mb_internal_encoding() ?: static::DEFAULT_ENCODING;
@@ -81,5 +83,17 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
             return $url->buildEscaped();
         }, ['is_safe' => ['html']]);
+    }
+
+    protected function getUrl(ChainRouter $router, string $url): string
+    {
+        if (APPLICATION === 'MERCHANT_PORTAL') {
+            $route = $router->match($url);
+            if (isset($route['_route']) && $route['_route']) {
+                $url = (string)$route['_route'];
+            }
+        }
+
+        return $url;
     }
 }
