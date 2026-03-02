@@ -30,46 +30,21 @@ class DataTableActionHelper extends Module
         }
     }
 
-    /**
-     * @param int $rowPosition
-     * @param string|null $gridId
-     *
-     * @return void
-     */
     public function clickDataTableEditButton(int $rowPosition = 1, ?string $gridId = null): void
     {
         $this->clickButton('Edit', $rowPosition, $gridId);
     }
 
-    /**
-     * @param int $rowPosition
-     * @param string|null $gridId
-     *
-     * @return void
-     */
     public function clickDataTableViewButton(int $rowPosition = 1, ?string $gridId = null): void
     {
         $this->clickButton('View', $rowPosition, $gridId);
     }
 
-    /**
-     * @param int $rowPosition
-     * @param string|null $gridId
-     *
-     * @return void
-     */
     public function clickDataTableDeleteButton(int $rowPosition = 1, ?string $gridId = null): void
     {
         $this->clickButton('Delete', $rowPosition, $gridId);
     }
 
-    /**
-     * @param string $buttonName
-     * @param string $linkName
-     * @param int $rowPosition
-     *
-     * @return void
-     */
     public function clickDataTableLinkInDropDownOfButton(string $buttonName, string $linkName, int $rowPosition = 1): void
     {
         $this->clickButton($buttonName, $rowPosition);
@@ -89,25 +64,11 @@ class DataTableActionHelper extends Module
         $this->getDriver()->click(sprintf('%s | %s', $elementInRoot, $elementInList));
     }
 
-    /**
-     * @param string $name
-     * @param int $rowPosition
-     * @param string|null $gridId
-     *
-     * @return void
-     */
     public function clickDataTableButton(string $name, int $rowPosition = 1, ?string $gridId = null): void
     {
         $this->clickButton($name, $rowPosition, $gridId);
     }
 
-    /**
-     * @param string $name
-     * @param int $rowPosition
-     * @param string|null $gridId
-     *
-     * @return void
-     */
     protected function clickButton(string $name, int $rowPosition, ?string $gridId = null): void
     {
         $driver = $this->getDriver();

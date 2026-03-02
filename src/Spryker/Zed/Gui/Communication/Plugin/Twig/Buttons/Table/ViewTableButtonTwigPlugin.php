@@ -15,33 +15,21 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonTwig;
  */
 class ViewTableButtonTwigPlugin extends AbstractButtonTwig
 {
-    /**
-     * @return string
-     */
     protected function getFunctionName(): string
     {
         return 'viewTableButton';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonClass(): string
     {
         return 'btn-success';
     }
 
-    /**
-     * @return string
-     */
     protected function getIcon(): string
     {
         return '<i class="fa fa-eye"></i> ';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonDefaultClass(): string
     {
         return 'btn-xs btn-outline';

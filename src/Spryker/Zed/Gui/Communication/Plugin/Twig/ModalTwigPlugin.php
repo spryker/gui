@@ -42,11 +42,6 @@ class ModalTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return $twig;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\TwigFunction
-     */
     protected function getZedModalFunction(Environment $twig): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_MODAL, function (string $title, string $content, ?string $footer = null, ?array $extraData = null) use ($twig) {

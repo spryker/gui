@@ -15,33 +15,21 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonTwig;
  */
 class RemoveActionButtonTwigPlugin extends AbstractButtonTwig
 {
-    /**
-     * @return string
-     */
     protected function getFunctionName(): string
     {
         return 'removeActionButton';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonClass(): string
     {
         return 'btn-remove';
     }
 
-    /**
-     * @return string
-     */
     protected function getIcon(): string
     {
         return '<i class="fa fa-trash"></i> ';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonDefaultClass(): string
     {
         return 'btn-sm btn-outline';

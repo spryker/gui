@@ -42,9 +42,6 @@ class AssetsPathTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return $twig;
     }
 
-    /**
-     * @return \Twig\TwigFunction
-     */
     protected function getZedAssetsPathFunction(): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_ASSETS_PATH, function (string $path) {
@@ -52,11 +49,6 @@ class AssetsPathTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         }, ['is_safe' => ['html']]);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     protected function getZedAssetsPathByName(string $path): string
     {
         return $this->appendBuildHash(
@@ -64,11 +56,6 @@ class AssetsPathTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         );
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     protected function appendBuildHash(string $path): string
     {
         $buildHash = $this->getConfig()->getAssetsBuildHash();

@@ -69,9 +69,6 @@ class AbstractTableTest extends Unit
      */
     protected $table;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -82,9 +79,6 @@ class AbstractTableTest extends Unit
         $this->table->setRequest($request);
     }
 
-    /**
-     * @return void
-     */
     public function testGetOrdersDefault(): void
     {
         $config = new TableConfiguration();
@@ -107,9 +101,6 @@ class AbstractTableTest extends Unit
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @return void
-     */
     public function testGetOrdersWithCustomSortField(): void
     {
         $config = new TableConfiguration();
@@ -134,9 +125,6 @@ class AbstractTableTest extends Unit
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @return void
-     */
     public function testGetOrdersWithCustomSortFieldAndCustomDirection(): void
     {
         $config = new TableConfiguration();
@@ -161,9 +149,6 @@ class AbstractTableTest extends Unit
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @return void
-     */
     public function testGetOrdersWithDeprecatedIndexAndDirection(): void
     {
         $config = new TableConfiguration();
@@ -189,9 +174,6 @@ class AbstractTableTest extends Unit
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @return void
-     */
     public function testGetCSVHeadersThrowsExceptionWhenMethodNotImplemented(): void
     {
         // Assert
@@ -206,9 +188,6 @@ class AbstractTableTest extends Unit
         $this->table->streamDownload();
     }
 
-    /**
-     * @return void
-     */
     public function testGetDownloadQueryThrowsExceptionWhenNotImplemented(): void
     {
         // Arrange
@@ -226,9 +205,6 @@ class AbstractTableTest extends Unit
         $table->streamDownload()->send();
     }
 
-    /**
-     * @return void
-     */
     public function testStreamDownloadReturnsStreamedResponseWithCSV(): void
     {
         // Arrange
@@ -253,9 +229,6 @@ class AbstractTableTest extends Unit
         $this->assertSame($expectedCsvStreamData, $streamedResponseOutput);
     }
 
-    /**
-     * @return void
-     */
     public function testStreamDownloadReturnsStreamedResponseWithOrderedAndFormattedCSV(): void
     {
         // Arrange
@@ -280,9 +253,6 @@ class AbstractTableTest extends Unit
         $this->assertSame($expectedCsvStreamData, $streamedResponseOutput);
     }
 
-    /**
-     * @return void
-     */
     public function testRunQueryFiltersDataUsingColumnStrictSearch(): void
     {
         // Arrange
@@ -309,9 +279,6 @@ class AbstractTableTest extends Unit
         $fooTableMock->fetchData();
     }
 
-    /**
-     * @return void
-     */
     public function testRunQueryUsesFuzzySearchWhenColumnFiltersNotProvided(): void
     {
         // Arrange

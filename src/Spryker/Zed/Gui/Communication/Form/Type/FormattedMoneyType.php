@@ -28,27 +28,16 @@ class FormattedMoneyType extends AbstractLocaleFormattedType
      */
     protected const OPTION_DISPLAY_CURRENCY = 'display_currency';
 
-    /**
-     * @return string
-     */
     public function getParent(): string
     {
         return MoneyType::class;
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::BLOCK_PREFIX;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

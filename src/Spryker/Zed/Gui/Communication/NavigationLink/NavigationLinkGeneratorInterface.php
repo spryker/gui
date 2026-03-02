@@ -11,10 +11,5 @@ use Twig\Environment;
 
 interface NavigationLinkGeneratorInterface
 {
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return string
-     */
     public function generateNavigationItems(Environment $twig): string;
 }

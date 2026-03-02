@@ -15,33 +15,21 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonTwig;
  */
 class BackTableButtonTwigPlugin extends AbstractButtonTwig
 {
-    /**
-     * @return string
-     */
     protected function getFunctionName(): string
     {
         return 'backTableButton';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonClass(): string
     {
         return 'btn-back';
     }
 
-    /**
-     * @return string
-     */
     protected function getIcon(): string
     {
         return '<i class="fa fa-angle-left"></i> ';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonDefaultClass(): string
     {
         return 'btn-xs btn-outline';

@@ -287,9 +287,6 @@ abstract class AbstractTable
         $this->dataTablesTransfer = $dataTablesTransfer;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\StreamedResponse
-     */
     public function streamDownload(): StreamedResponse
     {
         $streamedResponse = new StreamedResponse();
@@ -301,9 +298,6 @@ abstract class AbstractTable
         return $streamedResponse;
     }
 
-    /**
-     * @return callable
-     */
     protected function getStreamCallback(): callable
     {
         $csvHeaders = $this->getCsvHeaders();
@@ -337,11 +331,6 @@ abstract class AbstractTable
         throw new TableException(sprintf('You need to implement `%s()` in your `%s`.', __METHOD__, static::class));
     }
 
-    /**
-     * @param array $csvHeaders
-     *
-     * @return array
-     */
     protected function translateCsvHeaders(array $csvHeaders): array
     {
         $translator = $this->getTranslator();
@@ -357,9 +346,6 @@ abstract class AbstractTable
         return $csvHeaders;
     }
 
-    /**
-     * @return \Symfony\Contracts\Translation\TranslatorInterface|null
-     */
     protected function getTranslator(): ?TranslatorInterface
     {
         $container = $this->getApplicationContainer();
@@ -371,9 +357,6 @@ abstract class AbstractTable
         return $container->get(static::SERVICE_TRANSLATOR);
     }
 
-    /**
-     * @return iterable
-     */
     protected function executeDownloadQuery(): iterable
     {
         return $this->getDownloadQuery()
@@ -408,17 +391,11 @@ abstract class AbstractTable
         return $entity->toArray();
     }
 
-    /**
-     * @return string
-     */
     protected function getCsvFileName(): string
     {
         return sprintf('%s-%s.csv', $this->getClassNameShort(), $this->getDatetimeString());
     }
 
-    /**
-     * @return string
-     */
     protected function getClassNameShort(): string
     {
         $reflectionClass = new ReflectionClass($this);
@@ -432,9 +409,6 @@ abstract class AbstractTable
         return $filter->filter($classNameShort);
     }
 
-    /**
-     * @return string
-     */
     protected function getDatetimeString(): string
     {
         $dateTime = new DateTime('NOW');
@@ -700,9 +674,6 @@ abstract class AbstractTable
         return $twig;
     }
 
-    /**
-     * @return \Spryker\Shared\Kernel\Container\GlobalContainerInterface
-     */
     protected function getApplicationContainer(): GlobalContainerInterface
     {
         return new GlobalContainer();
@@ -849,9 +820,6 @@ abstract class AbstractTable
         return $this->getSearchParameter();
     }
 
-    /**
-     * @return array
-     */
     protected function getSearchParameter(): array
     {
         return $this->request->query->all('search');
@@ -1060,12 +1028,6 @@ abstract class AbstractTable
         return $conditionParameters;
     }
 
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return bool
-     */
     protected function isStrictSearch(ModelCriteria $query, TableConfiguration $config): bool
     {
         $searchTerms = $this->getSearchColumns();
@@ -1122,14 +1084,6 @@ abstract class AbstractTable
         return $conditions;
     }
 
-    /**
-     * @param string $searchPattern
-     * @param string $value
-     * @param string $filter
-     * @param string $conditionParameter
-     *
-     * @return string
-     */
     protected function buildCondition(
         string $searchPattern,
         string $value,
@@ -1139,11 +1093,6 @@ abstract class AbstractTable
         return sprintf($searchPattern, $value, $filter, $conditionParameter);
     }
 
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     *
-     * @return int
-     */
     protected function countTotal(ModelCriteria $query): int
     {
         return $query->count();
@@ -1474,11 +1423,6 @@ abstract class AbstractTable
         return $this->getFormFactory()->createNamed($formName, $formClassName, $data, $formOptions);
     }
 
-    /**
-     * @param array $buttonOptions
-     *
-     * @return string
-     */
     protected function generateButtonIcon(array $buttonOptions): string
     {
         if (array_key_exists(static::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[static::BUTTON_ICON] !== null) {
@@ -1506,12 +1450,6 @@ abstract class AbstractTable
         return $url->build();
     }
 
-    /**
-     * @param string $title
-     * @param string|null $class
-     *
-     * @return string
-     */
     protected function generateLabel(string $title, ?string $class): string
     {
         return $this->getTwig()->render('label.twig', [
@@ -1702,9 +1640,6 @@ abstract class AbstractTable
         }
     }
 
-    /**
-     * @return \Spryker\Service\UtilNumber\UtilNumberServiceInterface|null
-     */
     protected function getUtilNumberService(): ?UtilNumberServiceInterface
     {
         $container = $this->getApplicationContainer();
@@ -1715,9 +1650,6 @@ abstract class AbstractTable
         return $this->getApplicationContainer()->get(static::SERVICE_UTIL_NUMBER);
     }
 
-    /**
-     * @return string|null
-     */
     protected function getCurrentLocaleName(): ?string
     {
         $container = $this->getApplicationContainer();
@@ -1728,11 +1660,6 @@ abstract class AbstractTable
         return $container->get(static::SERVICE_LOCALE);
     }
 
-    /**
-     * @param int $value
-     *
-     * @return string
-     */
     protected function formatInt(int $value): string
     {
         $utilNumberService = $this->getUtilNumberService();
@@ -1754,11 +1681,6 @@ abstract class AbstractTable
         return $utilNumberService->formatInt($numberFormatIntRequestTransfer);
     }
 
-    /**
-     * @param float $value
-     *
-     * @return string
-     */
     protected function formatFloat(float $value): string
     {
         $utilNumberService = $this->getUtilNumberService();
@@ -1800,13 +1722,6 @@ abstract class AbstractTable
         return $this->twig->render('form-field.twig', $options);
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     * @param string $driverName
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     *
-     * @return string
-     */
     protected function getSearchPattern(TableConfiguration $config, string $driverName, ModelCriteria $query): string
     {
         if ($this->isStrictSearch($query, $config) === true) {
@@ -1816,11 +1731,6 @@ abstract class AbstractTable
         return static::SEARCH_PATTERN_FOR_FUZZY_SEARCH;
     }
 
-    /**
-     * @param string $driverName
-     *
-     * @return string
-     */
     protected function getStrictSearchPatternByDriverName(string $driverName): string
     {
         if ($driverName === static::DRIVER_NAME_PGSQL) {

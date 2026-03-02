@@ -20,17 +20,11 @@ class SanitizeXssListener implements EventSubscriberInterface
      */
     protected $utilSanitizeXssService;
 
-    /**
-     * @param \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface $utilSanitizeService
-     */
     public function __construct(GuiToUtilSanitizeXssServiceInterface $utilSanitizeService)
     {
         $this->utilSanitizeXssService = $utilSanitizeService;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -38,11 +32,6 @@ class SanitizeXssListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
     public function sanitizeSubmittedData(FormEvent $event): void
     {
         $data = $event->getData();

@@ -15,33 +15,21 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonTwig;
  */
 class EditTableButtonTwigPlugin extends AbstractButtonTwig
 {
-    /**
-     * @return string
-     */
     protected function getFunctionName(): string
     {
         return 'editTableButton';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonClass(): string
     {
         return 'btn-edit';
     }
 
-    /**
-     * @return string
-     */
     protected function getIcon(): string
     {
         return '<i class="fa fa-edit"></i> ';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonDefaultClass(): string
     {
         return 'btn-xs btn-outline';

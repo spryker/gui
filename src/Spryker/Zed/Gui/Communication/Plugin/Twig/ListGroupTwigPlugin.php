@@ -42,11 +42,6 @@ class ListGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return $twig;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\TwigFunction
-     */
     protected function getZedListGroupFunction(Environment $twig): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_LIST_GROUP, function (array $items) use ($twig) {

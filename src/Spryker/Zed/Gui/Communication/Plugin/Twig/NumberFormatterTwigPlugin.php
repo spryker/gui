@@ -34,11 +34,6 @@ class NumberFormatterTwigPlugin extends AbstractPlugin implements TwigPluginInte
         return $this->addTwigFilters($twig);
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\Environment
-     */
     protected function addTwigFilters(Environment $twig): Environment
     {
         return $this->getFactory()->createNumberFormatterTwigFilterExtender()->extend($twig);

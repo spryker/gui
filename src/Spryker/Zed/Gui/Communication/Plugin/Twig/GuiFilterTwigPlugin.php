@@ -35,11 +35,6 @@ class GuiFilterTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return $twig;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\Environment
-     */
     protected function addTwigFilters(Environment $twig): Environment
     {
         $twigFilters = $this->getFactory()->getTwigFilters();

@@ -48,11 +48,6 @@ abstract class AbstractLocaleFormattedType extends AbstractType
         $view->vars[static::OPTION_DECIMAL_SEPARATOR_SYMBOL] = $options[static::OPTION_DECIMAL_SEPARATOR_SYMBOL];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

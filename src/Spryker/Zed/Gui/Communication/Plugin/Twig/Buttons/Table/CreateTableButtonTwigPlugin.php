@@ -15,33 +15,21 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonTwig;
  */
 class CreateTableButtonTwigPlugin extends AbstractButtonTwig
 {
-    /**
-     * @return string
-     */
     protected function getFunctionName(): string
     {
         return 'createTableButton';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonClass(): string
     {
         return 'btn-create';
     }
 
-    /**
-     * @return string
-     */
     protected function getIcon(): string
     {
         return '<i class="fa fa-plus"></i> ';
     }
 
-    /**
-     * @return string
-     */
     protected function getButtonDefaultClass(): string
     {
         return 'btn-xs btn-outline';

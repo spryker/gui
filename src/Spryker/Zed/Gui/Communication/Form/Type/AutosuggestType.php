@@ -42,11 +42,6 @@ class AutosuggestType extends AbstractType
         $view->vars[static::PLACEHOLDER] = $options[static::PLACEHOLDER];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -35,11 +35,6 @@ class GuiTwigPluginHelper extends Module
 {
     use TwigHelperTrait;
 
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
     public function _before(TestInterface $test): void
     {
         $this->getTwigHelper()

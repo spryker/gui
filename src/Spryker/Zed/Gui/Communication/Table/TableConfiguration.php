@@ -133,9 +133,6 @@ class TableConfiguration
         return $this->rawColumns;
     }
 
-    /**
-     * @return bool
-     */
     public function getHasSearchableFieldsWithAggregateFunctions(): bool
     {
         return $this->hasSearchableFieldsWithAggregateFunctions;
@@ -450,9 +447,6 @@ class TableConfiguration
         $this->stateSave = $stateSave;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isProcessing(): ?bool
     {
         return $this->processing;
@@ -468,9 +462,6 @@ class TableConfiguration
         $this->processing = $processing;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isServerSide(): ?bool
     {
         return $this->serverSide;
@@ -486,9 +477,6 @@ class TableConfiguration
         $this->serverSide = $serverSide;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isPaging(): ?bool
     {
         return $this->paging;
@@ -504,9 +492,6 @@ class TableConfiguration
         $this->paging = $paging;
     }
 
-    /**
-     * @return bool|null
-     */
     public function isOrdering(): ?bool
     {
         return $this->ordering;

@@ -24,11 +24,6 @@ class DownloadTableWithOrderedHeadersAndFormatting extends FooTable
         ];
     }
 
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     *
-     * @return array
-     */
     protected function formatCsvRow(ActiveRecordInterface $entity): array
     {
         $dataArray = $entity->toArray();
@@ -37,17 +32,11 @@ class DownloadTableWithOrderedHeadersAndFormatting extends FooTable
         return $dataArray;
     }
 
-    /**
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
     protected function getDownloadQuery(): ModelCriteria
     {
         return new ModelCriteria();
     }
 
-    /**
-     * @return iterable
-     */
     protected function executeDownloadQuery(): iterable
     {
         return new ArrayObject([

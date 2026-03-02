@@ -42,11 +42,6 @@ class PanelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return $twig;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\TwigFunction
-     */
     protected function getZedPanelFunction(Environment $twig): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_PANEL, function (string $title, string $content, ?array $options = null, ?string $footer = null) use ($twig) {

@@ -37,17 +37,11 @@ class SanitizeXssTypeExtension extends AbstractTypeExtension
      */
     protected $utilSanitizeXssService;
 
-    /**
-     * @param \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface $utilSanitizeService
-     */
     public function __construct(GuiToUtilSanitizeXssServiceInterface $utilSanitizeService)
     {
         $this->utilSanitizeXssService = $utilSanitizeService;
     }
 
-    /**
-     * @return iterable
-     */
     public static function getExtendedTypes(): iterable
     {
         return [
@@ -56,19 +50,11 @@ class SanitizeXssTypeExtension extends AbstractTypeExtension
         ];
     }
 
-    /**
-     * @return string
-     */
     public function getExtendedType(): string
     {
         return TextareaType::class;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

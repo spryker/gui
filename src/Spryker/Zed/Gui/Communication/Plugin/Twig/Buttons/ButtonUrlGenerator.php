@@ -142,11 +142,6 @@ class ButtonUrlGenerator implements UrlGeneratorInterface
         return $html;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
     protected function escapeUrl(string $url): string
     {
         return str_replace('"', '', $url);

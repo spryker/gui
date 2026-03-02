@@ -14,21 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FooTable extends AbstractTable
 {
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         return new TableConfiguration();
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return array
-     */
     protected function prepareData(TableConfiguration $config): array
     {
         $this->runQuery($this->createQuery(), $config);
@@ -46,19 +36,11 @@ class FooTable extends AbstractTable
         throw new LogicException('Method should be mocked.');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return void
-     */
     public function setRequest(Request $request): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
     public function getRequest(): Request
     {
         return $this->request;

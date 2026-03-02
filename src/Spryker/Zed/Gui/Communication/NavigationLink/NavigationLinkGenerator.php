@@ -19,11 +19,6 @@ class NavigationLinkGenerator implements NavigationLinkGeneratorInterface
     {
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return string
-     */
     public function generateNavigationItems(Environment $twig): string
     {
         $navigationItems = [];
@@ -40,12 +35,6 @@ class NavigationLinkGenerator implements NavigationLinkGeneratorInterface
         return implode(PHP_EOL, $navigationItems);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LinkTransfer $linkTransfer
-     * @param \Twig\Environment $twig
-     *
-     * @return string
-     */
     protected function generateNavigationItem(LinkTransfer $linkTransfer, Environment $twig): string
     {
         $attributes = '';
@@ -64,11 +53,6 @@ class NavigationLinkGenerator implements NavigationLinkGeneratorInterface
         ]);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LinkTransfer|null $linkTransfer
-     *
-     * @return bool
-     */
     protected function isValidLinkTransfer(?LinkTransfer $linkTransfer): bool
     {
         return $linkTransfer !== null && $linkTransfer->getUrl() !== null && $linkTransfer->getLabel() !== null;

@@ -19,11 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DeleteForm extends AbstractType
 {
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('action');

@@ -42,11 +42,6 @@ class SubmitButtonTwigPlugin extends AbstractPlugin implements TwigPluginInterfa
         return $twig;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\TwigFunction
-     */
     protected function getZedSubmitButtonFunction(Environment $twig): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_SUBMIT_BUTTON, function (string $value, array $attr = []) use ($twig) {

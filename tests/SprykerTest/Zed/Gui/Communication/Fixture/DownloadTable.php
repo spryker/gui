@@ -23,17 +23,11 @@ class DownloadTable extends FooTable
         ];
     }
 
-    /**
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
     protected function getDownloadQuery(): ModelCriteria
     {
         return new ModelCriteria();
     }
 
-    /**
-     * @return iterable
-     */
     protected function executeDownloadQuery(): iterable
     {
         return new ArrayObject([

@@ -24,24 +24,12 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
      */
     protected const IS_SAFE_BUTTON = 'is_safe_button';
 
-    /**
-     * @return string
-     */
     abstract protected function getFunctionName(): string;
 
-    /**
-     * @return string
-     */
     abstract protected function getButtonClass(): string;
 
-    /**
-     * @return string
-     */
     abstract protected function getIcon(): string;
 
-    /**
-     * @return string
-     */
     abstract protected function getButtonDefaultClass(): string;
 
     /**
@@ -61,9 +49,6 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
         return $twig;
     }
 
-    /**
-     * @return \Twig\TwigFunction
-     */
     protected function getButtonGroupFunction(): TwigFunction
     {
         return new TwigFunction($this->getFunctionName(), function ($url, $title, $options = []) {

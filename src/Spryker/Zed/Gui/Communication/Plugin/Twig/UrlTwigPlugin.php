@@ -57,11 +57,6 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         return $twig;
     }
 
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\TwigFunction
-     */
     protected function getUrlFunction(ContainerInterface $container): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_URL, function (string $url, array $query = [], array $options = []) use ($container) {

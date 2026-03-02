@@ -40,17 +40,11 @@ class ActiveRecordTableMap extends TableMap
         $this->addColumn('first_name', 'FirstName', 'VARCHAR', false, 100, null);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::TABLE_NAME;
     }
 
-    /**
-     * @return string
-     */
     public function getClassName(): string
     {
         return "\SprykerTest\Zed\Gui\Communication\Fixture\ActiveRecord";

@@ -42,9 +42,6 @@ class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
         return $twig;
     }
 
-    /**
-     * @return \Twig\TwigFunction
-     */
     protected function getButtonGroupFunction(): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_GROUP_ACTION_BUTTONS, function (array $buttons, string $title, array $options = []) {
@@ -74,17 +71,11 @@ class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
         return new ButtonGroupUrlGenerator($buttons, $title, $options);
     }
 
-    /**
-     * @return string
-     */
     protected function getDefaultButtonClass(): string
     {
         return 'btn-view';
     }
 
-    /**
-     * @return string
-     */
     protected function getDefaultIcon(): string
     {
         return '<i class="fa fa-caret-right"></i> ';

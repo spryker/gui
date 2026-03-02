@@ -42,11 +42,6 @@ class NavigationLinkTwigPlugin extends AbstractPlugin implements TwigPluginInter
         return $twig;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\TwigFunction
-     */
     protected function getNavigationItemsFunction(Environment $twig): TwigFunction
     {
         return new TwigFunction(static::FUNCTION_NAME_LAYOUT_NAVIGATION_ITEMS, function () use ($twig) {

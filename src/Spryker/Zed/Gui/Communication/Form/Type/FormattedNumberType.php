@@ -20,17 +20,11 @@ class FormattedNumberType extends AbstractLocaleFormattedType
      */
     protected const BLOCK_PREFIX = 'formatted_number';
 
-    /**
-     * @return string
-     */
     public function getParent(): string
     {
         return NumberType::class;
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return static::BLOCK_PREFIX;

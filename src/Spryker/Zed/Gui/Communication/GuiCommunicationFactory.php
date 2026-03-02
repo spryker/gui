@@ -28,9 +28,6 @@ use Symfony\Component\Form\FormTypeExtensionInterface;
  */
 class GuiCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface
-     */
     public function createFilesystemLoader(): FilesystemLoaderInterface
     {
         return new FilesystemLoader($this->getConfig()->getTemplatePaths());
@@ -44,25 +41,16 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(GuiDependencyProvider::GUI_TWIG_FILTERS);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormTypeExtensionInterface
-     */
     public function createNoValidateFormTypeExtension(): FormTypeExtensionInterface
     {
         return new NoValidateTypeExtension();
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormTypeExtensionInterface
-     */
     public function createSanitizeXssTypeExtension(): FormTypeExtensionInterface
     {
         return new SanitizeXssTypeExtension($this->getUtilSanitizeXssService());
     }
 
-    /**
-     * @return \Spryker\Zed\Gui\Communication\Extender\NumberFormatterTwigFilterExtenderInterface
-     */
     public function createNumberFormatterTwigFilterExtender(): NumberFormatterTwigFilterExtenderInterface
     {
         return new NumberFormatterTwigFilterExtender(
@@ -70,9 +58,6 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Gui\Communication\Filter\NumberFormatterTwigFilterFactoryInterface
-     */
     public function createNumberFormatterTwigFilterFactory(): NumberFormatterTwigFilterFactoryInterface
     {
         return new NumberFormatterTwigFilterFactory(
@@ -80,17 +65,11 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface
-     */
     public function getUtilSanitizeXssService(): GuiToUtilSanitizeXssServiceInterface
     {
         return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_SANITIZE_XSS);
     }
 
-    /**
-     * @return \Spryker\Zed\Gui\Dependency\Service\GuiToUtilNumberServiceInterface
-     */
     public function getUtilNumberService(): GuiToUtilNumberServiceInterface
     {
         return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_NUMBER);
@@ -104,9 +83,6 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(GuiDependencyProvider::PLUGINS_DROPDOWN_NAVIGATION);
     }
 
-    /**
-     * @return \Spryker\Zed\Gui\Communication\NavigationLink\NavigationLinkGeneratorInterface
-     */
     public function createNavigationLinkGenerator(): NavigationLinkGeneratorInterface
     {
         return new NavigationLinkGenerator(

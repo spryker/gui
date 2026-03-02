@@ -35,11 +35,6 @@ class ParagraphType extends AbstractType
         $view->vars[static::OPTION_TEXT] = $options[static::OPTION_TEXT];
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([

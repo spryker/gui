@@ -29,17 +29,11 @@ class ActiveRecord implements ActiveRecordInterface
         $this->data = $data;
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
         return $this->data;
     }
 
-    /**
-     * @return bool
-     */
     public function isPrimaryKeyNull(): bool
     {
         return false;

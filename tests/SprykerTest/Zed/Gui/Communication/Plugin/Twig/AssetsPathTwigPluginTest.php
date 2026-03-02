@@ -43,9 +43,6 @@ class AssetsPathTwigPluginTest extends Unit
      */
     protected const TEST_BUILD_HASH = 'abc123';
 
-    /**
-     * @return void
-     */
     public function testExtendShouldAddAssetsPathWithBuildHash(): void
     {
         // Arrange

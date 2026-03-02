@@ -48,9 +48,6 @@ class FormRuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginIn
         return $twig;
     }
 
-    /**
-     * @return array
-     */
     protected function getTwigTemplateFileNames(): array
     {
         $files = new FilesystemIterator(
@@ -67,22 +64,11 @@ class FormRuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginIn
         return $typeTemplates;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Symfony\Component\Form\FormRendererEngineInterface
-     */
     protected function createTwigRendererEngine(Environment $twig): FormRendererEngineInterface
     {
         return new TwigRendererEngine($this->getTwigTemplateFileNames(), $twig);
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface|null $csrfTokenManager
-     *
-     * @return \Symfony\Component\Form\FormRendererInterface
-     */
     protected function createFormRenderer(Environment $twig, ?CsrfTokenManagerInterface $csrfTokenManager = null): FormRendererInterface
     {
         return new FormRenderer($this->createTwigRendererEngine($twig), $csrfTokenManager);

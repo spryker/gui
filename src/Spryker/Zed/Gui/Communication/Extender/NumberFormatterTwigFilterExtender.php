@@ -17,19 +17,11 @@ class NumberFormatterTwigFilterExtender implements NumberFormatterTwigFilterExte
      */
     protected NumberFormatterTwigFilterFactoryInterface $numberFormatterTwigFilterFactory;
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Filter\NumberFormatterTwigFilterFactoryInterface $numberFormatterTwigFilterFactory
-     */
     public function __construct(NumberFormatterTwigFilterFactoryInterface $numberFormatterTwigFilterFactory)
     {
         $this->numberFormatterTwigFilterFactory = $numberFormatterTwigFilterFactory;
     }
 
-    /**
-     * @param \Twig\Environment $twig
-     *
-     * @return \Twig\Environment
-     */
     public function extend(Environment $twig): Environment
     {
         $twig->addFilter($this->numberFormatterTwigFilterFactory->createFormatIntFilter());
