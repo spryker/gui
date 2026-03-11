@@ -62,6 +62,22 @@ class GuiConfig extends AbstractBundleConfig
 
     protected const string NAVIGATION_ICONS_TYPE_DEFAULT = 'font-awesome';
 
+    protected const string HOME_PATH = '/';
+
+    /**
+     * Specification:
+     * - Returns the URL the logo links to in the Back Office navigation.
+     * - Can be overridden at project level to change the home destination.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getUrlHome(): string
+    {
+        return static::HOME_PATH;
+    }
+
     /**
      * Specification:
      * - Returns the navigation icons type used in the Back Office interface.
