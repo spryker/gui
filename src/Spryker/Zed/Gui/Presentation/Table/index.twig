@@ -8,6 +8,8 @@
     data-state-save="{{ config.stateSave is defined and config.stateSave ? 'true' : 'false' }}"
     data-ordering="{{ config.ordering is defined and config.ordering ? 'true' : 'false' }}"
     data-paging="{{ config.paging is defined and config.paging ? 'true' : 'false' }}"
+    data-qa="data-table"
+
     {% if config.pageLength is defined -%}
         data-page-length="{{ config.pageLength }}"
     {% endif -%}
@@ -20,7 +22,6 @@
 
     {% include 'table-data-order.twig' -%}
     {% include 'table-data-columns.twig' -%}
-    data-qa="data-table"
 >
     {% include '@Gui/Table/thead.twig' %}
     {% include '@Gui/Table/tfoot.twig' %}

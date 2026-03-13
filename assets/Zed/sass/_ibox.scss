@@ -1,0 +1,97 @@
+.ibox {
+    @extend .card;
+
+    .ibox-title {
+        @extend .card-header;
+
+        h5 {
+            flex-grow: 1;
+        }
+
+        &::after {
+            display: none;
+        }
+
+        & > .row {
+            flex-grow: 1;
+        }
+
+        .collapse-link {
+            color: inherit;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .ibox-tools {
+            flex: 0 0 auto;
+            margin: 0 0 0 10px;
+        }
+
+        &-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            h5 {
+                flex: 0;
+            }
+        }
+    }
+
+    .ibox-heading {
+        margin-bottom: var(--ins-card-title-spacer-y);
+        color: var(--ins-card-title-color);
+        font-size: 15px;
+        text-transform: none;
+    }
+
+    &.nested {
+        margin-bottom: 5px;
+        margin-top: 5px;
+
+        .ibox-content {
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+        }
+
+        &.border-bottom,
+        &.collapsed {
+            border-bottom: none !important;
+
+            .ibox-title {
+                border-radius: 10px;
+            }
+        }
+
+        &.border-bottom.collapsed .ibox-title {
+            border-radius: 10px 10px 0 0;
+        }
+    }
+
+    .ibox-content {
+        @extend .card-body;
+    }
+
+    .ibox-footer {
+        @extend .card-footer;
+    }
+
+    &.error {
+        .ibox-title {
+            color: $brown;
+            background-color: $white-red;
+            border-color: $red-lightest;
+        }
+
+        .ibox-content {
+            border-color: $red-lightest;
+        }
+
+        &.collapsed {
+            > .ibox-content {
+                display: block;
+            }
+        }
+    }
+}

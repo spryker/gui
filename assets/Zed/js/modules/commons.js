@@ -7,12 +7,14 @@
 
 // external dependencies
 const $ = require('jquery');
-require('datatables.net')(window, $);
-require('datatables.net-bs')(window, $);
-require('datatables.net-buttons')(window, $);
-require('datatables.net-buttons-bs')(window, $);
-require('datatables.net-responsive')(window, $);
-require('datatables.net-select')(window, $);
+window.$ = $;
+window.jQuery = $;
+require('@popperjs/core');
+window.bootstrap = require('bootstrap');
+require('datatables.net-bs5');
+require('datatables.net-buttons-bs5');
+require('datatables.net-responsive-bs5');
+require('datatables.net-select-bs5');
 require('jquery-migrate/dist/jquery-migrate.min');
 require('jquery-ui/ui/core');
 require('jquery-ui/ui/effect');
@@ -23,23 +25,19 @@ require('jquery-ui/ui/widgets/autocomplete');
 require('jquery-ui/ui/widgets/button');
 require('jquery-ui/ui/widgets/sortable');
 require('jquery-ui/ui/widgets/tooltip');
-require('metismenu');
 require('pace');
 require('@spryker/nestable');
 require('select2');
 window.CodeMirror = require('codemirror');
 require('codemirror/mode/htmlmixed/htmlmixed.js');
 require('summernote/dist/summernote-bs5.min');
-require('sweetalert');
-require('@popperjs/core');
-require('bootstrap');
 
 XMLHttpRequest.prototype = Object.getPrototypeOf(new XMLHttpRequest());
 
 // inspinia
 require('../../../Inspinia/inspinia');
+require('../../../Inspinia2/js/config');
+require('../../../Inspinia2/js/app');
 
 // spryker customization
 require('../../sass/main.scss');
-
-require('./legacy/fixHeight');

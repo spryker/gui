@@ -55,7 +55,7 @@ class InternalMenuFilter {
         items.forEach((item) => item.classList.remove('matched'));
 
         items.forEach((item) => {
-            const label = item.querySelector('.nav-label')?.textContent.trim().toLowerCase();
+            const label = item.querySelector('.menu-text')?.textContent.trim().toLowerCase();
             if (!label?.includes(searchTerm)) return;
 
             item.classList.add('matched');

@@ -1,8 +1,8 @@
 {% if breadcrumbs|length > 0 %}
-    <div class="page-breadcrumbs">
-        <ol class="breadcrumb">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 py-2" data-qa="breadcrumb">
             {% for breadcrumbItem in breadcrumbs %}
-                <li>
+                <li class="breadcrumb-item">
                     {% if breadcrumbItem.uri is not empty %}
                         <a class="{{ loop.last ? 'disabled' }}" tabindex="{{ loop.last ? '-1' }}" href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title | trans }}">
                             {{ breadcrumbItem.label | trans }}
@@ -13,5 +13,5 @@
                 </li>
             {% endfor %}
         </ol>
-    </div>
+    </nav>
 {% endif %}

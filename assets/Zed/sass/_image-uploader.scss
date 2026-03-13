@@ -16,7 +16,7 @@
         max-height: 200px;
         max-width: 350px;
         width: 100%;
-        background: $white;
+        background: var(--ins-secondary-bg);
         overflow: hidden;
 
         &:focus-within,

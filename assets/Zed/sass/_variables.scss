@@ -3,6 +3,41 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+:root,
+[data-bs-theme='light'] {
+    --zed-spryker-logo-url: url('../img/spryker-logo.svg');
+    --zed-spryker-logo-small-url: url('../img/spryker-logo-small.svg');
+    --ins-breadcrumb-divider: '/';
+    --ins-primary: #0f856f;
+    --ins-primary-rgb: 15, 133, 111;
+    --ins-sidenav-bg: #23303c;
+    --ins-danger: #e71c00;
+}
+
+html[data-bs-theme='dark'] {
+    --zed-spryker-logo-url: url('../img/spryker-logo-light.svg');
+    --zed-spryker-logo-small-url: url('../img/spryker-logo-small-light.svg');
+    --ins-body-color: #e4e4e4;
+}
+
+html[data-menu-color='dark'],
+html[data-bs-theme='dark'][data-menu-color='dark'] {
+    --ins-sidenav-item-active-color: #9fcec5;
+}
+
+html[data-bs-theme='dark'][data-menu-color='dark'] {
+    --ins-sidenav-item-color: #e4e4e4;
+}
+
+html[data-bs-theme='light'][data-menu-color='dark'] {
+    --ins-sidenav-item-color: #e4e4e4;
+}
+
+.logo-light {
+    --zed-spryker-logo-url: url('../img/spryker-logo-light.svg');
+    --zed-spryker-logo-small-url: url('../img/spryker-logo-small-light.svg');
+}
+
 $zed-logo: url(https://static.spryker.com/logo.svg) !default;
 
 $green-default: #11856e;
@@ -98,7 +133,7 @@ $btn-danger-border: darken($btn-danger-bg, 5%) !default;
 
 body {
     --bs-body-line-height: 1.428571429;
-    --bs-body-font-size: 0.875rem;
+    --bs-body-font-size: 14px;
     --bs-table-striped-bg: $grey-lighter;
     --bs-body-font-family: 'Montserrat', sans-serif;
 }

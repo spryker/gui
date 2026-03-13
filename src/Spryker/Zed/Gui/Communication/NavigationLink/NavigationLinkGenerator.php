@@ -43,7 +43,7 @@ class NavigationLinkGenerator implements NavigationLinkGeneratorInterface
         }
 
         $template = $twig->createTemplate(
-            '<li><a href="{{ url }}"{{ attributes | raw }}>{{ label | trans }}</a></li>',
+            '<a class="dropdown-item" href="{{ url }}"{{ attributes | raw }}>{{ label | trans }}</a>',
         );
 
         return $template->render([

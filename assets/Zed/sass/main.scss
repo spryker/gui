@@ -8,23 +8,18 @@ $icon-font-path: '../../fonts/bootstrap/';
 
 // external dependencies
 @import '~jquery-ui/themes/base/all.css';
-@import '~bootstrap/scss/bootstrap.scss';
+@import '../../Inspinia/css/style';
+@import '../../Inspinia2/scss/app.scss';
+
 @import '~@fortawesome/fontawesome-free/css/all.css';
-@import '~@fortawesome/fontawesome-free/css/all.css';
-@import '~animate.css/animate';
-@import '~metismenu/src/metisMenu';
-@import '~datatables.net-bs/css/dataTables.bootstrap';
-@import '~datatables.net-buttons-bs/css/buttons.bootstrap';
-@import '~datatables.net-responsive-bs/css/responsive.bootstrap';
-@import '~datatables.net-select-bs/css/select.bootstrap';
+@import '~datatables.net-bs5/css/dataTables.bootstrap5.min';
+@import '~datatables.net-buttons-bs5/css/buttons.bootstrap5.min';
+@import '~datatables.net-responsive-bs5/css/responsive.bootstrap5.min';
+@import '~datatables.net-select-bs5/css/select.bootstrap5.min';
 @import '~select2/dist/css/select2';
 @import '~codemirror/lib/codemirror';
 @import '~summernote/dist/summernote-bs5.min.css';
-@import '~sweetalert/dist/sweetalert';
 @import '~highlight.js/styles/default.css';
-
-// inspinia
-@import '../../Inspinia/css/style';
 
 // spryker customization
 @import 'variables';
@@ -45,3 +40,6 @@ $icon-font-path: '../../fonts/bootstrap/';
 @import 'menu';
 @import 'pagination';
 @import 'alert';
+@import 'ibox';
+@import 'datepicker';
+@import 'nestable-list.scss';

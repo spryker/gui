@@ -39,17 +39,21 @@ export class Table {
         },
         configuration: {
             default: {
-                scrollX: true,
+                responsive: true,
                 language: getTranslations(),
-                dom:
-                    "<'row'<'col-md-6'i><'col-md-6'f>>" +
-                    "<'row'<'col'tr>>" +
-                    "<'alt-row'<'alt-row__left'l><'alt-row__center'p>>",
+                columnDefs: [
+                    { responsivePriority: 1, targets: 0 }, // First column, highest priority
+                    { responsivePriority: 2, targets: -1 }, // Last column, second highest priority
+                ],
             },
             noSearch: {
+                responsive: true,
+                columnDefs: [
+                    { responsivePriority: 1, targets: 0 }, // First column, highest priority
+                    { responsivePriority: 2, targets: -1 }, // Last column, second highest priority
+                ],
                 bFilter: false,
                 bInfo: false,
-                scrollX: true,
             },
         },
     };

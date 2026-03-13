@@ -26,6 +26,7 @@ import { CopyAction } from './libs/copy-action';
 import { Table } from './libs/table/table';
 import FormWithExternalFields from './form-with-external-fields';
 import InternalMenuFilter from './libs/internal-api/internal-menu-filter';
+import initSweetAlertMapper from './libs/sweet-alert-mapper';
 
 var dataTablesSearchDelay = function () {
     var dataTablesWrapper = $('.dataTables_wrapper');
@@ -93,8 +94,8 @@ $(document).ready(function () {
     $('.gui-table-data').on('error.dt', dataTable.onError).dataTable(dataTable.defaultConfiguration);
 
     $('.gui-table-data').on('init.dt', function (e, settings) {
-        const wrapper = $(e.target).closest('.dataTables_wrapper');
-        const searchInput = wrapper.find('.dataTables_filter input[type="search"]');
+        const wrapper = $(e.target).closest('.dt-container');
+        const searchInput = wrapper.find('.dt-search input[type="search"]');
         searchInput.attr('data-qa', 'table-search');
     });
 
@@ -161,12 +162,11 @@ $(document).ready(function () {
 
             searchRow += '<td>';
             if (api.ajax.params()['columns'][columnIndex]['searchable']) {
-                searchRow +=
-                    '<input type="text" style="width:80%" class="form-control input-sm column-search" placeholder="Search" data-column-index="' +
-                    columnIndex +
-                    '" value="' +
-                    api.ajax.params()['columns'][columnIndex]['search']['value'] +
-                    '"/>';
+                searchRow += `<input type="text"
+                        class="form-control form-control-sm column-search"
+                        placeholder="Search"
+                        data-column-index="${columnIndex}"
+                        value="${api.ajax.params()['columns'][columnIndex]['search']['value']}"/>`;
 
                 isSearchable = true;
             }
@@ -200,9 +200,6 @@ $(document).ready(function () {
 
     /* Draw data tables without search */
     $('.gui-table-data-no-search').on('error.dt', dataTable.onError).dataTable(dataTable.noSearchConfiguration);
-
-    /* All elements with the same class will have the same height */
-    $('.fix-height').sprykerFixHeight();
 
     $('.spryker-form-autocomplete').each(function (key, value) {
         var autoCompletedField = $(value);
@@ -264,6 +261,7 @@ $(document).ready(function () {
 
     initFormattedNumber();
     initFormattedMoney();
+    initSweetAlertMapper();
 
     new TranslationCopyFields();
     new Ibox();

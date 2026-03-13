@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html data-application-locale="{{ app.locale }}" lang="{{ (app.locale | slice(0, 2)) | lower }}">
+<html data-skin="classic" data-application-locale="{{ app.locale }}" lang="{{ (app.locale | slice(0, 2)) | lower }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
 
         <title>{% block head_title %}{% if title is defined %}{{ title | trans }}{% endif %}{% endblock %}</title>
 
@@ -18,7 +19,7 @@
         {% endblock %}
     </head>
     <body>
-        <div id="wrapper">
+        <div id="wrapper" class="wrapper">
             {% block body_menu %}
                 {% if app.twig.getFunction('navigation') != false %}
                     {% include '@Gui/Partials/navigation.twig' %}
@@ -27,101 +28,122 @@
                 {% endif %}
             {% endblock %}
 
-            <div id="page-wrapper" class="gray-bg">
-                <div class="row border-bottom">
-                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                        <div class="navbar-header">
-                            <a href="#" class="navbar-minimalize minimalize-styl-2 btn btn-primary" title="{{ 'Minimize navigation bar' | trans }}">
-                                <i class="fa fa-bars"></i>
-                            </a>
-                        </div>
-                        <ul class="nav navbar-top-links navbar-right">
-                            <li>
-                                <span class="m-r-sm text-muted welcome-message">{{ 'Welcome' | trans }}
-                                    {% if username is defined %}
-                                        <strong>{{ username }}</strong>
-                                    {% endif %}
-                                    {% if environment is defined %}
-                                        <em>[{{ environment }}]</em>
-                                    {% endif %}
-                                </span>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    {{ 'Settings' | trans }}
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    {% deprecated 'Will be moved to a plugin in the next major release.' %}
-                                    <li>
-                                        <a class="dropdown-item" href="/user/edit/password-reset">{{ 'Reset password' | trans }}</a>
-                                    </li>
-                                    {% if app.twig.getFunction('layout_navigation_items') %}
-                                        {% include '@Gui/Partials/navigation-items.twig' %}
-                                    {% endif %}
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/auth/logout">
-                                    <i class="fa fa-sign-out"></i>
-                                    {{ 'Log out' | trans }}
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                {% block layout %}
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-md-6">
-                        <h2>
-                            {% block section_title %}
-                                {% if title is defined %}
-                                    {{ title|trans }}
-                                {% endif %}
-                            {% endblock %}
-                        </h2>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="title-action">
-                            {% block action %}{# add here only links with classes "btn btn-sm btn-{color}" #}
-                                {# Example: <a href="" class="btn btn-sm btn-primary"><span class="fa fa-chevron-left" aria-hidden="true"></span> Back</a> #}
-                            {% endblock %}
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        {% if app.twig.getFunction('breadcrumb') != false %}
-                            {% include '@Gui/Partials/breadcrumb.twig' %}
-                        {% else %}
-                            {% include '@Gui/Partials/backward-compatible-breadcrumb.twig' %}
-                        {% endif %}
-                    </div>
-                </div>
-                {% endblock %}
-                <div class="wrapper wrapper-content">
-                    {% include '@Messenger/Partials/flash-messages.twig' %}
+            <div class="content-wrapper">
+                <header class="app-topbar">
+                    <div class="container-fluid topbar-menu">
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="sidenav-toggle-button btn btn-primary btn-icon">
+                                <span class="material-symbols-outlined">menu</span>
+                            </button>
 
-                    {% block content -%}{%- endblock %}
-                </div>
-            
-                <div class="footer">
-                    <div>
-                        <strong>Copyright</strong>
-                        Spryker Systems GmbH &copy;
-                        {{ 'now'|date('Y') }}
+                            <button class="topnav-toggle-button px-2"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#topnav-menu-content">
+                                <span class="material-symbols-outlined">menu</span>
+                            </button>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="topbar-item d-none d-sm-flex">
+                                <button class="topbar-link" id="light-dark-mode" type="button">
+                                    <span class="material-symbols-outlined fs-xxl mode-light-moon">dark_mode</span>
+                                    <span class="material-symbols-outlined fs-xxl mode-light-sun">light_mode</span>
+                                </button>
+                            </div>
+
+                            <div class="topbar-item nav-user">
+                                <div class="dropdown">
+                                    <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" data-bs-offset="0,16" href="#!" aria-haspopup="false" aria-expanded="false" data-qa="backoffice-user-navigation">
+                                        <div class="d-lg-flex align-items-center gap-1 d-none">
+                                            {% if username is defined %}
+                                                <h5 class="my-0">{{ username }}</h5>
+                                            {% endif %}
+                                            {% if environment is defined %}
+                                                <em>[{{ environment }}]</em>
+                                            {% endif %}
+                                            
+                                            <i class="ti ti-chevron-down align-middle"></i>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <div class="dropdown-header noti-title">
+                                            <h6 class="text-overflow m-0">Welcome back!</h6>
+                                        </div>
+
+                                        {% deprecated 'Will be moved to a plugin in the next major release.' %}
+                                        
+                                        <a class="dropdown-item" href="/user/edit/password-reset">
+                                            {{ 'Reset password' | trans }}
+                                        </a>
+
+                                        {% if app.twig.getFunction('layout_navigation_items') %}
+                                            {% include '@Gui/Partials/navigation-items.twig' %}
+                                        {% endif %}
+
+                                        <div class="dropdown-divider"></div>
+
+                                        <a data-qa="backoffice-logout-button" href="/auth/logout" class="dropdown-item text-danger fw-semibold">
+                                            <span class="align-middle">{{ 'Log out' | trans }}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </header>
+
+                <div class="content-page">
+                    <div class="container-fluid">
+                        <div class="page-title-head">
+                            <div class="d-flex py-1 align-items-center">
+                                <div class="flex-grow-1">
+                                    <h2 class="fs-sm fw-bold m-0">
+                                        {% block section_title %}
+                                            {% if title is defined %}
+                                                {{ title|trans }}
+                                            {% endif %}
+                                        {% endblock %}
+                                    </h2>
+                                </div>
+                                <div class="text-end d-flex gap-2 title-action" data-qa="title-action">
+                                    {% block action %}{% endblock %}
+                                </div>
+                            </div>
+
+                            {% if app.twig.getFunction('breadcrumb') != false %}
+                                {% include '@Gui/Partials/breadcrumb.twig' %}
+                            {% else %}
+                                {% include '@Gui/Partials/backward-compatible-breadcrumb.twig' %}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="wrapper wrapper-content">
+                            {% include '@Messenger/Partials/flash-messages.twig' %}
+                            {% block content -%}{%- endblock %}
+                        </div>
+                    </div>
+
+                    <footer class="footer">
+                        <div>
+                            <strong>Copyright</strong>
+                            Spryker Systems GmbH &copy;
+                            {{ 'now'|date('Y') }}
+                        </div>
+                    </footer>
                 </div>
             </div>
         </div>
+
         <div id="modal-alert" class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content alert" id="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="modal-title"></h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close' | trans }}"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'global.close' | trans }}"></button>
                     </div>
                     <div class="modal-body" id="modal-body"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">{{ 'Close' | trans }}</button>
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">{{ 'global.close' | trans }}</button>
                     </div>
                 </div>
             </div>

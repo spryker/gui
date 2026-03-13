@@ -8,6 +8,8 @@
                     {{- "#{attrName}=#{attrValue | json_encode()} " -}}
                 {% endfor %}
             {% endif %}
+ 
+            data-orderable="{{ config.sortable is defined and id in config.sortable ? 'true' : 'false' }}"
         >
             {{ value | trans }}
         </th>

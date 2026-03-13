@@ -152,33 +152,6 @@
     }
 }
 
-/* Navigation menu arrow */
-.metismenu {
-    .icon-arrow-left {
-        float: right;
-        line-height: 2;
-        font-size: 10px;
-    }
-
-    .active > a {
-        & > .icon-arrow-left:before {
-            content: '\e800';
-        }
-
-        .fa.arrow {
-            &:before {
-                content: '\f106';
-            }
-        }
-    }
-
-    .fa.arrow {
-        &:before {
-            content: '\f107';
-        }
-    }
-}
-
 .navbar-top-links {
     li {
         &:last-child {
@@ -231,29 +204,23 @@
     }
 }
 
-.navigation-menu {
+.side-nav {
     &.filtered {
-        > li:not(.matched):not(.menu-filter-container):not(.nav-header) {
+        > .side-nav-item:not(.matched) {
             display: none;
         }
 
-        > li.matched {
+        > .side-nav-item:has(.matched) {
             display: block;
 
-            > a .fa.arrow {
-                &:before {
-                    content: '\f106';
-                }
-            }
-
-            > .nav-second-level {
+            > .collapse {
                 display: block !important;
 
-                li:not(.matched) {
+                .side-nav-item:not(.matched) {
                     display: none;
                 }
 
-                li.matched {
+                .side-nav-item.matched {
                     display: block;
                 }
             }

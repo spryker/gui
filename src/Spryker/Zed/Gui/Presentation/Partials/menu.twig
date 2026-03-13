@@ -6,17 +6,17 @@
     {%- if node is defined %}
         {%- if menu_highlight is defined -%}
             {%- if menu_highlight == node.uri -%}
-                <li class="item active" data-qa="menu-item">
+                <li class="side-nav-item active" data-qa="menu-item">
             {%- else -%}
-                <li class="item" data-qa="menu-item">
+                <li class="side-nav-item" data-qa="menu-item">
             {%- endif -%}
-        {%- else-%}
-            <li class="item{{ node.is_active is defined and node.is_active ? " active" : "" }}" data-qa="menu-item">
+        {%- else -%}
+            <li class="side-nav-item {{ node.is_active is defined and node.is_active ?  'active' : '' }}" data-qa="menu-item">
         {%- endif -%}
-        <a href="{{ node.uri }}"{% if node.shortcut is defined %} data-hotkey="{{ node.shortcut }}"{% endif %} data-qa="menu-item-link">
-            {{ menu.getNodeIcon(node, navigationIconsType) }}
-            <span class="nav-label" data-qa="menu-item-label">{{ node.label | trans }}</span>
-        </a>
+            <a class="side-nav-link" href="{{ node.uri }}"{% if node.shortcut is defined %} data-hotkey="{{ node.shortcut }}"{% endif %} data-qa="menu-item-link">
+                {{ menu.getNodeIcon(node, navigationIconsType) }}
+                <span class="menu-text" data-qa="menu-item-label">{{ node.label | trans }}</span>
+            </a>
         </li>
     {% endif -%}
 {%- endmacro -%}
@@ -25,20 +25,25 @@
     {%- import _self as menu -%}
 
     {%- if node is defined %}
-        <li class="{{ node.is_active is defined and node.is_active ? " active" : "" }}" data-qa="menu-parent-item">
-            <a href="javascript:void(0)" data-qa="menu-parent-link" title="{{ node.label | trans }}">
+        <li class="side-nav-item {{ node.is_active is defined and node.is_active ? ' active' : '' }}" data-qa="menu-parent-item">
+            <a class="side-nav-link {{ node.is_active is defined and node.is_active ? '' : 'collapsed' }}" href="#menu-node-{{ node.title | lower | replace({' ': '-'}) }}"
+                data-qa="menu-parent-link"
+                data-bs-toggle="collapse">
                 {{ menu.getNodeIcon(node, navigationIconsType) }}
-                <span class="nav-label" data-qa="menu-item-label">{{ node.label | trans }}</span>
+
+                <span class="menu-text nav-label" data-qa="menu-item-label">{{ node.label | trans }}</span>
                 {% if navigationIconsType == 'google-material'  %}
                     <span class="side-menu__arrow material-symbols-outlined">keyboard_arrow_down</span>
                 {% else %}
                     <span class="fa arrow"></span>
                 {% endif %}
             </a>
-
-            <ul class="nav nav-second-level collapse" data-qa="menu-submenu">
-                {{ menu.tree(node.children, navigationIconsType) }}
-            </ul>
+            
+            <div class="collapse {{ node.is_active is defined and node.is_active ? "show" : "" }}" id="menu-node-{{ node.title | lower | replace({' ': '-'}) }}">
+                <ul class="sub-menu nav-second-level" data-qa="menu-submenu">
+                    {{ menu.tree(node.children, navigationIconsType) }}
+                </ul>
+            </div>
         </li>
     {% endif -%}
 {%- endmacro -%}
@@ -75,35 +80,24 @@
 
 {%- import _self as menu -%}
 
-<nav class="navbar-default navbar-static-side" role="navigation" data-qa="backoffice-navigation">
-    <div class="sidebar-collapse">
-        <ul tabindex="0" class="nav metismenu navigation-menu js-navigation-menu" id="side-menu" data-qa="navigation-menu">
-            <li class="nav-header">
-                <div class="dropdown profile-element">
 
-                    <a href="{{ homePath | default('/') }}" class="zed-logo" title="{{ 'Company logo' | trans }}"></a>
+<div class="sidenav-menu">
+    
+    {% include '@Gui/Partials/logo.twig' %}
 
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a class="dropdown-item" href="/auth/logout">{{ 'Logout' | trans }}</a></li>
-                    </ul>
-                </div>
-                <div class="logo-element">
-                    SP
-                </div>
-            </li>
-            <li class="menu-filter-container" data-qa="menu-filter-container">
-                <div class="menu-filter-wrapper">
-                    <input
-                        type="text"
-                        id="menu-filter-input"
-                        class="menu-filter-input js-menu-filter-input form-control"
-                        placeholder="{{ 'Filter' | trans }}"
-                        autocomplete="off"
-                        data-qa="menu-filter-input"
-                    />
-                </div>
-            </li>
+    <button class="button-close-offcanvas">
+        <i class="ti ti-x align-middle"></i>
+    </button>
+
+    <div class="scrollbar" data-simplebar>
+        <ul class="side-nav js-navigation-menu" role="navigation" data-lang="menu-title" data-qa="navigation-menu" id="side-menu">
+            <div class="d-none px-2 d-xl-block">
+                <input type="search" class="menu-filter-input js-menu-filter-input form-control"
+                name="search" placeholder="{{ 'Filter' | trans }}"
+                autocomplete="off"
+                data-qa="menu-filter-input">
+            </div>
             {{ menu.tree(navigation.menu, navigationIconsType) }}
         </ul>
     </div>
-</nav>
+</div>

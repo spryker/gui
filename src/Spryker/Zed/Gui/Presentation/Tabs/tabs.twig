@@ -8,9 +8,9 @@
 <div class="tabs-container"
      data-is-navigable="{{ tabsViewTransfer.isNavigable ? 'true' : 'false' }}"
      data-auto-errors="{{ tabsViewTransfer.autoErrors is null or tabsViewTransfer.autoErrors ? 'true' : 'false' }}">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs" role="tablist">
         {% for tab in tabsViewTransfer.tabs %}
-            <li class="{% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}" data-bs-toggle="tab" data-bs-target="#tab-content-{{ tab.name }}" data-tab-content-id="tab-content-{{ tab.name }}" data-qa="tab-{{ tab.name }}">
+            <li class="nav-link {% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}" data-bs-toggle="tab" data-bs-target="#tab-content-{{ tab.name }}" data-tab-content-id="tab-content-{{ tab.name }}" data-qa="tab-{{ tab.name }}" role="presentation">
                 <a href="#tab-content-{{ tab.name }}">{{ tab.title | trans }}</a>
             </li>
         {% endfor %}
@@ -18,7 +18,7 @@
 
     <div class="tab-content">
         {% for tab in tabsViewTransfer.tabs %}
-            <div id="tab-content-{{ tab.name }}" class="tab-pane {% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %}" data-qa="tab-content-{{ tab.name }}">
+            <div id="tab-content-{{ tab.name }}" class="tab-pane {% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %}" data-qa="tab-content-{{ tab.name }}" role="tabpanel">
                 <div class="panel-body">
                     {% include tab.template %}
                 </div>
