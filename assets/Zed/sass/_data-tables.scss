@@ -109,3 +109,7 @@ table.dataTable td.dt-type-date div.dt-column-header,
 table.dataTable td.dt-type-date div.dt-column-footer {
     flex-direction: row;
 }
+
+.cursor-pointer tr {
+    cursor: pointer;
+}
