@@ -5,37 +5,36 @@
 
 :root,
 [data-bs-theme='light'] {
-    --zed-spryker-logo-url: url('../img/spryker-logo.svg');
-    --zed-spryker-logo-small-url: url('../img/spryker-logo-small.svg');
-    --ins-breadcrumb-divider: '/';
-    --ins-primary: #0f856f;
-    --ins-primary-rgb: 15, 133, 111;
-    --ins-sidenav-bg: #23303c;
-    --ins-danger: #e71c00;
+    --zed-spryker-logo-url: url('../img/spryker-logo-light.svg');
+    --zed-spryker-logo-small-url: url('../img/spryker-logo-small-light.svg');
+    --#{$prefix}breadcrumb-divider: '/';
+    --#{$prefix}primary: var(--bo-main-color, #11856e);
+    --#{$prefix}primary-rgb: 15, 133, 111;
+    --#{$prefix}sidenav-bg: var(--bo-sidenav-color, #23303c);
+    --#{$prefix}danger: #e71c00;
 }
 
 html[data-bs-theme='dark'] {
     --zed-spryker-logo-url: url('../img/spryker-logo-light.svg');
     --zed-spryker-logo-small-url: url('../img/spryker-logo-small-light.svg');
-    --ins-body-color: #e4e4e4;
+    --#{$prefix}body-color: #e4e4e4;
 }
 
 html[data-menu-color='dark'],
 html[data-bs-theme='dark'][data-menu-color='dark'] {
-    --ins-sidenav-item-active-color: #9fcec5;
+    --#{$prefix}sidenav-item-active-color: #9fcec5;
 }
 
 html[data-bs-theme='dark'][data-menu-color='dark'] {
-    --ins-sidenav-item-color: #e4e4e4;
+    --#{$prefix}sidenav-item-color: #e4e4e4;
 }
 
 html[data-bs-theme='light'][data-menu-color='dark'] {
-    --ins-sidenav-item-color: #e4e4e4;
-}
-
-.logo-light {
-    --zed-spryker-logo-url: url('../img/spryker-logo-light.svg');
-    --zed-spryker-logo-small-url: url('../img/spryker-logo-small-light.svg');
+    --#{$prefix}sidenav-item-color: var(--bo-sidenav-text-color, #e4e4e4);
+    --#{$prefix}sidenav-item-active-color: color-mix(in srgb, var(--bo-sidenav-text-color), var(--bo-main-color) 35%);
+    --#{$prefix}sidenav-bg: var(--bo-sidenav-color, #23303c);
+    --#{$prefix}sidenav-border-color: var(--bo-sidenav-color);
+    --#{$prefix}sidenav-item-active-bg: color-mix(in srgb, var(--bo-sidenav-color), black 20%);
 }
 
 $zed-logo: url(https://static.spryker.com/logo.svg) !default;
@@ -136,6 +135,10 @@ body {
     --bs-body-font-size: 14px;
     --bs-table-striped-bg: $grey-lighter;
     --bs-body-font-family: 'Montserrat', sans-serif;
+
+    &.login {
+        --ins-body-bg: var(--ins-sidenav-bg);
+    }
 }
 
 .dropdown-menu {

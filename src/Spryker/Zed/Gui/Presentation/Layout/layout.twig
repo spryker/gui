@@ -10,12 +10,14 @@
         {% block head_css %}
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            
+
             <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap" />
-            
+
 
             <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-gui-commons.css') }}">
+
+            {% include '@Gui/Partials/theme-styles.twig' %}
         {% endblock %}
     </head>
     <body>
@@ -61,7 +63,7 @@
                                             {% if environment is defined %}
                                                 <em>[{{ environment }}]</em>
                                             {% endif %}
-                                            
+
                                             <i class="ti ti-chevron-down align-middle"></i>
                                         </div>
                                     </a>
@@ -71,7 +73,7 @@
                                         </div>
 
                                         {% deprecated 'Will be moved to a plugin in the next major release.' %}
-                                        
+
                                         <a class="dropdown-item" href="/user/edit/password-reset">
                                             {{ 'Reset password' | trans }}
                                         </a>
@@ -116,7 +118,7 @@
                                 {% include '@Gui/Partials/backward-compatible-breadcrumb.twig' %}
                             {% endif %}
                         </div>
-                        
+
                         <div class="wrapper wrapper-content">
                             {% include '@Messenger/Partials/flash-messages.twig' %}
                             {% block content -%}{%- endblock %}

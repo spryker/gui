@@ -1,0 +1,14 @@
+{# Color keys are defined in: gui/resources/configuration/gui.configuration.yml (theme > backoffice > colors) #}
+<style>
+    :root {
+        {% for key, value in configurationValues('theme:backoffice:colors') %}
+            --{{ key | replace({'_': '-'}) }}: {{ value | raw }};
+        {% endfor %}
+
+        {% set logo = configurationValue('theme:logos:logos:backoffice_logo_url') %}
+
+        {% if logo is not empty %}
+            --zed-spryker-logo-url: url({{ logo | raw }});
+        {% endif %}
+    }
+</style>

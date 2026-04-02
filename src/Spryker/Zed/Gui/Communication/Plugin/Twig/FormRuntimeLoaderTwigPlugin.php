@@ -7,18 +7,10 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
-use FilesystemIterator;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
-use Symfony\Bridge\Twig\Form\TwigRendererEngine;
-use Symfony\Component\Form\FormRenderer;
-use Symfony\Component\Form\FormRendererEngineInterface;
-use Symfony\Component\Form\FormRendererInterface;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Environment;
-use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
 /**
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
@@ -27,75 +19,18 @@ use Twig\RuntimeLoader\FactoryRuntimeLoader;
 class FormRuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * @var string
-     */
-    protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
-
-    /**
      * {@inheritDoc}
+     * Specification:
+     * - Adds a form renderer runtime loader to the Twig environment via FormRendererRuntimeLoader.
+     * - Maps FormRenderer::class (and TwigRenderer::class when available) to a lazy factory callback.
+     * - Injects the CSRF token manager from the container when available under 'form.csrf_provider'.
      *
      * @api
-     *
-     * @param \Twig\Environment $twig
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\Environment
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig->addRuntimeLoader($this->createFactoryRuntimeLoader($twig, $container));
+        $twig->addRuntimeLoader($this->getFactory()->createFormRendererRuntimeLoader()->createRuntimeLoader($twig, $container));
 
         return $twig;
-    }
-
-    protected function getTwigTemplateFileNames(): array
-    {
-        $files = new FilesystemIterator(
-            $this->getConfig()->getFormResourcesPath(),
-            FilesystemIterator::SKIP_DOTS | FilesystemIterator::KEY_AS_PATHNAME,
-        );
-
-        $typeTemplates = $this->getConfig()->getDefaultTemplateFileNames();
-        /** @var \SplFileInfo $file */
-        foreach ($files as $file) {
-            $typeTemplates[] = $file->getFilename();
-        }
-
-        return $typeTemplates;
-    }
-
-    protected function createTwigRendererEngine(Environment $twig): FormRendererEngineInterface
-    {
-        return new TwigRendererEngine($this->getTwigTemplateFileNames(), $twig);
-    }
-
-    protected function createFormRenderer(Environment $twig, ?CsrfTokenManagerInterface $csrfTokenManager = null): FormRendererInterface
-    {
-        return new FormRenderer($this->createTwigRendererEngine($twig), $csrfTokenManager);
-    }
-
-    /**
-     * @param \Twig\Environment $twig
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\RuntimeLoader\FactoryRuntimeLoader
-     */
-    protected function createFactoryRuntimeLoader(Environment $twig, ContainerInterface $container)
-    {
-        $formRendererCallback = function () use ($twig, $container) {
-            if ($container->has(static::SERVICE_FORM_CSRF_PROVIDER)) {
-                return $this->createFormRenderer($twig, $container->get(static::SERVICE_FORM_CSRF_PROVIDER));
-            }
-
-            return $this->createFormRenderer($twig);
-        };
-
-        $loadersMap = [];
-        $loadersMap[FormRenderer::class] = $formRendererCallback;
-        if (class_exists(TwigRenderer::class)) {
-            $loadersMap[TwigRenderer::class] = $formRendererCallback;
-        }
-
-        return new FactoryRuntimeLoader($loadersMap);
     }
 }

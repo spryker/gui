@@ -17,6 +17,8 @@ use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\SanitizeXssTypeExtension;
 use Spryker\Zed\Gui\Communication\NavigationLink\NavigationLinkGenerator;
 use Spryker\Zed\Gui\Communication\NavigationLink\NavigationLinkGeneratorInterface;
+use Spryker\Zed\Gui\Communication\Twig\FormRendererRuntimeLoader;
+use Spryker\Zed\Gui\Communication\Twig\FormRendererRuntimeLoaderInterface;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilNumberServiceInterface;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\Gui\GuiDependencyProvider;
@@ -88,5 +90,10 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
         return new NavigationLinkGenerator(
             $this->getNavigationPlugins(),
         );
+    }
+
+    public function createFormRendererRuntimeLoader(): FormRendererRuntimeLoaderInterface
+    {
+        return new FormRendererRuntimeLoader($this->getConfig());
     }
 }
