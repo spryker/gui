@@ -23,3 +23,28 @@ Remove,Löschen
 "Upload image requirements","Anforderungen für das Hochladen von Bildern"
 "Confirm delete","Löschen bestätigen"
 "Are you sure you want to delete the image?","Sind Sie sicher, dass Sie das Bild löschen möchten?"
+Theme,Thema
+image,Bild
+Logos,Logos
+"Back Office",Verwaltungsbereich
+"Back Office Logo","Verwaltungsbereich Logo"
+"Logo image displayed in the Back Office sidebar","Logo-Bild in der Verwaltungsbereich-Seitenleiste"
+"Back Office Colors",Verwaltungsbereich-Farben
+"Backoffice Theme Color",Verwaltungsbereich-Themenfarbe
+"Primary theme color for the Back Office interface","Primäre Themenfarbe für die Verwaltungsbereich-Oberfläche"
+"Backoffice Side Navigation Background","Verwaltungsbereich-Seitennavigation Hintergrund"
+"Side navigation and login background for the Back Office interface","Seitennavigation und Anmelde-Hintergrund für die Verwaltungsbereich-Oberfläche"
+"Backoffice Side Navigation Text Color","Verwaltungsbereich-Seitennavigation Textfarbe"
+"Side navigation text color for the Back Office interface","Textfarbe der Seitennavigation für die Verwaltungsbereich-Oberfläche"
+Storefront,Onlineshop
+"Storefront Logo","Onlineshop Logo"
+"Logo image displayed in the storefront header","Logo-Bild im Onlineshop-Header"
+"Storefront Colors",Onlineshop-Farben
+"Theme Main Color",Thema-Hauptfarbe
+"Primary brand color used across the storefront","Primäre Markenfarbe für den Onlineshop"
+"Theme Alternative Color",Thema-Alternativfarbe
+"Secondary brand color for accents and highlights","Sekundäre Markenfarbe für Akzente und Hervorhebungen"
+"Custom CSS","Benutzerdefiniertes CSS"
+"Storefront Custom CSS","Onlineshop benutzerdefiniertes CSS"
+"Custom CSS injected into storefront pages. Use with caution — invalid CSS may break page layout.","Benutzerdefiniertes CSS für Onlineshop-Seiten. Mit Vorsicht verwenden — ungültiges CSS kann das Seitenlayout beschädigen."
+"Enter valid CSS rules. Example: .header { background-color: #333; }","Gültige CSS-Regeln eingeben. Beispiel: .header { background-color: #333; }"

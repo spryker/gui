@@ -23,3 +23,28 @@ Remove,Remove
 "Upload image requirements","Upload image requirements"
 "Confirm delete","Confirm delete"
 "Are you sure you want to delete the image?","Are you sure you want to delete the image?"
+Theme,Theme
+image,image
+Logos,Logos
+"Back Office","Back Office"
+"Back Office Logo","Back Office Logo"
+"Logo image displayed in the Back Office sidebar","Logo image displayed in the Back Office sidebar"
+"Back Office Colors","Back Office Colors"
+"Backoffice Theme Color","Backoffice Theme Color"
+"Primary theme color for the Back Office interface","Primary theme color for the Back Office interface"
+"Backoffice Side Navigation Background","Backoffice Side Navigation Background"
+"Side navigation and login background for the Back Office interface","Side navigation and login background for the Back Office interface"
+"Backoffice Side Navigation Text Color","Backoffice Side Navigation Text Color"
+"Side navigation text color for the Back Office interface","Side navigation text color for the Back Office interface"
+Storefront,Storefront
+"Storefront Logo","Storefront Logo"
+"Logo image displayed in the storefront header","Logo image displayed in the storefront header"
+"Storefront Colors","Storefront Colors"
+"Theme Main Color","Theme Main Color"
+"Primary brand color used across the storefront","Primary brand color used across the storefront"
+"Theme Alternative Color","Theme Alternative Color"
+"Secondary brand color for accents and highlights","Secondary brand color for accents and highlights"
+"Custom CSS","Custom CSS"
+"Storefront Custom CSS","Storefront Custom CSS"
+"Custom CSS injected into storefront pages. Use with caution — invalid CSS may break page layout.","Custom CSS injected into storefront pages. Use with caution — invalid CSS may break page layout."
+"Enter valid CSS rules. Example: .header { background-color: #333; }","Enter valid CSS rules. Example: .header { background-color: #333; }"
