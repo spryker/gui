@@ -82,7 +82,7 @@ class ButtonGroupUrlGenerator implements UrlGeneratorInterface
      */
     protected function generateAnchor($url)
     {
-        return '<li><a href="' . $url . '">';
+        return '<li><a href="' . $url . '" class="dropdown-item">';
     }
 
     /**
