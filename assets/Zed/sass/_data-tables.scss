@@ -28,6 +28,14 @@
     }
 }
 
+table.table.dataTable > tbody > tr.selected .btn {
+    color: var(--ins-btn-color);
+
+    &:hover {
+        color: var(--ins-btn-hover-color);
+    }
+}
+
 table.table.dataTable.table-hover > tbody > tr.selected:hover > *,
 table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n + 1).selected > *,
 table.table.dataTable > tbody > tr.selected > * {
