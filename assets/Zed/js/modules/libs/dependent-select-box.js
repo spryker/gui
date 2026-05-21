@@ -65,15 +65,10 @@ function DependentSelectBox(options) {
 
     this.fillTargetSelectBox = function (data) {
         $.each(data[this.responseData.response], function (index, element) {
-            _self.$target.append(
-                $(
-                    '<option value="' +
-                        element[_self.responseData.value] +
-                        '">' +
-                        element[_self.responseData.text] +
-                        '</option>',
-                ),
-            );
+            const option = document.createElement('option');
+            option.value = element[_self.responseData.value];
+            option.textContent = element[_self.responseData.text];
+            _self.$target.append(option);
         });
     };
 
