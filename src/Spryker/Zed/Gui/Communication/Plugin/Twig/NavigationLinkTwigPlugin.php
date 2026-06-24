@@ -20,6 +20,8 @@ use Twig\TwigFunction;
 class NavigationLinkTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const FUNCTION_NAME_LAYOUT_NAVIGATION_ITEMS = 'layout_navigation_items';

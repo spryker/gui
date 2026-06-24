@@ -20,6 +20,8 @@ use Twig\TwigFunction;
 class SubmitButtonTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const FUNCTION_NAME_SUBMIT_BUTTON = 'submit_button';

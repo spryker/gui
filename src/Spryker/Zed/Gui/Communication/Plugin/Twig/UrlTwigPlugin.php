@@ -23,6 +23,8 @@ use Twig\TwigFunction;
 class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const FUNCTION_NAME_URL = 'url';

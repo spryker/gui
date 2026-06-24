@@ -21,6 +21,8 @@ use Twig\TwigFunction;
 class TabsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const FUNCTION_NAME_TABS = 'tabs';
