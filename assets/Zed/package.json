@@ -33,6 +33,6 @@
         "summernote": "~0.9.1",
         "sweetalert2": "~11.26.18",
         "marked": "^15.0.0",
-        "dompurify": "^3.2.0"
+        "dompurify": "^3.4.12"
     }
 }

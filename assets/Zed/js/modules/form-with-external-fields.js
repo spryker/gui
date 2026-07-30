@@ -39,7 +39,11 @@ export default class FormWithExternalFields {
             this.form.getAttribute('action') ?? this.getCurrentUrlWithoutParams(),
             this.externalFields,
         );
-        window.location.href = url;
+        const redirectUrl = new URL(url, window.location.origin);
+
+        if (redirectUrl.origin === window.location.origin) {
+            window.location.href = redirectUrl.href;
+        }
     }
 
     buildPageUrl(baseUrl, includeFields) {
