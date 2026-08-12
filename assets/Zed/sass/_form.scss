@@ -285,6 +285,10 @@ span[class='badge'] {
     @extend .badge-outline-danger;
 }
 
+.label-default {
+    @extend .badge-default;
+}
+
 .label-secondary {
     @extend .badge-outline-warning;
 }
