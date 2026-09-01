@@ -2,15 +2,17 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0 py-2" data-qa="breadcrumb">
             {% for breadcrumbItem in breadcrumbs %}
-                <li class="breadcrumb-item">
-                    {% if breadcrumbItem.uri is not empty %}
-                        <a class="{{ loop.last ? 'disabled' }}" tabindex="{{ loop.last ? '-1' }}" href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title | trans }}">
+                {% if breadcrumbItem.uri is not empty and not loop.last %}
+                    <li class="breadcrumb-item">
+                        <a href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title | trans }}">
                             {{ breadcrumbItem.label | trans }}
                         </a>
-                    {% else %}
+                    </li>
+                {% else %}
+                    <li class="breadcrumb-item{{ loop.last ? ' active' }}"{% if loop.last %} aria-current="page"{% endif %}>
                         {{ breadcrumbItem.label | trans }}
-                    {% endif %}
-                </li>
+                    </li>
+                {% endif %}
             {% endfor %}
         </ol>
     </nav>
