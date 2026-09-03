@@ -127,8 +127,11 @@ select {
     padding: 8px 30px 8px 12px;
     appearance: none;
     -webkit-text-size-adjust: none;
-    background: var(--ins-secondary-bg) #{calc(100% - 10px) 50% / 12px auto} no-repeat
-        url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzIwcHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCAzMjAgNTEyIiB2ZXJzaW9uPSIxLjEiPjxwYXRoIGZpbGw9IiM5ZWExYTciIGQ9Ik0xNDMgMzUyLjNMNyAyMTYuM2MtOS40LTkuNC05LjQtMjQuNiAwLTMzLjlsMjIuNi0yMi42YzkuNC05LjQgMjQuNi05LjQgMzMuOSAwbDk2LjQgOTYuNCA5Ni40LTk2LjRjOS40LTkuNCAyNC42LTkuNCAzMy45IDBsMjIuNiAyMi42YzkuNCA5LjQgOS40IDI0LjYgMCAzMy45bC0xMzYgMTM2Yy05LjIgOS40LTI0LjQgOS40LTMzLjggMHoiPjwvcGF0aD48L3N2Zz4=') !important;
+
+    &:not(.flatpickr-monthDropdown-months) {
+        background: var(--ins-secondary-bg) #{calc(100% - 10px) 50% / 12px auto} no-repeat
+            url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzIwcHgiIGhlaWdodD0iNTEycHgiIHZpZXdCb3g9IjAgMCAzMjAgNTEyIiB2ZXJzaW9uPSIxLjEiPjxwYXRoIGZpbGw9IiM5ZWExYTciIGQ9Ik0xNDMgMzUyLjNMNyAyMTYuM2MtOS40LTkuNC05LjQtMjQuNiAwLTMzLjlsMjIuNi0yMi42YzkuNC05LjQgMjQuNi05LjQgMzMuOSAwbDk2LjQgOTYuNCA5Ni40LTk2LjRjOS40LTkuNCAyNC42LTkuNCAzMy45IDBsMjIuNiAyMi42YzkuNCA5LjQgOS40IDI0LjYgMCAzMy45bC0xMzYgMTM2Yy05LjIgOS40LTI0LjQgOS40LTMzLjggMHoiPjwvcGF0aD48L3N2Zz4=') !important;
+    }
 
     &::-ms-expand {
         display: none;

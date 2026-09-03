@@ -1,3 +1,9 @@
+/**
+ * @deprecated Use `DateTimePicker` from `./date-time-picker` instead. It supports both date and
+ *   date-time fields and is configured declaratively through `DatePickerType`/`DateTimePickerType`.
+ *   This class and the `.js-date`, `.js-from-date` and `.js-to-date` selectors will be removed in
+ *   the next major version.
+ */
 export class DatePicker {
     constructor() {
         this.init();

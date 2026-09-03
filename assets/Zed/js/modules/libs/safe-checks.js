@@ -31,7 +31,12 @@ function addSafeSubmitCheck() {
     });
 }
 
-/* Prevent .save-datetime inputs to show native datepickers */
+/**
+ * Prevent .safe-datetime inputs to show native datepickers.
+ *
+ * @deprecated Fields using `DatePickerType`/`DateTimePickerType` render as text inputs, so there is
+ *   no native picker to suppress. Will be removed in the next major version.
+ */
 function addSafeDatetimeCheck() {
     $('body').on('click', safeDatetimeSelector, function (e) {
         function disableNativeWindow() {

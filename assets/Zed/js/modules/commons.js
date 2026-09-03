@@ -31,6 +31,10 @@ require('select2');
 window.CodeMirror = require('codemirror');
 require('codemirror/mode/htmlmixed/htmlmixed.js');
 require('summernote/dist/summernote-bs5.min');
+// Exposed globally because Inspinia2/js/app.js expects a bare `flatpickr` binding.
+window.flatpickr = require('flatpickr');
+// Required here, not in init.js, so date pickers also work on iframe-layout.twig pages.
+require('./libs/date-time-picker');
 
 XMLHttpRequest.prototype = Object.getPrototypeOf(new XMLHttpRequest());
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Gui\Communication;
 
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Zed\Gui\Communication\Extender\NumberFormatterTwigFilterExtender;
@@ -75,6 +76,11 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUtilNumberService(): GuiToUtilNumberServiceInterface
     {
         return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_NUMBER);
+    }
+
+    public function getUtilEncodingService(): UtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

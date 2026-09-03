@@ -30,6 +30,11 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
+     * @var string
+     */
     public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
 
     /**
@@ -54,6 +59,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTwigFilter($container);
         $container = $this->addUtilSanitizeXssService($container);
         $container = $this->addUtilNumberService($container);
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addDropdownNavigationPlugins($container);
 
         return $container;
@@ -98,6 +104,15 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
             return new GuiToUtilNumberServiceBridge(
                 $container->getLocator()->utilNumber()->service(),
             );
+        });
+
+        return $container;
+    }
+
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return $container->getLocator()->utilEncoding()->service();
         });
 
         return $container;

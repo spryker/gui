@@ -1,3 +1,10 @@
+@import '~flatpickr/dist/flatpickr.min.css';
+
+// Legacy styles for the `.xdsoft_*` markup of jquery-datetimepicker. Discount is the only module
+// bundling that library, and since its migration to DateTimePickerType it renders the legacy picker
+// only on installations running spryker/gui older than 5.4.0. Other modules keep legacy fallbacks of
+// their own on the deprecated Gui DatePicker (jQuery UI, `.js-date`/`.js-from-date`), whose markup
+// these rules do not cover. Remove with the rest of the pre-5.4.0 fallbacks in the next major.
 body {
     .xdsoft_datetimepicker .xdsoft_label,
     .xdsoft_datetimepicker {
