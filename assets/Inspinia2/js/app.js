@@ -168,7 +168,7 @@ class App {
 
     // Counter for Numbers
     initCounter() {
-        const counters = document.querySelectorAll('[data-target]');
+        const counters = document.querySelectorAll('[data-counter-target]');
 
         const observer = new IntersectionObserver(
             (entries, observer) => {
@@ -177,7 +177,7 @@ class App {
                         const counter = entry.target;
 
                         // Parse the target value, removing any commas first
-                        let target = counter.getAttribute('data-target').replace(/,/g, '');
+                        let target = counter.getAttribute('data-counter-target').replace(/,/g, '');
 
                         target = parseFloat(target); // Convert to float
 
