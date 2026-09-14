@@ -13,6 +13,7 @@ use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 use Twig\TwigFunction;
 
@@ -67,7 +68,8 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                     /** @var \Symfony\Cmf\Component\Routing\ChainRouter $router */
                     $router = $container->get(static::SERVICE_ROUTER);
                     $url = $this->getUrl($router, $url);
-                    $url = $router->generate($url, $query);
+                    $referenceType = $this->isWebProfilerRouteName($url) ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH;
+                    $url = $router->generate($url, $query, $referenceType);
 
                     $charset = mb_internal_encoding() ?: static::DEFAULT_ENCODING;
 
@@ -80,6 +82,15 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
             return $url->buildEscaped();
         }, ['is_safe' => ['html']]);
+    }
+
+    /**
+     * WebProfiler's own toolbar JavaScript (`new URL(url)`) requires an absolute URL for these
+     * routes, unlike regular Zed navigation, which intentionally stays relative.
+     */
+    protected function isWebProfilerRouteName(string $routeName): bool
+    {
+        return $routeName === '_wdt' || str_starts_with($routeName, '_wdt_') || str_starts_with($routeName, '_profiler');
     }
 
     protected function getUrl(ChainRouter $router, string $url): string
