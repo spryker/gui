@@ -1,3 +1,9 @@
+/**
+ * @deprecated Superseded by `./table/table.js`. `defaultConfiguration` and `noSearchConfiguration` are
+ * unused - the equivalent configuration now lives on `Table.#defaultOptions.configuration` - and MUST NOT
+ * gain new callers. `setTableErrorMode` and `onError` are still consumed by `./table/table.js`.
+ */
+
 'use strict';
 
 function getLocale() {
@@ -48,17 +54,6 @@ function setTableErrorMode(errorMode) {
     $.fn.dataTable.ext.errMode = errorMode || 'none';
 }
 
-function onTabChange(tabId) {
-    var $tab = $(tabId);
-    var $dataTables = $tab.find('.gui-table-data, .gui-table-data-no-search');
-
-    if (!$dataTables.data('initialized')) {
-        $dataTables.data('initialized', true).DataTable().draw();
-    }
-
-    $dataTables.DataTable().columns.adjust();
-}
-
 function onError(e, settings, techNote, message) {
     var debugMessage = '';
 
@@ -80,6 +75,5 @@ module.exports = {
     defaultConfiguration: defaultConfiguration,
     noSearchConfiguration: noSearchConfiguration,
     setTableErrorMode: setTableErrorMode,
-    onTabChange: onTabChange,
     onError: onError,
 };

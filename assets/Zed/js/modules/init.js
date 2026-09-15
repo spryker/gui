@@ -9,13 +9,11 @@ var editorConfig = require('ZedGuiEditorConfiguration');
 var Tabs = require('./libs/tabs');
 var TranslationCopyFields = require('./libs/translation-copy-fields');
 var Ibox = require('./libs/ibox');
-var dataTable = require('./libs/data-table');
 var safeChecks = require('./libs/safe-checks');
 var initFormattedNumber = require('./libs/formatted-number-input');
 var initFormattedMoney = require('./libs/formatted-money-input');
 var select2combobox = require('./libs/select2-combobox');
 var bootstrap = require('bootstrap');
-var timeoutId = 0;
 import { Dropzone } from './libs/dropzone';
 import { FormSubmitter } from './libs/form-submitter';
 import { DatePicker } from './libs/datepicker';
@@ -27,27 +25,6 @@ import { Table } from './libs/table/table';
 import FormWithExternalFields from './form-with-external-fields';
 import InternalMenuFilter from './libs/internal-api/internal-menu-filter';
 import initSweetAlertMapper from './libs/sweet-alert-mapper';
-
-var dataTablesSearchDelay = function () {
-    var dataTablesWrapper = $('.dataTables_wrapper');
-    dataTablesWrapper.each(function (index, wrapper) {
-        var searchInput = $(wrapper).find('input[type="search"]');
-        var dataTable = $(wrapper).find('.gui-table-data');
-        var dataTableApi = dataTable.dataTable().api();
-
-        if (searchInput.length && dataTable.length) {
-            searchInput.unbind().bind('input', function (e) {
-                var self = this;
-
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(function () {
-                    dataTableApi.settings()[0].jqXHR.abort();
-                    dataTableApi.search(self.value).draw();
-                }, 1000);
-            });
-        }
-    });
-};
 
 var editorInit = function () {
     $('.html-editor').each(function () {
@@ -87,120 +64,6 @@ $(document).ready(function () {
     editorInit();
     tooltipInit();
 
-    /* Data tables custom error handling */
-    dataTable.setTableErrorMode('none');
-
-    /* Draw data tables */
-    $('.gui-table-data').on('error.dt', dataTable.onError).dataTable(dataTable.defaultConfiguration);
-
-    $('.gui-table-data').on('init.dt', function (e, settings) {
-        const wrapper = $(e.target).closest('.dt-container');
-        const searchInput = wrapper.find('.dt-search input[type="search"]');
-        searchInput.attr('data-qa', 'table-search');
-    });
-
-    $('.gui-table-data').on('draw.dt', function (e, settings) {
-        var windowWidth = $(document).width();
-        var windowHeight = $(document).height();
-        var toggleWrap = this.querySelectorAll('.dropdown');
-        var $toggleDropdown;
-
-        toggleWrap.forEach((toggler) => {
-            toggler.addEventListener('show.bs.dropdown', function () {
-                $toggleDropdown = $(this).find('.dropdown-menu');
-
-                var $button = $(this).find('.dropdown-toggle');
-                var buttonWidth = $button.width();
-                var buttonHeight = $button.height();
-                var buttonTopOffset = $button.offset().top;
-                var buttonLeftOffset = $button.offset().left;
-                var dropdownWidth = $toggleDropdown.width();
-                var dropdownHeight = $toggleDropdown.height();
-                var requiredWidth = buttonLeftOffset + dropdownWidth;
-                var requiredHeight = buttonTopOffset + buttonHeight + dropdownHeight;
-                var dropdownPositionStyles = {
-                    top: buttonTopOffset + buttonHeight + 5 + 'px',
-                    left: buttonLeftOffset + 'px',
-                    display: 'block',
-                    zIndex: '10000',
-                };
-
-                if (requiredWidth >= windowWidth) {
-                    dropdownPositionStyles.left = buttonLeftOffset + buttonWidth - dropdownWidth + 'px';
-                }
-
-                if (requiredHeight >= windowHeight) {
-                    dropdownPositionStyles.top = buttonTopOffset - dropdownHeight - 11 + 'px';
-                }
-
-                $('body').append($toggleDropdown.css(dropdownPositionStyles).detach());
-            });
-
-            toggler.addEventListener('hidden.bs.dropdown', function () {
-                $(this).append($toggleDropdown.removeAttr('style').detach());
-            });
-        });
-
-        var api = new $.fn.dataTable.Api(settings);
-        var tableBody = $(e.target).find('tbody');
-        var searchRow = '<tr';
-
-        if ($(e.target).find('tr').slice(-1)[0].className === 'even') {
-            searchRow += ' class="odd"';
-        } else {
-            searchRow += ' class="even"';
-        }
-
-        searchRow += '>';
-
-        var isSearchable = false;
-
-        api.columns().every(function (columnIndex) {
-            if (typeof api.ajax.params() === 'undefined') {
-                return;
-            }
-
-            searchRow += '<td>';
-            if (api.ajax.params()['columns'][columnIndex]['searchable']) {
-                searchRow += `<input type="text"
-                        class="form-control form-control-sm column-search"
-                        placeholder="Search"
-                        data-column-index="${columnIndex}"
-                        value="${api.ajax.params()['columns'][columnIndex]['search']['value']}"/>`;
-
-                isSearchable = true;
-            }
-            searchRow += '</td>';
-        });
-        searchRow += '</tr>';
-
-        if (isSearchable === true) {
-            tableBody.append(searchRow);
-
-            tableBody
-                .find('input')
-                .off('keyup change click')
-                .on('keyup', function (e) {
-                    var self = this;
-
-                    clearTimeout(timeoutId);
-                    timeoutId = setTimeout(function () {
-                        api.settings()[0].jqXHR.abort();
-                        api.columns(parseInt(self.getAttribute('data-column-index')))
-                            .search(self.value, false, false)
-                            .draw();
-                    }, 1000);
-                });
-        }
-
-        document.querySelectorAll('.paginate_button.disabled > a').forEach((element) => {
-            element.setAttribute('tabindex', '-1');
-        });
-    });
-
-    /* Draw data tables without search */
-    $('.gui-table-data-no-search').on('error.dt', dataTable.onError).dataTable(dataTable.noSearchConfiguration);
-
     $('.spryker-form-autocomplete').each(function (key, value) {
         var autoCompletedField = $(value);
         if (autoCompletedField.data('url') === 'undefined') {
@@ -216,25 +79,6 @@ $(document).ready(function () {
             minLength: 3,
         });
     });
-
-    $('.table-dependency tr').hover(
-        function () {
-            $(this).addClass('warning');
-        },
-        function () {
-            $(this).removeClass('warning');
-        },
-    );
-    $('.table-dependency .btn-xs').hover(
-        function () {
-            $(this).removeClass('btn-default');
-            $(this).addClass('btn-primary');
-        },
-        function () {
-            $(this).addClass('btn-default');
-            $(this).removeClass('btn-primary');
-        },
-    );
 
     $('.more-history').click(function (e) {
         e.preventDefault();
@@ -253,7 +97,7 @@ $(document).ready(function () {
 
     /* Init tabs */
     $('.tabs-container').each(function (index, item) {
-        item.tabsInstance = new Tabs(item, dataTable.onTabChange);
+        item.tabsInstance = new Tabs(item);
     });
 
     safeChecks.addSafeSubmitCheck();
@@ -275,8 +119,4 @@ $(document).ready(function () {
     new DownloadAction();
     new Table();
     new InternalMenuFilter();
-});
-
-$(window).on('load', function () {
-    dataTablesSearchDelay();
 });

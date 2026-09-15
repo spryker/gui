@@ -13,7 +13,6 @@
 class App {
     init() {
         this.initComponents();
-        this.initPreloader();
         this.initPortletCard();
         this.initMultiDropdown();
         this.initFormValidation();
@@ -49,18 +48,6 @@ class App {
         // Toasts
         document.querySelectorAll('.toast').forEach((el) => {
             new bootstrap.Toast(el);
-        });
-    }
-
-    // Preloader
-    initPreloader() {
-        window.addEventListener('load', () => {
-            const status = document.getElementById('status');
-            const preloader = document.getElementById('preloader');
-            if (status) status.style.display = 'none';
-            if (preloader) {
-                setTimeout(() => (preloader.style.display = 'none'), 350);
-            }
         });
     }
 

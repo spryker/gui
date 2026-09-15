@@ -116,6 +116,21 @@ class TableConfiguration
     protected $hasSearchableFieldsWithAggregateFunctions = false;
 
     /**
+     * @var bool|null
+     */
+    protected ?bool $useSimplePagination = null;
+
+    /**
+     * @var bool|null
+     */
+    protected ?bool $useCaseSensitiveSearch = null;
+
+    /**
+     * @var bool|null
+     */
+    protected ?bool $useSorting = null;
+
+    /**
      * @var array<string, mixed>
      */
     protected array $tableAttributes = [];
@@ -307,10 +322,18 @@ class TableConfiguration
      */
     public function getSearchable()
     {
-        return $this->searchableFields ?: array_keys($this->header);
+        $searchable = $this->searchableFields ?: array_keys($this->header);
+
+        return array_values($searchable);
     }
 
     /**
+     * Accepts either a plain list of SQL expressions (`['spy_product.name', 'spy_product.sku']`) used only for
+     * the global search box, or an associative `[headerKey => sqlExpression]` array (e.g.
+     * `['NAME' => 'spy_product.name', 'SKU' => 'spy_product.sku']`) which also doubles as the map
+     * `getSearchableColumns()` needs to power per-column search for the same fields — no separate
+     * `setSearchableColumns()` call required in that case.
+     *
      * @param array<string> $searchable
      *
      * @return void
@@ -318,6 +341,17 @@ class TableConfiguration
     public function setSearchable(array $searchable)
     {
         $this->searchableFields = $searchable;
+    }
+
+    /**
+     * Returns whether the table renders per-column search inputs (one for each column listed in
+     * `searchableColumns`, hiding the global search box) instead of the single global search box — driven
+     * entirely by whether `searchableColumns` was configured (via `setSearchableColumns()`, or `setSearchable()`
+     * with an associative array), no separate opt-in flag needed.
+     */
+    public function isColumnSearchEnabled(): bool
+    {
+        return $this->getSearchableColumns() !== [];
     }
 
     /**
@@ -508,14 +542,86 @@ class TableConfiguration
     }
 
     /**
+     * Returns the `[headerKey => sqlExpression]` map used to render and query per-column search. Merges the
+     * associative array given to `setSearchable()` (if any) with an explicit `setSearchableColumns()` call, so
+     * a table can configure the two independently or together — on a key collision, the `setSearchable()`
+     * entry wins.
+     *
      * @return array<string, string>
      */
     public function getSearchableColumns(): array
     {
-        return $this->searchableColumns;
+        if ($this->searchableFields === null || array_is_list($this->searchableFields)) {
+            return $this->searchableColumns;
+        }
+
+        return array_merge($this->searchableColumns, $this->searchableFields);
     }
 
     /**
+     * `null` means neither this table's `configure()` nor the project-wide `GuiConfig` default set an explicit
+     * value — `AbstractTable` will resolve it adaptively based on table size before the query runs.
+     */
+    public function isSimplePaginationEnabled(): ?bool
+    {
+        return $this->useSimplePagination;
+    }
+
+    /**
+     * Skips both the `recordsTotal` and `recordsFiltered` `COUNT(*)` queries entirely, replacing them with a
+     * cheap "is there a next page" check (one extra row fetched alongside the current page). In exchange,
+     * the table UI switches to Previous/Next-only pagination (no page numbers, no "of N entries" text) —
+     * this mode never claims to know an exact total or page count, so there is nothing misleading to show.
+     */
+    public function setUseSimplePagination(?bool $useSimplePagination): void
+    {
+        $this->useSimplePagination = $useSimplePagination;
+    }
+
+    /**
+     * `null` means neither this table's `configure()` nor the project-wide `GuiConfig` default set an explicit
+     * value — `AbstractTable` will resolve it adaptively based on table size before the query runs.
+     */
+    public function isCaseSensitiveSearchEnabled(): ?bool
+    {
+        return $this->useCaseSensitiveSearch;
+    }
+
+    /**
+     * Matches the global search box against searchable columns with an exact, case-sensitive `=` comparison
+     * instead of a fuzzy `LOWER(column) LIKE '%term%'` comparison — the fuzzy pattern cannot use a regular index,
+     * so this speeds up search on large tables at the cost of only finding exact matches, not partial ones.
+     */
+    public function setUseCaseSensitiveSearch(?bool $useCaseSensitiveSearch): void
+    {
+        $this->useCaseSensitiveSearch = $useCaseSensitiveSearch;
+    }
+
+    /**
+     * `null` means neither this table's `configure()` nor the project-wide `GuiConfig` default set an explicit
+     * value — `AbstractTable` will resolve it adaptively based on table size before the query runs.
+     */
+    public function isSortingEnabled(): ?bool
+    {
+        return $this->useSorting;
+    }
+
+    /**
+     * Skips applying `ORDER BY` to the underlying query entirely. Rows are then returned in whatever order the
+     * query naturally produces (join order), which is unpredictable but avoids forcing the database to
+     * materialize and sort the full joined result set when no index can satisfy the requested order — the
+     * dominant cost on very large tables with joins that break index-order delivery.
+     */
+    public function setUseSorting(?bool $useSorting): void
+    {
+        $this->useSorting = $useSorting;
+    }
+
+    /**
+     * Configures per-column search independently of `setSearchable()` — lets a table keep its existing plain
+     * list of global-search fields untouched and add per-column search as a separate, additive call. Merged
+     * with any associative array given to `setSearchable()` if both are used together.
+     *
      * @param array<string, string> $searchableColumns
      *
      * @return void

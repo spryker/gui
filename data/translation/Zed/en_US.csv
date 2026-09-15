@@ -47,4 +47,5 @@ Storefront,Storefront
 "Custom CSS","Custom CSS"
 "Storefront Custom CSS","Storefront Custom CSS"
 "Custom CSS injected into storefront pages. Use with caution — invalid CSS may break page layout.","Custom CSS injected into storefront pages. Use with caution — invalid CSS may break page layout."
+"This table holds a large amount of data — pagination is simplified (Previous/Next only, no exact totals), search matches must be exact, and default sorting is disabled to keep it fast.","This table holds a large amount of data — pagination is simplified (Previous/Next only, no exact totals), search matches must be exact, and default sorting is disabled to keep it fast."
 "Enter valid CSS rules. Example: .header { background-color: #333; }","Enter valid CSS rules. Example: .header { background-color: #333; }"

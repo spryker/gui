@@ -47,4 +47,5 @@ Storefront,Onlineshop
 "Custom CSS","Benutzerdefiniertes CSS"
 "Storefront Custom CSS","Onlineshop benutzerdefiniertes CSS"
 "Custom CSS injected into storefront pages. Use with caution — invalid CSS may break page layout.","Benutzerdefiniertes CSS für Onlineshop-Seiten. Mit Vorsicht verwenden — ungültiges CSS kann das Seitenlayout beschädigen."
+"This table holds a large amount of data — pagination is simplified (Previous/Next only, no exact totals), search matches must be exact, and default sorting is disabled to keep it fast.","Diese Tabelle enthält eine große Datenmenge — die Seitennavigation ist vereinfacht (nur Vorherige/Weiter, keine genauen Gesamtzahlen), Suchtreffer müssen exakt sein, und die Standardsortierung ist deaktiviert, um sie schnell zu halten."
 "Enter valid CSS rules. Example: .header { background-color: #333; }","Gültige CSS-Regeln eingeben. Beispiel: .header { background-color: #333; }"

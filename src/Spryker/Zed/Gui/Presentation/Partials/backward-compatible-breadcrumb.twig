@@ -9,7 +9,7 @@
                         </a>
                     </li>
                 {% else %}
-                    <li class="breadcrumb-item{{ loop.last ? ' active' }}"{% if loop.last %} aria-current="page"{% endif %}>
+                    <li class="breadcrumb-item {{ loop.last ? 'active' }}"{% if loop.last %} aria-current="page"{% endif %}>
                         {{ breadcrumbItem.label | trans }}
                     </li>
                 {% endif %}

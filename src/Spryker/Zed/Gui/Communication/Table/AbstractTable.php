@@ -19,6 +19,7 @@ use LogicException;
 use PDO;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Formatter\OnDemandFormatter;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
@@ -30,11 +31,14 @@ use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Shared\Kernel\Container\GlobalContainerInterface;
 use Spryker\Zed\Gui\Communication\Exception\TableException;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
+use Spryker\Zed\Gui\GuiConfig;
+use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Throwable;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -154,6 +158,16 @@ abstract class AbstractTable
      * @var string
      */
     protected const DRIVER_NAME_PGSQL = 'pgsql';
+
+    /**
+     * @var string
+     */
+    protected const LARGE_TABLE_MODE_HINT_MESSAGE = 'This table holds a large amount of data — pagination is simplified (Previous/Next only, no exact totals), search matches must be exact, and default sorting is disabled to keep it fast.';
+
+    /**
+     * @var bool
+     */
+    protected $isLargeTableModeActive = false;
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -481,7 +495,20 @@ abstract class AbstractTable
      */
     protected function newTableConfiguration()
     {
-        return new TableConfiguration();
+        $config = new TableConfiguration();
+        $config->setUseSimplePagination($this->getGuiConfig()->isSimplePaginationEnabledByDefault());
+        $config->setUseCaseSensitiveSearch($this->getGuiConfig()->isCaseSensitiveSearchEnabledByDefault());
+        $config->setUseSorting($this->getGuiConfig()->isSortingEnabledByDefault());
+
+        return $config;
+    }
+
+    protected function getGuiConfig(): GuiConfig
+    {
+        /** @var \Spryker\Zed\Gui\GuiConfig $guiConfig */
+        $guiConfig = (new BundleConfigResolver())->resolve(GuiConfig::class);
+
+        return $guiConfig;
     }
 
     /**
@@ -712,21 +739,26 @@ abstract class AbstractTable
      */
     public function getOrders(TableConfiguration $config)
     {
-        $defaultSorting = [$this->getDefaultSorting($config)];
-
+        // A genuine client-sent order (a real column click) always wins, even when `isSortingEnabled()` is
+        // `false` — this is safe only because `prepareConfig()` never bakes a default order into the initial
+        // page's `data-order` attribute unless sorting is explicitly `true`. If it did (e.g. while still
+        // `null`, pending adaptive resolution), DataTables would echo that leaked default back as an `order`
+        // request parameter on every request, indistinguishable from a real click.
         $orderParameter = $this->getOrderParameter();
 
-        if (!is_array($orderParameter)) {
-            return $defaultSorting;
+        if (is_array($orderParameter)) {
+            $sorting = $this->createSortingParameters($orderParameter);
+
+            if ($sorting) {
+                return $sorting;
+            }
         }
 
-        $sorting = $this->createSortingParameters($orderParameter);
-
-        if (!$sorting) {
-            return $defaultSorting;
+        if ($config->isSortingEnabled() === false) {
+            return [];
         }
 
-        return $sorting;
+        return [$this->getDefaultSorting($config)];
     }
 
     /**
@@ -869,9 +901,11 @@ abstract class AbstractTable
      */
     public function prepareConfig()
     {
+        $tableClass = $this->tableClass;
+
         $configArray = [
             'tableId' => $this->getTableIdentifier(),
-            'class' => $this->tableClass,
+            'class' => $tableClass,
             'url' => $this->defaultUrl,
             'baseUrl' => $this->baseUrl,
             'header' => [],
@@ -885,7 +919,12 @@ abstract class AbstractTable
                 'url' => ($this->config->getUrl() === null) ? $this->defaultUrl : $this->config->getUrl(),
                 'header' => $this->config->getHeader(),
                 'footer' => $this->config->getFooter(),
-                'order' => $this->getOrders($this->config),
+                // Baking in the default sort here requires `isSortingEnabled() === true` specifically —
+                // when it's still `null` (pending adaptive resolution, which only happens once the query
+                // exists in `runQuery()`) or `false`, sending no initial order avoids a false "default order"
+                // that DataTables would otherwise echo back as a request parameter indistinguishable from a
+                // genuine column click (see `getOrders()`).
+                'order' => $this->config->isSortingEnabled() === true ? $this->getOrders($this->config) : [],
                 'searchable' => $this->config->getSearchable(),
                 'searchableColumns' => $this->config->getSearchableColumns(),
                 'sortable' => $this->config->getSortable(),
@@ -968,18 +1007,27 @@ abstract class AbstractTable
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults = false)
     {
-        $this->total = $this->filtered = $this->countTotal($query);
+        $this->resolveAdaptiveTableConfiguration($query, $config);
+
         $limit = $this->getLimit();
         $offset = $this->getOffset();
         $order = $this->getOrders($config);
-        $orderColumn = $this->getOrderByColumn($query, $config, $order);
 
-        $query->orderBy($orderColumn, $order[0][static::SORT_BY_DIRECTION]);
+        if ($order !== []) {
+            $orderColumn = $this->getOrderByColumn($query, $config, $order);
+            $query->orderBy($orderColumn, $order[0][static::SORT_BY_DIRECTION]);
+        }
 
         $searchTerm = $this->getSearchTerm();
         $searchValue = $searchTerm[static::PARAMETER_VALUE] ?? '';
+        $isSearchApplied = mb_strlen($searchValue) > 0 || $this->isStrictSearch($query, $config) === true;
+        $useSimplePagination = $config->isSimplePaginationEnabled();
 
-        if (mb_strlen($searchValue) > 0 || $this->isStrictSearch($query, $config) === true) {
+        if (!$useSimplePagination) {
+            $this->total = $this->filtered = $this->countTotal($query);
+        }
+
+        if ($isSearchApplied) {
             $query->setIdentifierQuoting(true);
 
             $conditions = $this->resolveConditions($query, $config, $searchValue);
@@ -988,7 +1036,9 @@ abstract class AbstractTable
                 $query = $this->applyConditions($query, $config, $conditions);
             }
 
-            $this->filtered = $query->count();
+            if (!$useSimplePagination) {
+                $this->filtered = $this->countFiltered($query);
+            }
         }
 
         if ($this->dataTablesTransfer !== null) {
@@ -997,15 +1047,166 @@ abstract class AbstractTable
             $this->addFilteringConditions($query, $searchColumns);
         }
 
+        $fetchLimit = $useSimplePagination ? $limit + 1 : $limit;
+
         $data = $query->offset($offset)
-            ->limit($limit)
+            ->limit($fetchLimit)
             ->find();
+
+        if ($useSimplePagination) {
+            // No exact count on either side — the UI for this table shows Previous/Next only (no page
+            // numbers, no "of N entries" text), so it never needs to know more than "is there a next page".
+            $this->total = $this->filtered = $offset + $this->resolveHasMoreResults($data, $limit);
+        }
 
         if ($returnRawResults === true) {
             return $data;
         }
 
         return $data->toArray(null, false, TableMap::TYPE_COLNAME);
+    }
+
+    /**
+     * Auto-enables the large-table optimizations (simple pagination, case-sensitive search, no default sort)
+     * for this one request when the query's main table is estimated to be at or above
+     * `GuiConfig::getLargeTableRowCountThreshold()`. Only ever turns an optimization on — never turns one off
+     * that `configure()` (or the project-wide default) already set explicitly. Only ever resolves a flag that
+     * is still `null` — an explicit `true`/`false` from either layer is left untouched and skips the row-count
+     * check entirely. Sets `$isLargeTableModeActive` when the adaptive check actually ran and found a large
+     * table, so `fetchData()` can surface why the optimizations kicked in.
+     */
+    protected function resolveAdaptiveTableConfiguration(ModelCriteria $query, TableConfiguration $config): void
+    {
+        $needsDetection = $config->isSimplePaginationEnabled() === null
+            || $config->isCaseSensitiveSearchEnabled() === null
+            || $config->isSortingEnabled() === null;
+
+        if (!$needsDetection) {
+            return;
+        }
+
+        $isLargeTable = $this->hasLargeMainTable($query);
+        $this->isLargeTableModeActive = $isLargeTable;
+
+        if ($config->isSimplePaginationEnabled() === null) {
+            $config->setUseSimplePagination($isLargeTable);
+        }
+
+        if ($config->isCaseSensitiveSearchEnabled() === null) {
+            $config->setUseCaseSensitiveSearch($isLargeTable);
+        }
+
+        if ($config->isSortingEnabled() === null) {
+            $config->setUseSorting(!$isLargeTable);
+        }
+    }
+
+    /**
+     * Checks only the query's main table against `GuiConfig::getLargeTableRowCountThreshold()`, using the
+     * database's own approximate row-count statistics (`information_schema.TABLES.TABLE_ROWS` on
+     * MySQL/MariaDB, `pg_class.reltuples` on PostgreSQL) — a metadata lookup, not `COUNT(*)`, so checking is
+     * cheap regardless of how large the table actually is. Deliberately ignores joined tables: a join to a
+     * huge lookup table (e.g. products) via an indexed FK match still only ever produces one row per row of
+     * the main table (e.g. comments) — the joined table's total size says nothing about how expensive THIS
+     * query is, only the main table's cardinality does. Never lets a detection failure (missing permissions,
+     * an unsupported driver, a transient connection issue) break the table — it just falls back to treating
+     * the table as not large. Skips the metadata query entirely when the threshold is `null` — projects that
+     * never opted in via `GuiConfig::getLargeTableRowCountThreshold()` pay nothing for this check.
+     */
+    protected function hasLargeMainTable(ModelCriteria $query): bool
+    {
+        $threshold = $this->getGuiConfig()->getLargeTableRowCountThreshold();
+
+        if ($threshold === null) {
+            return false;
+        }
+
+        $tableMap = $query->getTableMap();
+
+        if ($tableMap === null) {
+            return false;
+        }
+
+        $rowCounts = $this->getApproximateTableRowCounts([$tableMap->getName()]);
+
+        foreach ($rowCounts as $rowCount) {
+            if ($rowCount >= $threshold) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array<string> $tableNames
+     *
+     * @return array<int>
+     */
+    protected function getApproximateTableRowCounts(array $tableNames): array
+    {
+        try {
+            $connection = Propel::getConnection();
+            $driverName = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+            $placeholders = implode(',', array_fill(0, count($tableNames), '?'));
+
+            $sql = $driverName === static::DRIVER_NAME_PGSQL
+                ? sprintf(
+                    'SELECT c.reltuples FROM pg_class c INNER JOIN pg_namespace n ON n.oid = c.relnamespace WHERE n.nspname = ANY (current_schemas(false)) AND c.relname IN (%s)',
+                    $placeholders,
+                )
+                : sprintf(
+                    'SELECT TABLE_ROWS FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME IN (%s)',
+                    $placeholders,
+                );
+
+            $statement = $connection->prepare($sql);
+
+            if ($statement === false) {
+                return [0];
+            }
+
+            $statement->execute($tableNames);
+
+            return array_map('intval', $statement->fetchAll(PDO::FETCH_COLUMN));
+        } catch (Throwable $throwable) {
+            return [0];
+        }
+    }
+
+    protected function getLargeTableModeHintMessage(): ?string
+    {
+        if (!$this->isLargeTableModeActive) {
+            return null;
+        }
+
+        $translator = $this->getTranslator();
+
+        if (!$translator) {
+            return static::LARGE_TABLE_MODE_HINT_MESSAGE;
+        }
+
+        return $translator->trans(static::LARGE_TABLE_MODE_HINT_MESSAGE);
+    }
+
+    protected function countFiltered(ModelCriteria $query): int
+    {
+        return $query->count();
+    }
+
+    /**
+     * Trims the extra lookahead row (if present) from `$data` and reports whether more results exist beyond
+     * the current page, without an exact count — the row itself proves there is at least one more result.
+     */
+    protected function resolveHasMoreResults(Collection $data, int $limit): int
+    {
+        if (count($data) <= $limit) {
+            return count($data);
+        }
+
+        $data->pop();
+
+        return $limit + 1;
     }
 
     /**
@@ -1076,7 +1277,10 @@ abstract class AbstractTable
             return $conditions;
         }
 
-        $conditionParameter = $connection->quote('%' . mb_strtolower($searchValue) . '%');
+        $conditionParameter = $config->isCaseSensitiveSearchEnabled()
+            ? $connection->quote(trim($searchValue))
+            : $connection->quote('%' . mb_strtolower($searchValue) . '%');
+
         foreach ($config->getSearchable() as $value) {
             $conditions[] = $this->buildCondition($searchPattern, $value, $filter, $conditionParameter);
         }
@@ -1154,6 +1358,8 @@ abstract class AbstractTable
             'recordsTotal' => $this->total,
             'recordsFiltered' => $this->filtered,
             'data' => $this->data,
+            'simplePaginationActive' => $this->config->isSimplePaginationEnabled() === true,
+            'performanceModeMessage' => $this->getLargeTableModeHintMessage(),
         ];
 
         return $wrapperArray;
@@ -1724,7 +1930,7 @@ abstract class AbstractTable
 
     protected function getSearchPattern(TableConfiguration $config, string $driverName, ModelCriteria $query): string
     {
-        if ($this->isStrictSearch($query, $config) === true) {
+        if ($this->isStrictSearch($query, $config) === true || $config->isCaseSensitiveSearchEnabled()) {
             return $this->getStrictSearchPatternByDriverName($driverName);
         }
 

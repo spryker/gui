@@ -10,7 +10,7 @@
      data-auto-errors="{{ tabsViewTransfer.autoErrors is null or tabsViewTransfer.autoErrors ? 'true' : 'false' }}">
     <ul class="nav nav-tabs" role="tablist">
         {% for tab in tabsViewTransfer.tabs %}
-            <li class="nav-link {% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}" data-bs-toggle="tab" data-bs-target="#tab-content-{{ tab.name }}" data-tab-content-id="tab-content-{{ tab.name }}" data-qa="tab-{{ tab.name }}" role="presentation">
+            <li class="nav-link {% if tabsViewTransfer.activeTabName == tab.name %}active{% endif %} {% if tab.hasError %}error{% endif %}" data-bs-toggle="tab" data-bs-target="#tab-content-{{ tab.name }}" data-tab-content-id="tab-content-{{ tab.name }}" data-qa="tab-{{ tab.name }}" role="tab">
                 <a href="#tab-content-{{ tab.name }}">{{ tab.title | trans }}</a>
             </li>
         {% endfor %}
