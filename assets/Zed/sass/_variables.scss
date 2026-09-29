@@ -3,6 +3,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+@use 'sass:color';
+
 :root,
 [data-bs-theme='light'] {
     --zed-spryker-logo-url: url('../img/spryker-logo-light.svg');
@@ -31,10 +33,10 @@ html[data-bs-theme='dark'][data-menu-color='dark'] {
 
 html[data-bs-theme='light'][data-menu-color='dark'] {
     --#{$prefix}sidenav-item-color: var(--bo-sidenav-text-color, #e4e4e4);
-    --#{$prefix}sidenav-item-active-color: color-mix(in srgb, var(--bo-sidenav-text-color), var(--bo-main-color) 35%);
+    --#{$prefix}sidenav-item-active-color: color-mix(in sRGB, var(--bo-sidenav-text-color), var(--bo-main-color) 35%);
     --#{$prefix}sidenav-bg: var(--bo-sidenav-color, #23303c);
     --#{$prefix}sidenav-border-color: var(--bo-sidenav-color);
-    --#{$prefix}sidenav-item-active-bg: color-mix(in srgb, var(--bo-sidenav-color), black 20%);
+    --#{$prefix}sidenav-item-active-bg: color-mix(in sRGB, var(--bo-sidenav-color), #000 20%);
 }
 
 $zed-logo: url(https://static.spryker.com/logo.svg) !default;
@@ -95,7 +97,7 @@ $tablet: 1023px;
 
 $label-link-hover-color: #fff !default;
 
-$brand-primary: darken(#428bca, 6.5%) !default; // #337ab7
+$brand-primary: color.adjust(#428bca, $lightness: -6.5%) !default; // #337ab7
 $brand-success: #5cb85c !default;
 $brand-info: #5bc0de !default;
 $brand-warning: #f0ad4e !default;
@@ -107,23 +109,23 @@ $btn-default-border: #ccc !default;
 
 $btn-primary-color: #fff !default;
 $btn-primary-bg: $brand-primary !default;
-$btn-primary-border: darken($btn-primary-bg, 5%) !default;
+$btn-primary-border: color.adjust($btn-primary-bg, $lightness: -5%) !default;
 
 $btn-success-color: #fff !default;
 $btn-success-bg: $brand-success !default;
-$btn-success-border: darken($btn-success-bg, 5%) !default;
+$btn-success-border: color.adjust($btn-success-bg, $lightness: -5%) !default;
 
 $btn-info-color: #fff !default;
 $btn-info-bg: $brand-info !default;
-$btn-info-border: darken($btn-info-bg, 5%) !default;
+$btn-info-border: color.adjust($btn-info-bg, $lightness: -5%) !default;
 
 $btn-warning-color: #fff !default;
 $btn-warning-bg: $brand-warning !default;
-$btn-warning-border: darken($btn-warning-bg, 5%) !default;
+$btn-warning-border: color.adjust($btn-warning-bg, $lightness: -5%) !default;
 
 $btn-danger-color: #fff !default;
 $btn-danger-bg: $brand-danger !default;
-$btn-danger-border: darken($btn-danger-bg, 5%) !default;
+$btn-danger-border: color.adjust($btn-danger-bg, $lightness: -5%) !default;
 
 :root {
     scroll-behavior: auto !important;
@@ -131,9 +133,9 @@ $btn-danger-border: darken($btn-danger-bg, 5%) !default;
 }
 
 body {
-    --bs-body-line-height: 1.428571429;
+    --bs-body-line-height: 1.4286;
     --bs-body-font-size: 14px;
-    --bs-table-striped-bg: $grey-lighter;
+    --bs-table-striped-bg: #{$grey-lighter};
     --bs-body-font-family: 'Montserrat', sans-serif;
 
     &.login {

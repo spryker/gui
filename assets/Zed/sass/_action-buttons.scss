@@ -1,24 +1,3 @@
-@mixin coloredButton($backgroundColor, $color, $hoverColor: '') {
-    background-color: $backgroundColor;
-    border-color: $backgroundColor;
-    color: $color;
-
-    &.btn-outline {
-        background: transparent;
-        color: $backgroundColor;
-
-        &:hover {
-            background-color: $backgroundColor;
-            border-color: $backgroundColor;
-            @if $hoverColor == '' {
-                color: $color;
-            } @else {
-                color: $hoverColor;
-            }
-        }
-    }
-}
-
 .btn-back {
     @extend .btn-outline-dark;
 }

@@ -126,7 +126,7 @@ textarea {
 select {
     padding: 8px 30px 8px 12px;
     appearance: none;
-    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
 
     &:not(.flatpickr-monthDropdown-months) {
         background: var(--ins-secondary-bg) #{calc(100% - 10px) 50% / 12px auto} no-repeat
@@ -186,7 +186,7 @@ select.form-control {
     border-radius: 0 20px 20px 0;
     padding: 6px 8px;
     height: 38px;
-    font-family: 'fontello';
+    font-family: fontello, sans-serif;
     font-style: normal;
     font-size: 16px;
     line-height: 1;

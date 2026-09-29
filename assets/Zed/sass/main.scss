@@ -9,7 +9,7 @@ $icon-font-path: '../../fonts/bootstrap/';
 // external dependencies
 @import '~jquery-ui/themes/base/all.css';
 @import '../../Inspinia/css/style';
-@import '../../Inspinia2/scss/app.scss';
+@import '../../Inspinia2/scss/app';
 
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~datatables.net-bs5/css/dataTables.bootstrap5.min';
@@ -42,4 +42,4 @@ $icon-font-path: '../../fonts/bootstrap/';
 @import 'alert';
 @import 'ibox';
 @import 'datepicker';
-@import 'nestable-list.scss';
+@import 'nestable-list';

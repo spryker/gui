@@ -97,7 +97,6 @@ export class TableFileUploader {
                 }),
             );
         } catch (error) {
-            // eslint-disable-next-line no-console
             console.error('Upload failed:', error);
         } finally {
             target.classList.remove(this.staticClasses.isLoading);

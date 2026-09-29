@@ -60,15 +60,15 @@ html[data-sidenav-size='condensed'] .content-page {
 }
 
 a {
-    color: rgba(var(--ins-link-color-rgb), var(--ins-link-opacity, 1));
+    color: rgb(var(--ins-link-color-rgb), var(--ins-link-opacity, 1));
     text-decoration: none;
 
     &:hover {
         --ins-link-color-rgb: var(--ins-link-hover-color-rgb);
     }
 
-    &:not([href]):not([class]),
-    &:not([href]):not([class]):hover {
+    &:not([href], [class]),
+    &:not([href], [class]):hover {
         color: inherit;
         text-decoration: none;
     }
@@ -120,6 +120,7 @@ h3 {
 
 .tooltip-inner {
     max-width: 600px;
+    text-align: left;
 }
 
 .login {
@@ -164,7 +165,7 @@ h3 {
             text-transform: uppercase;
             font-weight: 500;
 
-            &:after {
+            &::after {
                 content: none;
             }
         }
@@ -214,6 +215,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
     span {
         display: block;
     }
+
     i {
         display: none;
     }
@@ -304,7 +306,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
     &__message {
         --ins-bg-opacity: 1;
         display: block;
-        background: rgba(var(--ins-light-rgb), var(--ins-bg-opacity));
+        background: rgb(var(--ins-light-rgb), var(--ins-bg-opacity));
         border-radius: 10px;
         padding: 7px 12px 9px;
         line-height: 18px;
@@ -368,7 +370,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
     background: var(--ins-secondary-bg);
     border-radius: 10px;
     border: var(--ins-border-width) solid var(--ins-border-color);
-    box-shadow: 0 1px 3px rgba(18, 18, 18, 0.15);
+    box-shadow: 0 1px 3px rgb(18 18 18 / 15%);
     padding: 20px 25px;
     display: flex;
     gap: 40px;
@@ -394,10 +396,6 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 
 .storage-tooltip {
     color: #337ab7;
-}
-
-.tooltip-inner {
-    text-align: left;
 }
 
 .storage-key {

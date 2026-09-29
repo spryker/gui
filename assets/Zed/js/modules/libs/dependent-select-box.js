@@ -42,7 +42,9 @@ function DependentSelectBox(options) {
             data: this.data,
             success: function (data) {
                 _self.updateTargetSelectBox(data);
-                _self.successCallback ? _self.successCallback(data) : null;
+                if (_self.successCallback) {
+                    _self.successCallback(data);
+                }
             },
         });
     };

@@ -17,7 +17,7 @@ function getLocale() {
 function getTranslation(locale) {
     try {
         return require('./i18n/' + locale + '.json');
-    } catch (e) {
+    } catch {
         return require('./i18n/en.json');
     }
 }

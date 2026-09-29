@@ -6,7 +6,7 @@
 
         &-header {
             padding: 14px 20px;
-            background-color: white;
+            background-color: #fff;
             background-image: none;
         }
 
@@ -22,7 +22,7 @@
                 margin: 0;
             }
 
-            &:before {
+            &::before {
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -50,7 +50,7 @@
                     font-size: 8px;
                     margin-right: 4px;
                     margin-left: 2px;
-                    font-family: 'fontello';
+                    font-family: fontello, sans-serif;
                     font-style: normal;
                     vertical-align: 20%;
                 }
@@ -58,6 +58,7 @@
                 &:focus {
                     color: $ink-base;
                     background-color: $grey-lighter;
+
                     i {
                         color: $green-default;
                     }
@@ -77,13 +78,14 @@
             }
 
             &.active {
-                &:before {
+                &::before {
                     background: $green-default;
                 }
 
                 & > a {
                     color: $green-dark;
                     background-color: $grey-lighter;
+
                     .fa {
                         color: $green-default !important;
                     }

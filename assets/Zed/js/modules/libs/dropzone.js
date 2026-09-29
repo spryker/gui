@@ -50,7 +50,6 @@ export class Dropzone {
 
         for (const file of Array.from(files)) {
             if (data.transfer.files.length >= max) {
-                // eslint-disable-next-line no-console
                 console.warn(`The maximum number of files is ${this.max}`);
                 break;
             }
@@ -58,7 +57,6 @@ export class Dropzone {
             const isFileTypeAllowed = file.type.split('/').some((type) => accept.includes(type));
 
             if (!isFileTypeAllowed || !file.type) {
-                // eslint-disable-next-line no-console
                 console.warn(`The file ${file.name} has an unsupported format`);
                 continue;
             }

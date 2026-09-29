@@ -4,15 +4,12 @@
 
 .tab-content {
     background: var(--ins-secondary-bg);
+    border: solid var(--ins-border-color);
+    border-width: 0 var(--ins-border-width) var(--ins-border-width);
 }
 
 .tabs-footer {
     padding: 10px 0;
-}
-
-.tab-content {
-    border: solid var(--ins-border-color);
-    border-width: 0 var(--ins-border-width) var(--ins-border-width);
 }
 
 .nav-link a {

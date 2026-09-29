@@ -13,12 +13,12 @@
 
     .label-success {
         --ins-success-rgb: var(--ins-primary);
+
         @extend .badge-outline-success;
     }
 
     .label-primary {
         @extend .badge-outline-primary;
-
         color: var(--ins-success);
         border-color: currentColor;
     }

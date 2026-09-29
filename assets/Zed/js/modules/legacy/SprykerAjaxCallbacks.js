@@ -24,7 +24,7 @@ module.exports = new (function () {
      * @param ajaxResponse
      */
     self.changeStatusMarkInGrid = function (ajaxResponse) {
-        if (ajaxResponse.code == self.codeSuccess) {
+        if (ajaxResponse.code === self.codeSuccess) {
             $('#active-' + ajaxResponse.id).prop('checked', ajaxResponse.newStatus);
         } else {
             self.alerter.error(ajaxResponse.message);

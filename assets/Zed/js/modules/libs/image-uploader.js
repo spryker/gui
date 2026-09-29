@@ -81,10 +81,10 @@ export class ImageUploader {
         }
 
         data.deleteInput.setAttribute('checked', 'checked');
-        this.detachModalBehaviorFromDeleteButton();
+        this.detachModalBehaviorFromDeleteButton(data);
     }
 
-    detachModalBehaviorFromDeleteButton() {
+    detachModalBehaviorFromDeleteButton(data) {
         const trigger = data.uploader.querySelector('[data-toggle="modal"]');
 
         if (!trigger) {

@@ -3,7 +3,6 @@
 
     @extend .btn;
     @extend .btn-primary;
-
     gap: var(--btn-flex-gap);
     align-items: center;
 
@@ -42,7 +41,7 @@
     --ins-btn-color: #fff;
     --ins-btn-hover-color: #fff;
     --ins-btn-active-color: #fff;
-    --ins-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --ins-btn-active-shadow: inset 0 3px 5px rgb(0 0 0 / 12.5%);
     --ins-btn-disabled-color: #fff;
     --ins-btn-bg: var(--ins-danger);
     --ins-btn-border-color: var(--ins-danger);
@@ -70,7 +69,7 @@
     --ins-btn-color: #fff;
     --ins-btn-hover-color: #fff;
     --ins-btn-active-color: #fff;
-    --ins-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --ins-btn-active-shadow: inset 0 3px 5px rgb(0 0 0 / 12.5%);
     --ins-btn-disabled-color: #fff;
     --ins-btn-bg: var(--ins-secondary);
     --ins-btn-border-color: var(--ins-secondary);
@@ -102,11 +101,9 @@
     --ins-btn-focus-shadow-rgb: var(--ins-warning-rgb);
     --ins-btn-active-bg: var(--ins-warning-text-emphasis);
     --ins-btn-active-border-color: var(--ins-warning-text-emphasis);
-    --ins-btn-disabled-bg: var(--ins-warning);
-    --ins-btn-disabled-border-color: var(--ins-warning);
     --ins-btn-hover-color: #fff;
     --ins-btn-active-color: #fff;
-    --ins-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --ins-btn-active-shadow: inset 0 3px 5px rgb(0 0 0 / 12.5%);
     --ins-btn-disabled-color: #f8ac59;
     --ins-btn-disabled-bg: transparent;
     --ins-btn-disabled-border-color: #f8ac59;
@@ -170,7 +167,6 @@
 .btn.disabled,
 fieldset:disabled .btn {
     --ins-btn-disabled-opacity: 0.4;
-
     color: inherit;
     background-color: inherit;
     border-color: inherit;
