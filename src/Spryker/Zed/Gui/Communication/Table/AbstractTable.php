@@ -997,7 +997,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
+     * @todo Refactor this class to allow unspecified header columns and to add flexibility
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config

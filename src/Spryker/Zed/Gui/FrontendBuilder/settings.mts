@@ -41,11 +41,12 @@ const resolveNamespaceDirectory = (context: string, namespace: string): string =
 // `features` (resolve.modules) and `project` (the key a settings file may replace).
 const NAMESPACE_SOURCE_KEYS: Record<string, string> = { Spryker: 'core', SprykerFeature: 'features', Pyz: 'project' };
 
-// The finder lets a later root win, the backend lists the strongest first: both lists are reversed.
+// The finder lets a later root win, the backend lists the strongest first: each list is reversed on its
+// own, so the project namespaces stay after the core ones.
 const buildGeneratedSources = (context: string, generated: GeneratedBuildConfiguration): Record<string, string> => {
     const sources: Record<string, string> = {};
 
-    [...generated.coreNamespaces, ...generated.projectNamespaces].reverse().forEach((namespace) => {
+    [...[...generated.coreNamespaces].reverse(), ...[...generated.projectNamespaces].reverse()].forEach((namespace) => {
         sources[NAMESPACE_SOURCE_KEYS[namespace] ?? namespace.toLowerCase()] = resolveNamespaceDirectory(
             context,
             namespace,

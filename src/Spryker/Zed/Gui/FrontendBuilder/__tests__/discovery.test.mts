@@ -1,7 +1,7 @@
 import { basename, join } from 'node:path';
 import { describe, it, expect, afterEach } from '@jest/globals';
 import { deriveEntryName, findEntryPoints, findFiles } from '../libs/webpack/finder.mts';
-import { defineConfig, getAppSettings } from '../settings.mts';
+import { applyGeneratedBuildConfiguration, defineConfig, getAppSettings } from '../settings.mts';
 import { createModuleTree, removeCreatedModuleTrees } from './helpers/module-tree.mts';
 
 const entryPatterns = ['**/Zed/**/*.entry.js', '**/Zed/**/*.entry.ts', '!**/node_modules/**'];
@@ -109,6 +109,23 @@ describe('entry point discovery in a custom project namespace', () => {
 
         expect(Object.keys(entryPoints).sort()).toEqual(['spryker-zed-acme-only', 'spryker-zed-tax-main']);
         expect(entryPoints['spryker-zed-tax-main']).toContain(join('src', 'Acme', 'Zed', 'Tax'));
+    });
+});
+
+describe('entry point discovery with the build configuration from the backend', () => {
+    it('lets a Pyz entry replace the same-named core entry, as the class resolver prefers Pyz', async () => {
+        const context = createModuleTree({
+            'vendor/spryker/tax/assets/Zed/js/spryker-zed-tax-main.entry.js': '// core entry',
+            'src/Pyz/Zed/Tax/assets/Zed/js/spryker-zed-tax-main.entry.js': '// Pyz override',
+        });
+        const globalSettings = applyGeneratedBuildConfiguration(
+            { ...defineConfig({}), context },
+            { coreNamespaces: ['Spryker'], projectNamespaces: ['Pyz'] },
+        );
+
+        const entryPoints = await findEntryPoints(getAppSettings(globalSettings, 'development').find.entryPoints);
+
+        expect(entryPoints['spryker-zed-tax-main']).toContain(join('src', 'Pyz', 'Zed', 'Tax'));
     });
 });
 

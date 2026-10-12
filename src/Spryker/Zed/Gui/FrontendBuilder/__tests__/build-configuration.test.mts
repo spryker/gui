@@ -86,15 +86,16 @@ describe('applying the generated build configuration', () => {
     it('scans every namespace weakest first, src/ when the repository holds it and vendor/ otherwise, under the built-in keys', () => {
         const settings = applyGeneratedBuildConfiguration(settingsFor(createContext()), generated);
 
-        expect(settings.paths.sources).toEqual({
-            sprykersdk: './vendor/spryker-sdk',
-            core: './src/Spryker',
-            sprykereco: './vendor/spryker-eco',
-            features: './src/SprykerFeature',
-            sprykershop: './src/SprykerShop',
-            project: './src/Pyz',
-            acme: './src/Acme',
-        });
+        // Entries, not the object: `toEqual` on an object ignores key order, and the order is the precedence.
+        expect(Object.entries(settings.paths.sources)).toEqual([
+            ['sprykersdk', './vendor/spryker-sdk'],
+            ['core', './src/Spryker'],
+            ['sprykereco', './vendor/spryker-eco'],
+            ['features', './src/SprykerFeature'],
+            ['sprykershop', './src/SprykerShop'],
+            ['project', './src/Pyz'],
+            ['acme', './src/Acme'],
+        ]);
     });
 
     it('resolves every core namespace to vendor/ in a project checkout', () => {
