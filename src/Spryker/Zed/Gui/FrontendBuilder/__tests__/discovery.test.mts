@@ -1,6 +1,7 @@
 import { basename, join } from 'node:path';
 import { describe, it, expect, afterEach } from '@jest/globals';
 import { deriveEntryName, findEntryPoints, findFiles } from '../libs/webpack/finder.mts';
+import { defineConfig, getAppSettings } from '../settings.mts';
 import { createModuleTree, removeCreatedModuleTrees } from './helpers/module-tree.mts';
 
 const entryPatterns = ['**/Zed/**/*.entry.js', '**/Zed/**/*.entry.ts', '!**/node_modules/**'];
@@ -71,6 +72,43 @@ describe('entry point discovery', () => {
         });
 
         expect(entryPoints['spryker-zed-alpha']).toContain(join('ModuleA', 'assets'));
+    });
+});
+
+describe('entry point discovery in a custom project namespace', () => {
+    const createNamespacedProject = (): string =>
+        createModuleTree({
+            'src/Pyz/Zed/Tax/assets/Zed/js/spryker-zed-tax-main.entry.js': '// Pyz entry',
+            'src/Pyz/Zed/PyzOnly/assets/Zed/js/spryker-zed-pyz-only.entry.js': '// Pyz-only entry',
+            'src/Acme/Zed/Tax/assets/Zed/js/spryker-zed-tax-main.entry.js': '// custom namespace override',
+            'src/Acme/Zed/AcmeOnly/assets/Zed/js/spryker-zed-acme-only.entry.ts': '// custom namespace entry',
+        });
+
+    const findProjectEntryPoints = (context: string, sources: Record<string, string>) =>
+        findEntryPoints(
+            getAppSettings({ ...defineConfig({ paths: { sources } }), context }, 'development').find.entryPoints,
+        );
+
+    it('builds the entries of Pyz and of a namespace registered next to it, the later namespace winning a name', async () => {
+        const context = createNamespacedProject();
+
+        const entryPoints = await findProjectEntryPoints(context, {
+            project: './src/Pyz/Zed',
+            acme: './src/Acme/Zed',
+        });
+
+        expect(entryPoints['spryker-zed-pyz-only']).toContain(join('src', 'Pyz', 'Zed', 'PyzOnly'));
+        expect(entryPoints['spryker-zed-acme-only']).toContain(join('src', 'Acme', 'Zed', 'AcmeOnly'));
+        expect(entryPoints['spryker-zed-tax-main']).toContain(join('src', 'Acme', 'Zed', 'Tax'));
+    });
+
+    it('builds no Pyz entry once the namespace replaces Pyz under the project key', async () => {
+        const context = createNamespacedProject();
+
+        const entryPoints = await findProjectEntryPoints(context, { project: './src/Acme/Zed' });
+
+        expect(Object.keys(entryPoints).sort()).toEqual(['spryker-zed-acme-only', 'spryker-zed-tax-main']);
+        expect(entryPoints['spryker-zed-tax-main']).toContain(join('src', 'Acme', 'Zed', 'Tax'));
     });
 });
 

@@ -1,7 +1,86 @@
 import { dirname, join, resolve } from 'node:path';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import type { FindSettings } from './libs/webpack/finder.mts';
+
+// Written by the backend before every build; without it the built-in layout stays in effect.
+export const BUILD_CONFIGURATION_PATH = 'data/cache/Zed/frontend/build-config.json';
+
+export interface GeneratedBuildConfiguration {
+    /** Strongest first. */
+    coreNamespaces: string[];
+    projectNamespaces: string[];
+}
+
+export const readGeneratedBuildConfiguration = (context: string): GeneratedBuildConfiguration | null => {
+    const filePath = join(context, BUILD_CONFIGURATION_PATH);
+
+    if (!existsSync(filePath)) {
+        return null;
+    }
+
+    const parsed: Partial<GeneratedBuildConfiguration> = JSON.parse(readFileSync(filePath, 'utf8'));
+
+    if (!Array.isArray(parsed.coreNamespaces) || !Array.isArray(parsed.projectNamespaces)) {
+        throw new Error(
+            `${filePath}: "coreNamespaces" and "projectNamespaces" must be lists of namespace names; ` +
+                `regenerate the file with "vendor/bin/console frontend:zed:build".`,
+        );
+    }
+
+    return parsed as GeneratedBuildConfiguration;
+};
+
+const dasherize = (value: string): string => value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+// `src/<Namespace>` when the repository holds the modules, the Composer package directory otherwise.
+const resolveNamespaceDirectory = (context: string, namespace: string): string =>
+    existsSync(join(context, 'src', namespace)) ? `./src/${namespace}` : `./vendor/${dasherize(namespace)}`;
+
+// The keys the rest of the builder reads: `core` (Gui package, legacy aliases, resolve.modules),
+// `features` (resolve.modules) and `project` (the key a settings file may replace).
+const NAMESPACE_SOURCE_KEYS: Record<string, string> = { Spryker: 'core', SprykerFeature: 'features', Pyz: 'project' };
+
+// The finder lets a later root win, the backend lists the strongest first: both lists are reversed.
+const buildGeneratedSources = (context: string, generated: GeneratedBuildConfiguration): Record<string, string> => {
+    const sources: Record<string, string> = {};
+
+    [...generated.coreNamespaces, ...generated.projectNamespaces].reverse().forEach((namespace) => {
+        sources[NAMESPACE_SOURCE_KEYS[namespace] ?? namespace.toLowerCase()] = resolveNamespaceDirectory(
+            context,
+            namespace,
+        );
+    });
+
+    return sources;
+};
+
+// Defaults, then the generated file, then the project settings on top: a `paths` value the settings
+// changed survives, so a root from `frontend/backoffice.settings.mts` is scanned after the generated ones.
+export const applyGeneratedBuildConfiguration = (
+    settings: GlobalSettings,
+    generated: GeneratedBuildConfiguration | null,
+): GlobalSettings => {
+    if (generated === null) {
+        return settings;
+    }
+
+    const projectSources = Object.fromEntries(
+        Object.entries(settings.paths.sources).filter(
+            ([key, root]) => defaultGlobalSettings.paths.sources[key] !== root,
+        ),
+    );
+
+    return {
+        ...settings,
+        paths: {
+            ...settings.paths,
+            sources: { ...buildGeneratedSources(settings.context, generated), ...projectSources },
+        },
+        generatedBuildConfiguration: generated,
+        buildConfigurationSource: `generated (${join(settings.context, BUILD_CONFIGURATION_PATH)})`,
+    };
+};
 
 export interface SourceLayout {
     name: string;
@@ -27,6 +106,8 @@ export interface GlobalSettings {
     /** Whether `lint` also runs the TypeScript compiler over the Back Office sources. */
     typecheck: boolean;
     expectedModeArgument: number;
+    generatedBuildConfiguration: GeneratedBuildConfiguration | null;
+    buildConfigurationSource: string;
 }
 
 export interface AppSettings {
@@ -51,8 +132,7 @@ interface DefineConfigOverrides {
     typecheck?: boolean;
 }
 
-// Resolution order: a later root overrides an earlier one, so `project` is last. Do not reorder the
-// first four: existing entry name collisions depend on it.
+// The fallback without a generated file. A later root overrides an earlier one, so `project` is last.
 const monorepoSourceLayout: SourceLayout = {
     name: 'monorepo (modules in src/)',
     marker: 'src/Spryker',
@@ -166,6 +246,9 @@ export const defaultGlobalSettings: GlobalSettings = {
     typecheck: detectedSourceLayout.typecheck,
 
     expectedModeArgument: 2,
+
+    generatedBuildConfiguration: null,
+    buildConfigurationSource: `built-in defaults (no ${BUILD_CONFIGURATION_PATH}; the backend generates it)`,
 };
 
 export const defineConfig = (overrides: DefineConfigOverrides = {}): GlobalSettings => ({
@@ -187,14 +270,16 @@ export const PROJECT_SETTINGS_RELATIVE_PATH = 'frontend/backoffice.settings.mts'
 export const loadProjectGlobalSettings = async (): Promise<GlobalSettings> => {
     const projectOverridePath = join(resolveProjectRoot(), PROJECT_SETTINGS_RELATIVE_PATH);
 
+    const generated = readGeneratedBuildConfiguration(defaultGlobalSettings.context);
+
     if (!existsSync(projectOverridePath)) {
-        return defaultGlobalSettings;
+        return applyGeneratedBuildConfiguration(defaultGlobalSettings, generated);
     }
 
     try {
         const { default: projectSettings } = await import(pathToFileURL(projectOverridePath).href);
 
-        return projectSettings as GlobalSettings;
+        return applyGeneratedBuildConfiguration(projectSettings as GlobalSettings, generated);
     } catch (error) {
         const reason = error instanceof Error ? error.message : String(error);
 

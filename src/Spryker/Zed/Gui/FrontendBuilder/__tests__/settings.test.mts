@@ -2,7 +2,13 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, it, expect, afterEach } from '@jest/globals';
-import { defineConfig, getAppSettings, resolveProjectRoot, resolveSourceLayout } from '../settings.mts';
+import {
+    defaultGlobalSettings,
+    defineConfig,
+    getAppSettings,
+    resolveProjectRoot,
+    resolveSourceLayout,
+} from '../settings.mts';
 
 const temporaryRoots: string[] = [];
 
@@ -77,6 +83,24 @@ describe('project configuration overrides', () => {
         expect(globalSettings.paths.sources.core).toBeDefined();
         expect(globalSettings.paths.publicDir).toBe('./public/Backoffice/assets');
     });
+
+    it('registers a custom namespace under a new key next to Pyz, after every built-in root', () => {
+        const globalSettings = defineConfig({ paths: { sources: { acme: './src/Acme/Zed' } } });
+
+        expect(Object.entries(globalSettings.paths.sources)).toEqual([
+            ...Object.entries(defaultGlobalSettings.paths.sources),
+            ['acme', './src/Acme/Zed'],
+        ]);
+    });
+
+    it('replaces Pyz with a custom namespace registered under the project key, keeping the root order', () => {
+        const globalSettings = defineConfig({ paths: { sources: { project: './src/Acme/Zed' } } });
+        const sourceRoots = Object.values(globalSettings.paths.sources);
+
+        expect(Object.keys(globalSettings.paths.sources)).toEqual(Object.keys(defaultGlobalSettings.paths.sources));
+        expect(sourceRoots.at(-1)).toBe('./src/Acme/Zed');
+        expect(sourceRoots.some((sourceRoot) => sourceRoot.includes('/Pyz/'))).toBe(false);
+    });
 });
 
 describe('application settings', () => {
@@ -92,5 +116,16 @@ describe('application settings', () => {
         const appSettings = getAppSettings(defineConfig(), 'development');
 
         expect(appSettings.find.entryPoints.patterns).toContain('!**/Zed/Gui/FrontendBuilder/**');
+    });
+
+    it('scans a custom namespace registered next to Pyz for entry points and module dependencies, after Pyz', () => {
+        const globalSettings = defineConfig({ paths: { sources: { acme: './src/Acme/Zed' } } });
+        const projectDirectory = join(globalSettings.context, globalSettings.paths.sources.project);
+        const customNamespaceDirectory = join(globalSettings.context, 'src/Acme/Zed');
+
+        const { entryPoints, resolveModules } = getAppSettings(globalSettings, 'development').find;
+
+        expect(entryPoints.dirs.slice(-2)).toEqual([projectDirectory, customNamespaceDirectory]);
+        expect(resolveModules.dirs.slice(-2)).toEqual([projectDirectory, customNamespaceDirectory]);
     });
 });

@@ -18,6 +18,7 @@ export const run = async (globalSettings: GlobalSettings = defaultGlobalSettings
 
     // An empty build is almost always a layout or working-directory problem, so the layout is logged.
     console.log(`Source layout: ${resolveSourceLayout(globalSettings.context).name}`);
+    console.log(`Build configuration: ${globalSettings.buildConfigurationSource}`);
 
     const configurationModule = modeConfigurationMap[mode];
 

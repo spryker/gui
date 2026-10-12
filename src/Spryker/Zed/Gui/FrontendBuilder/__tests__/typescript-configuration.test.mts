@@ -123,6 +123,19 @@ describe('fresh generation', () => {
         expect(paths['@zed/tax/*']).toEqual(['../../../../../../../../src/Spryker/Tax/assets/Zed/*']);
     });
 
+    it('names the alias of a monorepo project module after the module, not after the Zed layer', async () => {
+        const context = createMonorepoRoot();
+        mkdirSync(join(context, 'src/Pyz/PriceFormatting/src/Pyz/Zed/PriceFormatting/assets/Zed'), { recursive: true });
+
+        const [buildConfiguration] = await reconcileTypeScriptConfigurations(settingsFor(context));
+        const paths = buildConfiguration.configuration.compilerOptions!.paths!;
+
+        expect(paths['@zed/price-formatting/*']).toEqual([
+            '../../../../../../../../src/Pyz/PriceFormatting/src/Pyz/Zed/PriceFormatting/assets/Zed/*',
+        ]);
+        expect(paths['@zed/zed/*']).toBeUndefined();
+    });
+
     it('keeps the three legacy aliases, in both the bare and the prefix form webpack needs', async () => {
         const context = createMonorepoRoot();
 
@@ -298,6 +311,79 @@ describe('the builder-owned defaults', () => {
         const { configuration } = reconcileDefaultsConfiguration(settingsFor(context));
 
         expect(configuration.compilerOptions!.paths).toBeUndefined();
+    });
+});
+
+describe('a custom project namespace', () => {
+    const createNamespacedProjectRoot = (): string =>
+        createRoot([
+            'vendor/spryker/gui/assets/Zed',
+            'vendor/spryker/tax/assets/Zed',
+            PROJECT_BUILDER_DIRECTORY,
+            'src/Pyz/Zed/Tax/assets/Zed',
+            'src/Pyz/Zed/PyzOnly/assets/Zed',
+            'src/Acme/Zed/Tax/assets/Zed',
+            'src/Acme/Zed/AcmeOnly/assets/Zed',
+        ]);
+
+    const namespacedSettingsFor = (context: string, sources: Record<string, string>): GlobalSettings => {
+        const settings = projectSettingsFor(context);
+
+        return { ...settings, paths: { ...settings.paths, sources: { ...settings.paths.sources, ...sources } } };
+    };
+
+    it('aliases the modules of Pyz and of a namespace registered next to it', async () => {
+        const context = createNamespacedProjectRoot();
+
+        const [buildConfiguration] = await reconcileTypeScriptConfigurations(
+            namespacedSettingsFor(context, { acme: './src/Acme/Zed' }),
+        );
+        const paths = buildConfiguration.configuration.compilerOptions!.paths!;
+
+        expect(paths['@zed/pyz-only/*']).toEqual([`${BUILDER_LADDER}/src/Pyz/Zed/PyzOnly/assets/Zed/*`]);
+        expect(paths['@zed/acme-only/*']).toEqual([`${BUILDER_LADDER}/src/Acme/Zed/AcmeOnly/assets/Zed/*`]);
+    });
+
+    it('points the alias of a module both namespaces contain at the later namespace only, as a whole', async () => {
+        const context = createNamespacedProjectRoot();
+
+        const [buildConfiguration] = await reconcileTypeScriptConfigurations(
+            namespacedSettingsFor(context, { acme: './src/Acme/Zed' }),
+        );
+
+        expect(buildConfiguration.configuration.compilerOptions!.paths!['@zed/tax/*']).toEqual([
+            `${BUILDER_LADDER}/src/Acme/Zed/Tax/assets/Zed/*`,
+        ]);
+    });
+
+    it('lints and type-checks both Pyz and a namespace registered next to it', async () => {
+        const context = createNamespacedProjectRoot();
+
+        const [, lintConfiguration] = await reconcileTypeScriptConfigurations(
+            namespacedSettingsFor(context, { acme: './src/Acme/Zed' }),
+        );
+
+        expect(lintConfiguration.configuration.include).toEqual(
+            expect.arrayContaining([
+                `${BUILDER_LADDER}/src/Pyz/Zed/**/assets/Zed/**/*.ts`,
+                `${BUILDER_LADDER}/src/Acme/Zed/**/assets/Zed/**/*.ts`,
+            ]),
+        );
+    });
+
+    it('drops every Pyz alias and include once the namespace replaces Pyz under the project key', async () => {
+        const context = createNamespacedProjectRoot();
+
+        const [buildConfiguration, lintConfiguration] = await reconcileTypeScriptConfigurations(
+            namespacedSettingsFor(context, { project: './src/Acme/Zed' }),
+        );
+        const mentionsPyz = (entries: string[]): boolean => entries.some((entry) => entry.includes('/src/Pyz/'));
+
+        expect(mentionsPyz(Object.values(buildConfiguration.configuration.compilerOptions!.paths!).flat())).toBe(false);
+        expect(mentionsPyz(lintConfiguration.configuration.include ?? [])).toBe(false);
+        expect(lintConfiguration.configuration.include).toContain(
+            `${BUILDER_LADDER}/src/Acme/Zed/**/assets/Zed/**/*.ts`,
+        );
     });
 });
 

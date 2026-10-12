@@ -31,14 +31,13 @@ const findAssetRootDirectories = async (context: string, sourceRoot: string): Pr
     return directories.sort();
 };
 
-// The first segment below the source root, which also holds for the nested `src/SprykerFeature/<Module>/src/…` shape.
-const getModuleDirectoryName = (sourceRoot: string, assetRootDirectory: string): string | null => {
-    const sourceRootSegmentCount = toConfigurationPathSegments(sourceRoot).filter(
-        (segment) => !segment.includes('*'),
-    ).length;
+// The directory that contains `assets/Zed` is the module, whatever lies above it: `src/Spryker/Tax`,
+// `src/Pyz/PriceFormatting/src/Pyz/Zed/PriceFormatting`, `src/Pyz/Zed/Tax` and `vendor/spryker/tax` all
+// name their module in that position.
+const getModuleDirectoryName = (assetRootDirectory: string): string | null => {
     const segments = toConfigurationPathSegments(assetRootDirectory);
 
-    return segments[sourceRootSegmentCount] ?? null;
+    return segments[segments.length - toConfigurationPathSegments(ASSET_ROOT_SUFFIX).length - 1] ?? null;
 };
 
 export const buildGeneratedModulePathAliases = async (globalSettings: GlobalSettings): Promise<ModulePathAliases> => {
@@ -50,7 +49,7 @@ export const buildGeneratedModulePathAliases = async (globalSettings: GlobalSett
         const shallowestByModule = new Map<string, string>();
 
         for (const assetRootDirectory of assetRootDirectories) {
-            const moduleDirectoryName = getModuleDirectoryName(sourceRoot, assetRootDirectory);
+            const moduleDirectoryName = getModuleDirectoryName(assetRootDirectory);
 
             if (moduleDirectoryName === null) {
                 continue;

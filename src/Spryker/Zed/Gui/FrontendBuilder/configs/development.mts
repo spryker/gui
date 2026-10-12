@@ -66,13 +66,14 @@ export const getConfiguration = async (appSettings: AppSettings): Promise<Webpac
         },
 
         resolve: {
+            // The generated build configuration may not list every built-in root.
             modules: [
                 ...zedModuleDirectories,
                 'node_modules',
                 appSettings.paths.sourcePath,
                 appSettings.paths.sources.core,
                 appSettings.paths.sources.features,
-            ],
+            ].filter((directory): directory is string => directory !== undefined),
             extensions: ['.ts', '.js', '.css', '.scss'],
             // Shared with the generated TypeScript configuration so the editor and bundler resolve alike.
             alias: getAliasList(appSettings.context),
