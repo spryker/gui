@@ -58,6 +58,11 @@ The array is JSON-encoded onto the `<table>` and arrives as `data.config` in the
 addressed by **header id** (the key in `setHeader()`), never by index — so reordering columns cannot break a
 feature.
 
+The `inputSelector` input carries the selected IDs comma-separated, and that is what the form submits. Let
+the form render the submitted value back: when a submit fails validation, `SelectableTable` restores the
+selection from those IDs. Each row comes from the copy the browser stored while the user selected it; an ID
+without one shows as an ID-only row until the table draws its row. Don't blank the field to protect the table.
+
 ### 2. Otherwise take a handle
 
 Reach the orchestrator over the DOM. Never `import { Table }` — each Zed module is a separate bundle, so an
@@ -138,14 +143,16 @@ A feature with no `attribute` runs on **every** table (`performance`, `searchabl
 | `features`                 | Sibling features on this table                         |
 | `tables`                   | Map of every initialized table                         |
 | `requestTable`             | `(element, cb)` — reach a second table, created or not |
+| `isManagedTable`           | `(element)` — whether `requestTable` can reach it      |
 | `options` / `translations` | Shared config and the current locale's strings         |
 
 A static `configuration(table)` on the class contributes DataTables options at creation time — that is how
 `PerformanceTable` installs its pagination type.
 
 Use `requestTable` for cross-table work: the second table is often in a closed tab and does not exist yet.
-`MasterDetailTable` does this. `SelectableTable` does not yet — it still reaches its destination table with
-`$(el).DataTable({retrieve: true})`, which is one of the call sites left to migrate in here.
+`MasterDetailTable` does this. `SelectableTable` does it only to render a selection restored on load; on a
+user's selection it still reaches its destination table with `$(el).DataTable({retrieve: true})`, which is one
+of the call sites left to migrate in here.
 
 ## The files
 

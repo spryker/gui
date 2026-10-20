@@ -288,7 +288,8 @@ export class Table {
      *
      * @returns {Object} Data shared with every feature of the table, `requestTable` being how a feature
      *                   reaches a second table - the detail or selected table it keeps in sync - whether or
-     *                   not that one has been created yet.
+     *                   not that one has been created yet. `isManagedTable` tells whether a second table is
+     *                   one `requestTable` can reach.
      */
     #createData(table, api) {
         return {
@@ -298,6 +299,7 @@ export class Table {
             options: this.options.config,
             translations: this.options.configuration.default.language,
             requestTable: (requested, onHandle) => this.#requestHandle(requested, onHandle),
+            isManagedTable: (element) => element.matches(this.options.selectors),
         };
     }
 

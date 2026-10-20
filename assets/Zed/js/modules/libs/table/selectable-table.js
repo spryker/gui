@@ -37,6 +37,7 @@ export class SelectableTable {
         this.removeRowAction();
         this.addCounter();
         this.setRemoveAllAction();
+        this.renderRestoredSelection();
     }
 
     setDefaults() {
@@ -87,6 +88,16 @@ export class SelectableTable {
         };
 
         const store = JSON.parse(localStorage.getItem(this.getStorageKey()) || '[]');
+        const inputIds = _data ? [] : this.getInputIds();
+
+        if (inputIds.length) {
+            this.selected = inputIds.map(
+                (id) => this.findSelectedItem(store, id) ?? this.createIdOnlyItem(id, cols.length),
+            );
+
+            return;
+        }
+
         const input = document.querySelector(this.data.config.inputSelector);
         const data = (_data ?? JSON.parse((input.value || '[]').replace(/&quot;/g, '"').replace(/,/g, ''))).map(
             (_item) => {
@@ -106,6 +117,54 @@ export class SelectableTable {
 
         input.value = '';
         this.selected = unique;
+    }
+
+    /**
+     * The IDs the input already carries, in the comma-separated form `updateInput()` writes. The server renders
+     * them back when a submitted form fails validation.
+     */
+    getInputIds() {
+        const value = document.querySelector(this.data.config.inputSelector)?.value.trim() ?? '';
+
+        if (!value || value.startsWith('[')) return [];
+
+        return value
+            .split(',')
+            .map((id) => id.trim())
+            .filter(Boolean);
+    }
+
+    findSelectedItem(items, id) {
+        return items.find((item) => String(item[this.colIndexes.id]) === String(id));
+    }
+
+    createIdOnlyItem(id, columnCount) {
+        const item = new Array(columnCount).fill('');
+        item[this.colIndexes.id] = id;
+
+        return item;
+    }
+
+    renderRestoredSelection() {
+        if (!this.selected.length) return;
+
+        this.updateInput();
+        this.updateCounter();
+
+        if (!this.skeletonTable) return;
+
+        if (!this.data.isManagedTable?.(this.skeletonTable)) {
+            this.tableActions();
+
+            return;
+        }
+
+        // The selected items table may sit in a tab that is not open yet, so it is rendered once the
+        // orchestrator has created it rather than by creating it here.
+        this.data.requestTable(this.skeletonTable, async (handle) => {
+            await handle.created();
+            this.tableActions();
+        });
     }
 
     removeRowAction() {
@@ -130,8 +189,11 @@ export class SelectableTable {
             const rowData = this.data.api.rows(row).data()[0];
             const id = rowData[this.colIndexes.id];
 
-            if (this.selected.some((item) => item[this.colIndexes.id] === id)) {
+            const selectedIndex = this.selected.findIndex((item) => String(item[this.colIndexes.id]) === String(id));
+
+            if (selectedIndex !== -1) {
                 checkbox.checked = true;
+                this.selected[selectedIndex] = [...rowData];
                 this.addRow(rowData, true);
             }
 
@@ -157,7 +219,11 @@ export class SelectableTable {
         if (idx === -1) return;
 
         const rowIndex = this.data.api.rows((_, data) => String(data[this.colIndexes.id]) === String(id)).indexes()[0];
-        this.data.api.row(rowIndex).node().querySelector(this.data.config.checkboxSelector).checked = false;
+
+        if (rowIndex !== undefined) {
+            this.data.api.row(rowIndex).node().querySelector(this.data.config.checkboxSelector).checked = false;
+        }
+
         this.selected.splice(idx, 1);
         this.tableActions();
     }
@@ -238,7 +304,7 @@ export class SelectableTable {
     clearStorage() {
         const navType = performance.getEntriesByType('navigation')[0].type;
 
-        if (navType === 'navigate') {
+        if (navType === 'navigate' && !this.getInputIds().length) {
             localStorage.removeItem(this.getStorageKey());
         }
     }
