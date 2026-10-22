@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Gui\Communication\Table;
 
 use DateTime;
+use Generated\Shared\Transfer\ActionConfirmationTransfer;
 use Generated\Shared\Transfer\DataTablesColumnTransfer;
 use Generated\Shared\Transfer\NumberFormatFilterTransfer;
 use Generated\Shared\Transfer\NumberFormatFloatRequestTransfer;
@@ -146,6 +147,22 @@ abstract class AbstractTable
      * @var string
      */
     protected const DELETE_FORM_NAME = 'delete_form';
+
+    public const string CONFIRMATION_TYPE_DANGER = 'danger';
+
+    public const string CONFIRMATION_TYPE_PRIMARY = 'primary';
+
+    protected const string CONFIRMATION_ATTRIBUTE_ENABLED = 'data-confirm';
+
+    protected const string CONFIRMATION_ATTRIBUTE_TITLE = 'data-confirm-title';
+
+    protected const string CONFIRMATION_ATTRIBUTE_MESSAGE = 'data-confirm-message';
+
+    protected const string CONFIRMATION_ATTRIBUTE_BUTTON = 'data-confirm-button';
+
+    protected const string CONFIRMATION_ATTRIBUTE_TYPE = 'data-confirm-type';
+
+    protected const string CONFIRMATION_ENABLED_VALUE = '1';
 
     /**
      * @var string
@@ -1517,6 +1534,34 @@ abstract class AbstractTable
         $options['title'] = $title;
 
         return $this->twig->render('delete-form.twig', $options);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    protected function buildConfirmationAttributes(ActionConfirmationTransfer $actionConfirmationTransfer): array
+    {
+        $translationParameters = $actionConfirmationTransfer->getTranslationParameters();
+        $type = $actionConfirmationTransfer->getType() ?? static::CONFIRMATION_TYPE_DANGER;
+
+        return [
+            static::CONFIRMATION_ATTRIBUTE_ENABLED => static::CONFIRMATION_ENABLED_VALUE,
+            static::CONFIRMATION_ATTRIBUTE_TITLE => $this->translateConfirmationAttribute($actionConfirmationTransfer->getTitleOrFail(), $translationParameters),
+            static::CONFIRMATION_ATTRIBUTE_MESSAGE => $this->translateConfirmationAttribute($actionConfirmationTransfer->getMessageOrFail(), $translationParameters),
+            static::CONFIRMATION_ATTRIBUTE_BUTTON => $this->translateConfirmationAttribute($actionConfirmationTransfer->getConfirmButtonLabelOrFail()),
+            static::CONFIRMATION_ATTRIBUTE_TYPE => htmlspecialchars($type, ENT_QUOTES, 'UTF-8'),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $parameters
+     */
+    protected function translateConfirmationAttribute(string $key, array $parameters = []): string
+    {
+        $translator = $this->getTranslator();
+        $message = $translator !== null ? $translator->trans($key, $parameters) : strtr($key, $parameters);
+
+        return htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
     }
 
     /**

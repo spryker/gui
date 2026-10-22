@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Gui\Communication\Table;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ActionConfirmationTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -17,12 +18,14 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Gui\GuiConfig;
 use SprykerTest\Zed\Gui\Communication\Fixture\ActiveRecord;
+use SprykerTest\Zed\Gui\Communication\Fixture\ConfirmationActionTable;
 use SprykerTest\Zed\Gui\Communication\Fixture\DownloadTable;
 use SprykerTest\Zed\Gui\Communication\Fixture\DownloadTableWithOrderedHeadersAndFormatting;
 use SprykerTest\Zed\Gui\Communication\Fixture\DownloadTableWithoutGetDownloadQueryMethod;
 use SprykerTest\Zed\Gui\Communication\Fixture\FooTable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Auto-generated group annotations
@@ -84,6 +87,7 @@ class AbstractTableTest extends Unit
 
     public function testGetOrdersDefault(): void
     {
+        // Arrange
         $config = new TableConfiguration();
         $config->setHeader([
             static::COL_ONE => 'One',
@@ -94,7 +98,10 @@ class AbstractTableTest extends Unit
             static::COL_TWO,
         ]);
 
+        // Act
         $result = $this->table->getOrders($config);
+
+        // Assert
         $expected = [
             [
                 'column' => 0,
@@ -106,6 +113,7 @@ class AbstractTableTest extends Unit
 
     public function testGetOrdersWithCustomSortField(): void
     {
+        // Arrange
         $config = new TableConfiguration();
         $config->setHeader([
             static::COL_ONE => 'One',
@@ -118,7 +126,10 @@ class AbstractTableTest extends Unit
 
         $config->setDefaultSortField(static::COL_TWO);
 
+        // Act
         $result = $this->table->getOrders($config);
+
+        // Assert
         $expected = [
             [
               'column' => 1,
@@ -130,6 +141,7 @@ class AbstractTableTest extends Unit
 
     public function testGetOrdersWithCustomSortFieldAndCustomDirection(): void
     {
+        // Arrange
         $config = new TableConfiguration();
         $config->setHeader([
             static::COL_ONE => 'One',
@@ -142,7 +154,10 @@ class AbstractTableTest extends Unit
 
         $config->setDefaultSortField(static::COL_TWO, TableConfiguration::SORT_DESC);
 
+        // Act
         $result = $this->table->getOrders($config);
+
+        // Assert
         $expected = [
             [
                 'column' => 1,
@@ -154,6 +169,7 @@ class AbstractTableTest extends Unit
 
     public function testGetOrdersWithDeprecatedIndexAndDirection(): void
     {
+        // Arrange
         $config = new TableConfiguration();
         $config->setHeader([
             static::COL_ONE => 'One',
@@ -167,7 +183,10 @@ class AbstractTableTest extends Unit
         $config->setDefaultSortColumnIndex(1);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
+        // Act
         $result = $this->table->getOrders($config);
+
+        // Assert
         $expected = [
             [
                 'column' => 1,
@@ -716,6 +735,73 @@ class AbstractTableTest extends Unit
             ['SKU' => 'spy_product.sku', 'NAME' => 'spy_product.name'],
             $config->getSearchableColumns(),
         );
+    }
+
+    public function testBuildConfirmationAttributesReturnsTranslatedAndEscapedAttributes(): void
+    {
+        // Arrange
+        $table = $this->createConfirmationTable();
+
+        // Act
+        $attributes = $table->buildConfirmationAttributes(
+            (new ActionConfirmationTransfer())
+                ->setTitle('Delete foo')
+                ->setMessage('Delete "%name%"?')
+                ->setConfirmButtonLabel('Delete')
+                ->setType(AbstractTable::CONFIRMATION_TYPE_DANGER)
+                ->setTranslationParameters(['%name%' => '<b>Foo\'s</b>']),
+        );
+
+        // Assert
+        $this->assertSame([
+            'data-confirm' => '1',
+            'data-confirm-title' => '[t] Delete foo',
+            'data-confirm-message' => '[t] Delete &quot;&lt;b&gt;Foo&#039;s&lt;/b&gt;&quot;?',
+            'data-confirm-button' => '[t] Delete',
+            'data-confirm-type' => 'danger',
+        ], $attributes);
+    }
+
+    public function testBuildConfirmationAttributesDefaultsToDangerType(): void
+    {
+        // Arrange
+        $table = $this->createConfirmationTable();
+
+        // Act
+        $attributes = $table->buildConfirmationAttributes(
+            (new ActionConfirmationTransfer())->setTitle('Title')->setMessage('Message')->setConfirmButtonLabel('Confirm'),
+        );
+
+        // Assert
+        $this->assertSame(AbstractTable::CONFIRMATION_TYPE_DANGER, $attributes['data-confirm-type']);
+    }
+
+    public function testBuildConfirmationAttributesKeepsPrimaryType(): void
+    {
+        // Arrange
+        $table = $this->createConfirmationTable();
+
+        // Act
+        $attributes = $table->buildConfirmationAttributes(
+            (new ActionConfirmationTransfer())
+                ->setTitle('Title')
+                ->setMessage('Message')
+                ->setConfirmButtonLabel('Activate')
+                ->setType(AbstractTable::CONFIRMATION_TYPE_PRIMARY),
+        );
+
+        // Assert
+        $this->assertSame(AbstractTable::CONFIRMATION_TYPE_PRIMARY, $attributes['data-confirm-type']);
+    }
+
+    protected function createConfirmationTable(): ConfirmationActionTable
+    {
+        $translatorMock = $this->createMock(TranslatorInterface::class);
+        $translatorMock->method('trans')->willReturnCallback(
+            fn (string $id, array $parameters = []): string => '[t] ' . strtr($id, $parameters),
+        );
+
+        return new ConfirmationActionTable($translatorMock);
     }
 
     /**

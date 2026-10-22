@@ -22,6 +22,7 @@ import { Highlight } from './libs/highlight';
 import { DownloadAction } from './libs/download-action';
 import { CopyAction } from './libs/copy-action';
 import { Table } from './libs/table/table';
+import { ActionConfirmation } from './libs/action-confirmation';
 import FormWithExternalFields from './form-with-external-fields';
 import InternalMenuFilter from './libs/internal-api/internal-menu-filter';
 import initSweetAlertMapper from './libs/sweet-alert-mapper';
@@ -57,6 +58,9 @@ var tooltipInit = function () {
 };
 
 $(document).ready(function () {
+    // First, so that a failing initialiser below cannot leave destructive actions without their confirmation step.
+    new ActionConfirmation();
+
     // editor
     editorInit();
     tooltipInit();

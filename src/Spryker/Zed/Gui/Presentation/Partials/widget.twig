@@ -2,19 +2,22 @@
     {% if row_id is defined and row_id is not empty %}id="{{ row_id }}"{% endif %}>
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
-            <div class="ibox-title clearfix">
-                {% block widget_title -%}
-                    <h5>{{ widget_title | default('') | trans }}</h5>
-                {%- endblock %}
-                <div class="float-end">
-                    {% block widget_header_content -%}{%- endblock %}
+            {% block widget_title_wrapper %}
+                <div class="ibox-title clearfix">
+                    {% block widget_title -%}
+                        <h5>{{ widget_title | default('') | trans }}</h5>
+                    {%- endblock %}
+                    <div class="float-end">
+                        {% block widget_header_content -%}{%- endblock %}
+                    </div>
                 </div>
-            </div>
-            <div class="ibox-content">
+            {% endblock %}
 
-                {% block widget_content -%}{%- endblock %}
-
-            </div>
+            {% block widget_content_wrapper %}
+                <div class="ibox-content">
+                    {% block widget_content -%}{%- endblock %}
+                </div>
+            {% endblock %}
         </div>
     </div>
 </div>

@@ -1,6 +1,8 @@
 <div
     {% if id is defined and id is not null %}id={{ id }} {% endif %}
     {% if extras is defined and extras is not null %}{{ extras }}{% endif %}
+    {% if titleId is defined and titleId is not null %}aria-labelledby="{{ titleId }}"{% endif %}
+    {% if descriptionId is defined and descriptionId is not null %}aria-describedby="{{ descriptionId }}"{% endif %}
     class="modal"
     tabindex="-1"
     role="dialog"
@@ -8,7 +10,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <header class="modal-header">
-                <h4 class="modal-title">{{ title }}</h4>
+                <h4 class="modal-title"{% if titleId is defined and titleId is not null %} id="{{ titleId }}"{% endif %}>{{ title }}</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close' | trans }}"></button>
             </header>
             <div class="modal-body">{{ content }}</div>

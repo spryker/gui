@@ -159,6 +159,10 @@
     width: 100%;
 }
 
+.btn-sm .material-symbols-outlined {
+    font-size: 18px;
+}
+
 .login-box .btn {
     @extend .btn-primary;
 }

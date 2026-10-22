@@ -1,0 +1,38 @@
+{#
+    The values arrive already translated, so JavaScript fills them in as plain text when the modal opens.
+#}
+{% set content %}
+    <p
+        id="action-confirmation-message"
+        class="js-action-confirmation-message mb-0"
+        data-default-message="{{ 'Are you sure you want to proceed?' | trans }}"
+    ></p>
+{% endset %}
+
+{% set footer %}
+    <button
+        type="button"
+        class="btn btn-outline-dark js-action-confirmation-cancel-button"
+        data-bs-dismiss="modal"
+        data-qa="action-confirmation-cancel"
+    >
+        {{ 'Cancel' | trans }}
+    </button>
+    <button
+        type="button"
+        class="btn btn-danger js-action-confirmation-confirm-button"
+        data-default-title="{{ 'Confirm action' | trans }}"
+        data-default-button="{{ 'Confirm' | trans }}"
+        data-qa="action-confirmation-confirm"
+    ></button>
+{% endset %}
+
+{% include '@Gui/Modal/modal.twig' with {
+    id: 'action-confirmation-modal',
+    titleId: 'action-confirmation-title',
+    descriptionId: 'action-confirmation-message',
+    extras: 'data-qa=action-confirmation-modal',
+    title: '',
+    content: content,
+    footer: footer,
+} %}

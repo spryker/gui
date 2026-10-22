@@ -72,4 +72,12 @@
         <property name="attributes" type="string[]" associative="true" singular="attribute"/>
     </transfer>
 
+    <transfer name="ActionConfirmation" strict="true">
+        <property name="title" type="string"/>
+        <property name="message" type="string"/>
+        <property name="confirmButtonLabel" type="string"/>
+        <property name="type" type="string"/>
+        <property name="translationParameters" type="array" singular="translationParameter" associative="true"/>
+    </transfer>
+
 </transfers>

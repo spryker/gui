@@ -151,6 +151,8 @@
             </div>
         </div>
 
+        {% include '@Gui/Modal/action-confirmation-modal.twig' %}
+
         {% block footer_js %}
             {% block common_js %}
                 <script src="{{ assetsPath('js/spryker-zed-gui-commons.js') }}"></script>
