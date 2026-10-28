@@ -3,7 +3,10 @@ import { existsSync } from 'node:fs';
 import { readConfigurationFile } from '../typescript/configuration-file.mts';
 import { resolveBuildConfigurationLocation } from '../typescript/typescript-configuration.mts';
 
-export const getAliasList = (context: string): Record<string, string> => {
+// A list of targets is tried in order and the first that resolves wins, as in the tsconfig `paths` it mirrors.
+type AliasList = Record<string, string | string[]>;
+
+export const getAliasList = (context: string): AliasList => {
     const { filePath: configurationPath, directory } = resolveBuildConfigurationLocation(context);
 
     if (!existsSync(configurationPath)) {
@@ -18,7 +21,7 @@ export const getAliasList = (context: string): Record<string, string> => {
 
     const configuration = readConfigurationFile(configurationPath);
     const pathAliases = configuration?.compilerOptions?.paths ?? {};
-    const aliasList: Record<string, string> = {};
+    const aliasList: AliasList = {};
 
     for (const [aliasName, aliasValues] of Object.entries(pathAliases)) {
         // Aliasing `*` to `*` would make webpack resolve every request through itself.
@@ -27,9 +30,9 @@ export const getAliasList = (context: string): Record<string, string> => {
         }
 
         const alias = aliasName.replace(/\/\*$/, '');
-        const aliasTarget = aliasValues[0].replace(/\/\*$/, '');
+        const aliasTargets = aliasValues.map((aliasValue) => join(context, directory, aliasValue.replace(/\/\*$/, '')));
 
-        aliasList[alias] = join(context, directory, aliasTarget);
+        aliasList[alias] = aliasTargets.length === 1 ? aliasTargets[0] : aliasTargets;
     }
 
     aliasList.jQuery = 'jquery';

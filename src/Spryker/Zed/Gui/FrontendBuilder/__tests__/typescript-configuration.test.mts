@@ -13,7 +13,7 @@ import {
     resolveBuildConfigurationLocation,
 } from '../libs/typescript/typescript-configuration.mts';
 import { reconcileEntryList } from '../libs/typescript/configuration-file.mts';
-import { mergeModulePathAliases } from '../libs/typescript/module-path-aliases.mts';
+import { mergePathAliases } from '../libs/typescript/path-alias-reconciliation.mts';
 import { applySolutionReconciliation } from '../libs/typescript/update-configuration.mts';
 
 const BUILDER_DIRECTORY = 'src/Spryker/Gui/src/Spryker/Zed/Gui/FrontendBuilder';
@@ -110,41 +110,17 @@ describe('fresh generation', () => {
         expect(Object.keys(buildConfiguration.configuration.compilerOptions!)).toEqual(['paths']);
     });
 
-    it('generates one @zed alias per discovered module, kebab-cased', async () => {
+    it('writes the aliases of every provider relative to the build configuration', async () => {
         const context = createMonorepoRoot();
-        mkdirSync(join(context, 'src/Spryker/ProductRelationGui/assets/Zed'), { recursive: true });
+        const coreSharedTheme = 'src/SprykerFeature/AiCommerce/src/SprykerFeature/Shared/AiCommerce/Theme/default';
+        mkdirSync(join(context, coreSharedTheme), { recursive: true });
 
         const [buildConfiguration] = await reconcileTypeScriptConfigurations(settingsFor(context));
         const paths = buildConfiguration.configuration.compilerOptions!.paths!;
 
-        expect(paths['@zed/product-relation-gui/*']).toEqual([
-            '../../../../../../../../src/Spryker/ProductRelationGui/assets/Zed/*',
-        ]);
-        expect(paths['@zed/tax/*']).toEqual(['../../../../../../../../src/Spryker/Tax/assets/Zed/*']);
-    });
-
-    it('names the alias of a monorepo project module after the module, not after the Zed layer', async () => {
-        const context = createMonorepoRoot();
-        mkdirSync(join(context, 'src/Pyz/PriceFormatting/src/Pyz/Zed/PriceFormatting/assets/Zed'), { recursive: true });
-
-        const [buildConfiguration] = await reconcileTypeScriptConfigurations(settingsFor(context));
-        const paths = buildConfiguration.configuration.compilerOptions!.paths!;
-
-        expect(paths['@zed/price-formatting/*']).toEqual([
-            '../../../../../../../../src/Pyz/PriceFormatting/src/Pyz/Zed/PriceFormatting/assets/Zed/*',
-        ]);
-        expect(paths['@zed/zed/*']).toBeUndefined();
-    });
-
-    it('keeps the three legacy aliases, in both the bare and the prefix form webpack needs', async () => {
-        const context = createMonorepoRoot();
-
-        const [buildConfiguration] = await reconcileTypeScriptConfigurations(settingsFor(context));
-        const paths = buildConfiguration.configuration.compilerOptions!.paths!;
-
-        expect(paths.ZedGui).toEqual(['../../../../../../../../src/Spryker/Gui/assets/Zed/js/modules/commons']);
-        expect(paths['ZedGuiModules/*']).toEqual(['../../../../../../../../src/Spryker/Gui/assets/Zed/js/modules/*']);
-        expect(paths.ZedGuiEditorConfiguration).toBeDefined();
+        expect(paths['@zed/tax/*']).toEqual([`${BUILDER_LADDER}/src/Spryker/Tax/assets/Zed/*`]);
+        expect(paths.ZedGui).toEqual([`${BUILDER_LADDER}/src/Spryker/Gui/assets/Zed/js/modules/commons`]);
+        expect(paths['@shared/ai-commerce/*']).toEqual([`${BUILDER_LADDER}/${coreSharedTheme}/*`]);
     });
 
     it('re-enables noImplicitAny in the defaults, because the shared defaults turn it off', () => {
@@ -154,6 +130,17 @@ describe('fresh generation', () => {
 
         expect(configuration.compilerOptions!.strict).toBe(true);
         expect(configuration.compilerOptions!.noImplicitAny).toBe(true);
+    });
+
+    it('includes the TypeScript of the core Shared themes next to the Back Office sources', async () => {
+        const [buildConfiguration] = await reconcileTypeScriptConfigurations(settingsFor(createMonorepoRoot()));
+
+        expect(buildConfiguration.configuration.include).toEqual(
+            expect.arrayContaining([
+                `${BUILDER_LADDER}/src/SprykerFeature/**/assets/Zed/**/*.ts`,
+                `${BUILDER_LADDER}/src/SprykerFeature/*/src/*/Shared/*/Theme/default/**/*.ts`,
+            ]),
+        );
     });
 
     it('excludes installed third-party sources from the lint configuration only', async () => {
@@ -239,6 +226,31 @@ describe('re-running the reconciliation', () => {
         expect(lintConfiguration.configuration.include).not.toContain(
             '../../../../../../../../src/Pyz/Zed/**/assets/Zed/**/*.ts',
         );
+    });
+});
+
+describe('the Shared theme aliases', () => {
+    const CORE_SHARED_THEME = 'src/SprykerFeature/AiCommerce/src/SprykerFeature/Shared/AiCommerce/Theme/default';
+
+    it('drops a stale Shared alias whose targets still look generated, and keeps a hand-written one', async () => {
+        const context = createMonorepoRoot();
+        mkdirSync(join(context, CORE_SHARED_THEME), { recursive: true });
+        await reconcileInto(context);
+
+        const configurationPath = join(context, BUILDER_DIRECTORY, BUILD_CONFIGURATION_FILE_NAME);
+        const configuration = JSON.parse(readFileSync(configurationPath, 'utf8'));
+        configuration.compilerOptions.paths['@shared/removed-module/*'] = [
+            `${BUILDER_LADDER}/src/Pyz/RemovedModule/src/Pyz/Shared/RemovedModule/Theme/default/*`,
+            `${BUILDER_LADDER}/src/SprykerFeature/RemovedModule/src/SprykerFeature/Shared/RemovedModule/Theme/default/*`,
+        ];
+        configuration.compilerOptions.paths['@shared/hand-written/*'] = [`${BUILDER_LADDER}/node_modules/thing/*`];
+        writeFileSync(configurationPath, `${JSON.stringify(configuration, null, 4)}\n`);
+
+        const [buildConfiguration] = await reconcileTypeScriptConfigurations(settingsFor(context));
+        const paths = buildConfiguration.configuration.compilerOptions!.paths!;
+
+        expect(paths['@shared/removed-module/*']).toBeUndefined();
+        expect(paths['@shared/hand-written/*']).toEqual([`${BUILDER_LADDER}/node_modules/thing/*`]);
     });
 });
 
@@ -332,30 +344,6 @@ describe('a custom project namespace', () => {
         return { ...settings, paths: { ...settings.paths, sources: { ...settings.paths.sources, ...sources } } };
     };
 
-    it('aliases the modules of Pyz and of a namespace registered next to it', async () => {
-        const context = createNamespacedProjectRoot();
-
-        const [buildConfiguration] = await reconcileTypeScriptConfigurations(
-            namespacedSettingsFor(context, { acme: './src/Acme/Zed' }),
-        );
-        const paths = buildConfiguration.configuration.compilerOptions!.paths!;
-
-        expect(paths['@zed/pyz-only/*']).toEqual([`${BUILDER_LADDER}/src/Pyz/Zed/PyzOnly/assets/Zed/*`]);
-        expect(paths['@zed/acme-only/*']).toEqual([`${BUILDER_LADDER}/src/Acme/Zed/AcmeOnly/assets/Zed/*`]);
-    });
-
-    it('points the alias of a module both namespaces contain at the later namespace only, as a whole', async () => {
-        const context = createNamespacedProjectRoot();
-
-        const [buildConfiguration] = await reconcileTypeScriptConfigurations(
-            namespacedSettingsFor(context, { acme: './src/Acme/Zed' }),
-        );
-
-        expect(buildConfiguration.configuration.compilerOptions!.paths!['@zed/tax/*']).toEqual([
-            `${BUILDER_LADDER}/src/Acme/Zed/Tax/assets/Zed/*`,
-        ]);
-    });
-
     it('lints and type-checks both Pyz and a namespace registered next to it', async () => {
         const context = createNamespacedProjectRoot();
 
@@ -367,6 +355,21 @@ describe('a custom project namespace', () => {
             expect.arrayContaining([
                 `${BUILDER_LADDER}/src/Pyz/Zed/**/assets/Zed/**/*.ts`,
                 `${BUILDER_LADDER}/src/Acme/Zed/**/assets/Zed/**/*.ts`,
+            ]),
+        );
+    });
+
+    it('lints and type-checks the Shared themes of Pyz and of a namespace registered next to it', async () => {
+        const context = createNamespacedProjectRoot();
+
+        const [, lintConfiguration] = await reconcileTypeScriptConfigurations(
+            namespacedSettingsFor(context, { acme: './src/Acme/Zed' }),
+        );
+
+        expect(lintConfiguration.configuration.include).toEqual(
+            expect.arrayContaining([
+                `${BUILDER_LADDER}/src/Pyz/Shared/*/Theme/default/**/*.ts`,
+                `${BUILDER_LADDER}/src/Acme/Shared/*/Theme/default/**/*.ts`,
             ]),
         );
     });
@@ -519,7 +522,7 @@ describe('reconciliation primitives', () => {
     });
 
     it('lets the generator own the value of an alias it emits, overwriting a hand edit', () => {
-        expect(mergeModulePathAliases({ '@zed/tax/*': ['./wrong'] }, { '@zed/tax/*': ['./right'] })).toEqual({
+        expect(mergePathAliases({ '@zed/tax/*': ['./wrong'] }, { '@zed/tax/*': ['./right'] }, () => false)).toEqual({
             '@zed/tax/*': ['./right'],
         });
     });

@@ -2,6 +2,7 @@ import { dirname, join, resolve } from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import type { FindSettings } from './libs/webpack/finder.mts';
+import type { SourceRoots } from './libs/aliases/alias-provider.mts';
 
 // Written by the backend before every build; without it the built-in layout stays in effect.
 export const BUILD_CONFIGURATION_PATH = 'data/cache/Zed/frontend/build-config.json';
@@ -39,7 +40,15 @@ const resolveNamespaceDirectory = (context: string, namespace: string): string =
 
 // The keys the rest of the builder reads: `core` (Gui package, legacy aliases, resolve.modules),
 // `features` (resolve.modules) and `project` (the key a settings file may replace).
-const NAMESPACE_SOURCE_KEYS: Record<string, string> = { Spryker: 'core', SprykerFeature: 'features', Pyz: 'project' };
+const PROJECT_SOURCE_KEY = 'project';
+const NAMESPACE_SOURCE_KEYS: Record<string, string> = {
+    Spryker: 'core',
+    SprykerFeature: 'features',
+    Pyz: PROJECT_SOURCE_KEY,
+};
+
+// Every other namespace keeps its lower-cased name, so a key alone does not tell project from core.
+const toNamespaceSourceKey = (namespace: string): string => NAMESPACE_SOURCE_KEYS[namespace] ?? namespace.toLowerCase();
 
 // The finder lets a later root win, the backend lists the strongest first: each list is reversed on its
 // own, so the project namespaces stay after the core ones.
@@ -47,10 +56,7 @@ const buildGeneratedSources = (context: string, generated: GeneratedBuildConfigu
     const sources: Record<string, string> = {};
 
     [...[...generated.coreNamespaces].reverse(), ...[...generated.projectNamespaces].reverse()].forEach((namespace) => {
-        sources[NAMESPACE_SOURCE_KEYS[namespace] ?? namespace.toLowerCase()] = resolveNamespaceDirectory(
-            context,
-            namespace,
-        );
+        sources[toNamespaceSourceKey(namespace)] = resolveNamespaceDirectory(context, namespace);
     });
 
     return sources;
@@ -175,6 +181,31 @@ export const BUILDER_MODULE_RELATIVE_DIRECTORY = 'src/Spryker/Zed/Gui/FrontendBu
 export const VENDOR_SOURCE_PREFIX = './vendor/';
 
 export const RUNTIME_ENTRY_NAME = 'spryker-zed-gui-commons';
+
+// The backend namespace list decides what is project code; without it only the `project` root is.
+// A root a settings file adds under any other key counts as core. Strongest namespace first, as
+// `KernelConstants::PROJECT_NAMESPACES` orders them.
+const getProjectSourceRoots = (globalSettings: GlobalSettings): string[] =>
+    (
+        globalSettings.generatedBuildConfiguration?.projectNamespaces.map(toNamespaceSourceKey) ?? [PROJECT_SOURCE_KEY]
+    ).flatMap((projectSourceKey) => {
+        const sourceRoot = globalSettings.paths.sources[projectSourceKey];
+
+        return sourceRoot === undefined ? [] : [sourceRoot];
+    });
+
+// Classified once here; the alias providers take the split as given.
+export const getSourceRoots = (globalSettings: GlobalSettings): SourceRoots => {
+    const projectSourceRoots = getProjectSourceRoots(globalSettings);
+
+    return {
+        context: globalSettings.context,
+        core: Object.values(globalSettings.paths.sources).filter(
+            (sourceRoot) => !projectSourceRoots.includes(sourceRoot),
+        ),
+        project: projectSourceRoots,
+    };
+};
 
 export const resolveProjectRoot = (startDirectory: string = process.cwd()): string => {
     let currentDirectory = resolve(startDirectory);

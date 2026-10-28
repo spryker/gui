@@ -3,19 +3,16 @@ import { join } from 'node:path';
 import {
     BUILDER_MODULE_RELATIVE_DIRECTORY,
     VENDOR_SOURCE_PREFIX,
+    getSourceRoots,
     sourceLayouts,
     type GlobalSettings,
     type SourceLayout,
 } from '../../settings.mts';
+import { collectPathAliases, isProvidedAliasName } from '../aliases/alias-provider.mts';
+import { SHARED_THEME_OPTIONS, createPathAliasProviders } from '../aliases/path-alias-providers.mts';
+import { buildSharedThemeSourcePatterns } from '../aliases/shared-theme-aliases.mts';
 import { buildParentDirectoryLadder, buildRelativeReference, joinConfigurationPath } from './configuration-path.mts';
-import {
-    buildGeneratedModulePathAliases,
-    buildLegacyPathAliases,
-    mergeModulePathAliases,
-    sortPathAliases,
-    toRelativeAliasValues,
-    type ModulePathAliases,
-} from './module-path-aliases.mts';
+import { mergePathAliases, sortPathAliases } from './path-alias-reconciliation.mts';
 import { readConfigurationFile, reconcileEntryList, type TypeScriptConfiguration } from './configuration-file.mts';
 import {
     PROJECT_CONFIGURATION_FILE_NAME,
@@ -85,9 +82,13 @@ const resolveConfigurationLocation = (context: string, fileName: string): Config
 const buildBuilderDirectory = (layout: SourceLayout): string =>
     joinConfigurationPath(layout.sources.core, layout.guiFolder, BUILDER_MODULE_RELATIVE_DIRECTORY);
 
-// `.ts` only: the legacy Back Office sources stay JavaScript for backward compatibility.
-const buildIncludePatterns = (sourceRoots: string[]): string[] =>
-    sourceRoots.map((sourceRoot) => joinConfigurationPath(sourceRoot, '**', 'assets/Zed/**/*.ts'));
+// `.ts` only: the legacy Back Office sources stay JavaScript for backward compatibility. The Shared themes are
+// listed too: they reach the program through imports anyway, but an editor opens a file only with the paths of a
+// project whose include matches it, and without those the `@shared` imports do not resolve.
+const buildIncludePatterns = (sourceRoots: string[]): string[] => [
+    ...sourceRoots.map((sourceRoot) => joinConfigurationPath(sourceRoot, '**', 'assets/Zed/**/*.ts')),
+    ...new Set(sourceRoots.flatMap((sourceRoot) => buildSharedThemeSourcePatterns(sourceRoot, SHARED_THEME_OPTIONS))),
+];
 
 const buildAmbientTypesInclude = (layout: SourceLayout): string =>
     joinConfigurationPath(layout.sources.core, layout.guiFolder, AMBIENT_TYPES_MODULE_RELATIVE_PATH, '**/*.d.ts');
@@ -243,10 +244,10 @@ export const reconcileTypeScriptConfigurations = async (
 ): Promise<ReconciledTypeScriptConfiguration[]> => {
     const layout = detectSourceLayout(globalSettings.context);
     const builderDirectory = buildBuilderDirectory(layout);
-    const generatedAliases: ModulePathAliases = sortPathAliases({
-        ...buildLegacyPathAliases(globalSettings),
-        ...(await buildGeneratedModulePathAliases(globalSettings)),
-    });
+    const pathAliasProviders = createPathAliasProviders(globalSettings);
+    const generatedAliases = sortPathAliases(
+        await collectPathAliases(pathAliasProviders, getSourceRoots(globalSettings)),
+    );
     const recognisedIncludeEntries = buildRecognisedIncludeEntries(globalSettings);
 
     const buildConfigurationDirectory =
@@ -286,12 +287,14 @@ export const reconcileTypeScriptConfigurations = async (
                 const relativeAliases = Object.fromEntries(
                     Object.entries(generatedAliases).map(([aliasName, aliasValues]) => [
                         aliasName,
-                        toRelativeAliasValues(aliasValues, parentDirectoryLadder),
+                        aliasValues.map((aliasValue) => buildRelativeReference(parentDirectoryLadder, aliasValue)),
                     ]),
                 );
 
                 compilerOptions.paths = sortPathAliases(
-                    mergeModulePathAliases(compilerOptions.paths ?? {}, relativeAliases),
+                    mergePathAliases(compilerOptions.paths ?? {}, relativeAliases, (aliasName) =>
+                        isProvidedAliasName(pathAliasProviders, aliasName),
+                    ),
                 );
                 configuration.compilerOptions = compilerOptions;
             }
