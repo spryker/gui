@@ -16,7 +16,6 @@ require('datatables.net-buttons-bs5');
 require('datatables.net-responsive-bs5');
 require('datatables.net-select-bs5');
 require('jquery-migrate/dist/jquery-migrate.min');
-require('jquery-ui/ui/core');
 require('jquery-ui/ui/effect');
 require('jquery-ui/ui/effects/effect-highlight');
 require('jquery-ui/ui/widget');
