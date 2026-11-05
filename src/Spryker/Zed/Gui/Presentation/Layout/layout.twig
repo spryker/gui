@@ -156,6 +156,13 @@
         {% block footer_js %}
             {% block common_js %}
                 <script src="{{ assetsPath('js/spryker-zed-gui-commons.js') }}"></script>
+                {% block rich_text_editor_labels %}
+                    {% include '@Gui/RichTextEditor/labels.twig' %}
+                {% endblock %}
+                {% block rich_text_editor_templates %}
+                    {% include '@Gui/RichTextEditor/dialog-templates.twig' %}
+                {% endblock %}
+                <script src="{{ assetsPath('js/spryker-zed-gui-rich-text-editor.js') }}"></script>
             {% endblock %}
             {% block init_js %}
                 <script src="{{ assetsPath('js/spryker-zed-gui-init.js') }}"></script>

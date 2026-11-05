@@ -50,3 +50,151 @@ Storefront,Storefront
 "This table holds a large amount of data — pagination is simplified (Previous/Next only, no exact totals), search matches must be exact, and default sorting is disabled to keep it fast.","This table holds a large amount of data — pagination is simplified (Previous/Next only, no exact totals), search matches must be exact, and default sorting is disabled to keep it fast."
 "Enter valid CSS rules. Example: .header { background-color: #333; }","Enter valid CSS rules. Example: .header { background-color: #333; }"
 "Are you sure you want to proceed?","Are you sure you want to proceed?"
+Formatting,Formatting
+"Text style","Text style"
+"Normal text","Normal text"
+"Heading 1","Heading 1"
+"Heading 2","Heading 2"
+"Heading 3","Heading 3"
+"Heading 4","Heading 4"
+"Heading 5","Heading 5"
+"Heading 6","Heading 6"
+Quote,Quote
+"Code block","Code block"
+Bold,Bold
+Italic,Italic
+Underline,Underline
+"Remove formatting","Remove formatting"
+Strikethrough,Strikethrough
+Superscript,Superscript
+Subscript,Subscript
+"Font size","Font size"
+"Default size","Default size"
+"Text colour","Text colour"
+"Background colour","Background colour"
+"Reset colour","Reset colour"
+"Bulleted list","Bulleted list"
+"Numbered list","Numbered list"
+Paragraph,Paragraph
+"Align left","Align left"
+"Align centre","Align centre"
+"Align right","Align right"
+Justify,Justify
+Outdent,Outdent
+Indent,Indent
+Image,Image
+Link,Link
+Video,Video
+Table,Table
+"Insert table","Insert table"
+"Add row above","Add row above"
+"Add row below","Add row below"
+"Add column before","Add column before"
+"Add column after","Add column after"
+"Delete row","Delete row"
+"Delete column","Delete column"
+"Merge cells","Merge cells"
+"Split cell","Split cell"
+"Header row","Header row"
+"Delete table","Delete table"
+"Horizontal rule","Horizontal rule"
+Undo,Undo
+Redo,Redo
+"HTML source","HTML source"
+"Full screen","Full screen"
+"Resize editor","Resize editor"
+Insert,Insert
+Save,Save
+"Insert link","Insert link"
+URL,URL
+"Text to display","Text to display"
+"Open in new tab","Open in new tab"
+"Edit link","Edit link"
+"Open link","Open link"
+"Remove link","Remove link"
+"Enter a valid link address.","Enter a valid link address."
+"A link cannot be added here, for example inside code.","A link cannot be added here, for example inside code."
+"Insert image","Insert image"
+"Edit image","Edit image"
+"Remove image","Remove image"
+100%,100%
+50%,50%
+25%,25%
+"Original size","Original size"
+"Float left","Float left"
+"Float right","Float right"
+"Remove float","Remove float"
+"Image URL","Image URL"
+"Alternative text","Alternative text"
+"Enter an image address starting with https:// or a relative path. Embedded (data:) images are not supported.","Enter an image address starting with https:// or a relative path. Embedded (data:) images are not supported."
+"Images can only be added by URL. Pasted or dropped image files are not supported.","Images can only be added by URL. Pasted or dropped image files are not supported."
+"Insert video","Insert video"
+"Video URL","Video URL"
+"Enter the address of a YouTube, Vimeo, Dailymotion, Google Drive, Instagram, Facebook, Youku, QQ or PeerTube video.","Enter the address of a YouTube, Vimeo, Dailymotion, Google Drive, Instagram, Facebook, Youku, QQ or PeerTube video."
+"This content contains %element%, which the visual editor cannot show. It is kept unchanged; edit it as HTML here.","This content contains %element%, which the visual editor cannot show. It is kept unchanged; edit it as HTML here."
+"an HTML comment","an HTML comment"
+"unsupported HTML","unsupported HTML"
+Black,Black
+Tundora,Tundora
+"Dove Gray","Dove Gray"
+"Star Dust","Star Dust"
+"Pale Slate","Pale Slate"
+Gallery,Gallery
+Alabaster,Alabaster
+White,White
+Red,Red
+"Orange Peel","Orange Peel"
+Yellow,Yellow
+Green,Green
+Cyan,Cyan
+Blue,Blue
+"Electric Violet","Electric Violet"
+Magenta,Magenta
+Azalea,Azalea
+Karry,Karry
+"Egg White","Egg White"
+Zanah,Zanah
+Botticelli,Botticelli
+"Tropical Blue","Tropical Blue"
+Mischka,Mischka
+Twilight,Twilight
+"Tonys Pink","Tonys Pink"
+"Peach Orange","Peach Orange"
+"Cream Brulee","Cream Brulee"
+Sprout,Sprout
+Casper,Casper
+Perano,Perano
+"Cold Purple","Cold Purple"
+"Careys Pink","Careys Pink"
+Mandy,Mandy
+Rajah,Rajah
+Dandelion,Dandelion
+Olivine,Olivine
+"Gulf Stream","Gulf Stream"
+Viking,Viking
+"Blue Marguerite","Blue Marguerite"
+Puce,Puce
+"Guardsman Red","Guardsman Red"
+"Fire Bush","Fire Bush"
+"Golden Dream","Golden Dream"
+"Chelsea Cucumber","Chelsea Cucumber"
+"Smalt Blue","Smalt Blue"
+"Boston Blue","Boston Blue"
+"Butterfly Bush","Butterfly Bush"
+Cadillac,Cadillac
+Sangria,Sangria
+"Mai Tai","Mai Tai"
+"Buddha Gold","Buddha Gold"
+"Forest Green","Forest Green"
+Eden,Eden
+"Venice Blue","Venice Blue"
+Meteorite,Meteorite
+Claret,Claret
+Rosewood,Rosewood
+Cinnamon,Cinnamon
+Olive,Olive
+Parsley,Parsley
+Tiber,Tiber
+"Midnight Blue","Midnight Blue"
+Valentino,Valentino
+Loulou,Loulou

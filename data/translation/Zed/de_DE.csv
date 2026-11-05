@@ -50,3 +50,151 @@ Storefront,Onlineshop
 "This table holds a large amount of data — pagination is simplified (Previous/Next only, no exact totals), search matches must be exact, and default sorting is disabled to keep it fast.","Diese Tabelle enthält eine große Datenmenge — die Seitennavigation ist vereinfacht (nur Vorherige/Weiter, keine genauen Gesamtzahlen), Suchtreffer müssen exakt sein, und die Standardsortierung ist deaktiviert, um sie schnell zu halten."
 "Enter valid CSS rules. Example: .header { background-color: #333; }","Gültige CSS-Regeln eingeben. Beispiel: .header { background-color: #333; }"
 "Are you sure you want to proceed?","Möchten Sie wirklich fortfahren?"
+Formatting,Formatierung
+"Text style",Textstil
+"Normal text","Normaler Text"
+"Heading 1","Überschrift 1"
+"Heading 2","Überschrift 2"
+"Heading 3","Überschrift 3"
+"Heading 4","Überschrift 4"
+"Heading 5","Überschrift 5"
+"Heading 6","Überschrift 6"
+Quote,Zitat
+"Code block",Codeblock
+Bold,Fett
+Italic,Kursiv
+Underline,Unterstrichen
+"Remove formatting","Formatierung entfernen"
+Strikethrough,Durchgestrichen
+Superscript,Hochgestellt
+Subscript,Tiefgestellt
+"Font size",Schriftgröße
+"Default size",Standardgröße
+"Text colour",Textfarbe
+"Background colour",Hintergrundfarbe
+"Reset colour","Farbe zurücksetzen"
+"Bulleted list",Aufzählung
+"Numbered list","Nummerierte Liste"
+Paragraph,Absatz
+"Align left",Linksbündig
+"Align centre",Zentriert
+"Align right",Rechtsbündig
+Justify,Blocksatz
+Outdent,"Einzug verkleinern"
+Indent,"Einzug vergrößern"
+Image,Bild
+Link,Link
+Video,Video
+Table,Tabelle
+"Insert table","Tabelle einfügen"
+"Add row above","Zeile oberhalb einfügen"
+"Add row below","Zeile unterhalb einfügen"
+"Add column before","Spalte links einfügen"
+"Add column after","Spalte rechts einfügen"
+"Delete row","Zeile löschen"
+"Delete column","Spalte löschen"
+"Merge cells","Zellen verbinden"
+"Split cell","Zelle teilen"
+"Header row",Kopfzeile
+"Delete table","Tabelle löschen"
+"Horizontal rule","Horizontale Linie"
+Undo,Rückgängig
+Redo,Wiederholen
+"HTML source",HTML-Quelltext
+"Full screen",Vollbild
+"Resize editor","Editorgröße ändern"
+Insert,Einfügen
+Save,Speichern
+"Insert link","Link einfügen"
+URL,URL
+"Text to display","Anzuzeigender Text"
+"Open in new tab","In neuem Tab öffnen"
+"Edit link","Link bearbeiten"
+"Open link","Link öffnen"
+"Remove link","Link entfernen"
+"Enter a valid link address.","Geben Sie eine gültige Linkadresse ein."
+"A link cannot be added here, for example inside code.","Hier kann kein Link eingefügt werden, zum Beispiel innerhalb von Code."
+"Insert image","Bild einfügen"
+"Edit image","Bild bearbeiten"
+"Remove image","Bild entfernen"
+100%,"100 %"
+50%,"50 %"
+25%,"25 %"
+"Original size",Originalgröße
+"Float left","Links umfließen"
+"Float right","Rechts umfließen"
+"Remove float","Umfließen entfernen"
+"Image URL",Bild-URL
+"Alternative text",Alternativtext
+"Enter an image address starting with https:// or a relative path. Embedded (data:) images are not supported.","Geben Sie eine Bildadresse ein, die mit https:// beginnt, oder einen relativen Pfad. Eingebettete Bilder (data:) werden nicht unterstützt."
+"Images can only be added by URL. Pasted or dropped image files are not supported.","Bilder können nur per URL hinzugefügt werden. Eingefügte oder abgelegte Bilddateien werden nicht unterstützt."
+"Insert video","Video einfügen"
+"Video URL",Video-URL
+"Enter the address of a YouTube, Vimeo, Dailymotion, Google Drive, Instagram, Facebook, Youku, QQ or PeerTube video.","Geben Sie die Adresse eines Videos von YouTube, Vimeo, Dailymotion, Google Drive, Instagram, Facebook, Youku, QQ oder PeerTube ein."
+"This content contains %element%, which the visual editor cannot show. It is kept unchanged; edit it as HTML here.","Dieser Inhalt enthält %element%, das der visuelle Editor nicht anzeigen kann. Er bleibt unverändert; bearbeiten Sie ihn hier als HTML."
+"an HTML comment","einen HTML-Kommentar"
+"unsupported HTML","nicht unterstütztes HTML"
+Black,Schwarz
+Tundora,Tundora
+"Dove Gray",Taubengrau
+"Star Dust",Sternenstaub
+"Pale Slate","Blasses Schiefergrau"
+Gallery,Galerie
+Alabaster,Alabaster
+White,Weiß
+Red,Rot
+"Orange Peel",Orangenschale
+Yellow,Gelb
+Green,Grün
+Cyan,Cyan
+Blue,Blau
+"Electric Violet","Elektrisches Violett"
+Magenta,Magenta
+Azalea,Azalee
+Karry,Karry
+"Egg White",Eierschalenweiß
+Zanah,Zanah
+Botticelli,Botticelli
+"Tropical Blue",Tropenblau
+Mischka,Mischka
+Twilight,Dämmerung
+"Tonys Pink","Tonys Pink"
+"Peach Orange",Pfirsichorange
+"Cream Brulee","Crème brûlée"
+Sprout,Spross
+Casper,Casper
+Perano,Perano
+"Cold Purple","Kaltes Lila"
+"Careys Pink","Careys Pink"
+Mandy,Mandy
+Rajah,Rajah
+Dandelion,Löwenzahn
+Olivine,Olivin
+"Gulf Stream","Gulf Stream"
+Viking,Viking
+"Blue Marguerite","Blue Marguerite"
+Puce,Puce
+"Guardsman Red",Gardistenrot
+"Fire Bush",Feuerbusch
+"Golden Dream",Goldtraum
+"Chelsea Cucumber",Chelsea-Gurke
+"Smalt Blue",Smalteblau
+"Boston Blue",Bostonblau
+"Butterfly Bush",Schmetterlingsflieder
+Cadillac,Cadillac
+Sangria,Sangria
+"Mai Tai","Mai Tai"
+"Buddha Gold","Buddha Gold"
+"Forest Green",Waldgrün
+Eden,Eden
+"Venice Blue",Venedigblau
+Meteorite,Meteorit
+Claret,Claret
+Rosewood,Rosenholz
+Cinnamon,Zimt
+Olive,Oliv
+Parsley,Petersilie
+Tiber,Tiber
+"Midnight Blue",Mitternachtsblau
+Valentino,Valentino
+Loulou,Loulou

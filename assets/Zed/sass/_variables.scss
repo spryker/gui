@@ -91,7 +91,7 @@ $box-shadow-red-focused:
     0 0 0 1px $white,
     0 0 3px 1px $red-default;
 
-$main-font: var(--bs-body-font-family);
+$main-font: var(--ins-body-font-family);
 
 $desktop: 1199px;
 $tablet: 1023px;
@@ -130,29 +130,10 @@ $btn-danger-border: color.adjust($btn-danger-bg, $lightness: -5%) !default;
 
 :root {
     scroll-behavior: auto !important;
-    --bs-heading-color: #{$ink-base};
 }
 
 body {
-    --bs-body-line-height: 1.4286;
-    --bs-body-font-size: 14px;
-    --bs-table-striped-bg: #{$grey-lighter};
-    --bs-body-font-family: 'Montserrat', sans-serif;
-
     &.login {
-        --ins-body-bg: var(--ins-sidenav-bg);
+        --#{$prefix}body-bg: var(--#{$prefix}sidenav-bg);
     }
-}
-
-.dropdown-menu {
-    --bs-dropdown-link-active-bg: #f5f5f5;
-    --bs-dropdown-link-active-color: #262626;
-}
-
-.modal-dialog {
-    --bs-modal-width: 600px;
-}
-
-.offcanvas {
-    --bs-offcanvas-width: 600px;
 }

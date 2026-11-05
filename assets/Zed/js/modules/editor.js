@@ -5,6 +5,13 @@
 
 'use strict';
 
+/**
+ * Summernote configuration for `textarea.html-editor` fields (alias `ZedGuiEditorConfiguration`).
+ *
+ * @deprecated Summernote, the `html-editor` class, `data-editor-config` and `window.editorConfiguration` editor
+ *   configs will be removed in the next major version. Use `RichTextEditorType` (Gui) for the field and register
+ *   custom buttons through `window.SprykerRichTextEditor.registerFeature()`.
+ */
 module.exports = {
     getGlobalConfig: function (configName) {
         return Boolean(configName && window.editorConfiguration && window.editorConfiguration[configName])

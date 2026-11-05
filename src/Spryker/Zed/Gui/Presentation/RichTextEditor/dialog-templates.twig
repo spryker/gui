@@ -1,0 +1,47 @@
+{#
+    The markup of the rich-text editor's dialogs (link, image, video), cloned by
+    assets/Zed/js/modules/libs/rich-text-editor/dialogs/modal.ts. The text arrives from the editor labels,
+    so JavaScript fills it in as plain text when a dialog opens.
+    The dialog has its own <form>: the editor sits inside the page's form, and forms cannot nest.
+#}
+{% block dialog %}
+    <template id="rich-text-editor-dialog-template">
+        <div class="modal fade rich-text-editor__dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <form class="modal-content js-rich-text-editor-dialog__form">
+                    <div class="modal-header">
+                        <h5 class="modal-title js-rich-text-editor-dialog__title"></h5>
+                        <button type="button" class="btn-close js-rich-text-editor-dialog__close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger js-rich-text-editor-dialog__error" role="alert" hidden></div>
+                        <div class="js-rich-text-editor-dialog__fields"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger me-auto js-rich-text-editor-dialog__secondary"></button>
+                        <button type="button" class="btn btn-secondary js-rich-text-editor-dialog__cancel" data-bs-dismiss="modal"></button>
+                        <button type="submit" class="btn btn-primary js-rich-text-editor-dialog__submit"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+{% endblock %}
+
+{% block text_field %}
+    <template id="rich-text-editor-dialog-text-field-template">
+        <div class="mb-3">
+            <label class="form-label js-rich-text-editor-dialog__label"></label>
+            <input class="form-control js-rich-text-editor-dialog__input">
+        </div>
+    </template>
+{% endblock %}
+
+{% block checkbox_field %}
+    <template id="rich-text-editor-dialog-checkbox-field-template">
+        <div class="form-check mb-3">
+            <input class="form-check-input js-rich-text-editor-dialog__input" type="checkbox">
+            <label class="form-check-label js-rich-text-editor-dialog__label"></label>
+        </div>
+    </template>
+{% endblock %}

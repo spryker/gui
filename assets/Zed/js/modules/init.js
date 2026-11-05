@@ -23,32 +23,13 @@ import { DownloadAction } from './libs/download-action';
 import { CopyAction } from './libs/copy-action';
 import { Table } from './libs/table/table';
 import { ActionConfirmation } from './libs/action-confirmation';
+import { installModalShim } from './libs/modal-shim';
+import { initHtmlEditors } from './libs/html-editor-init';
+import { initRichTextEditorFields } from './libs/rich-text-editor/field-init';
+
 import FormWithExternalFields from './form-with-external-fields';
 import InternalMenuFilter from './libs/internal-api/internal-menu-filter';
 import initSweetAlertMapper from './libs/sweet-alert-mapper';
-
-var editorInit = function () {
-    $('.html-editor').each(function () {
-        var $textarea = $(this);
-        var textareaConfigName = $textarea.data('editor-config');
-
-        var config = editorConfig.getGlobalConfig(textareaConfigName);
-
-        if (!config) {
-            config = editorConfig.getConfig();
-        }
-
-        $textarea.summernote(config);
-    });
-
-    $.fn.modal = function (config) {
-        return this.each(() => {
-            const modal = bootstrap.Modal.getOrCreateInstance(this[0]);
-            if (config === 'show') modal.show();
-            else if (config === 'hide') modal.hide();
-        });
-    };
-};
 
 var tooltipInit = function () {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
@@ -62,7 +43,9 @@ $(document).ready(function () {
     new ActionConfirmation();
 
     // editor
-    editorInit();
+    initHtmlEditors($, editorConfig);
+    initRichTextEditorFields(document, window.SprykerRichTextEditor);
+    installModalShim($);
     tooltipInit();
 
     $('.spryker-form-autocomplete').each(function (key, value) {
