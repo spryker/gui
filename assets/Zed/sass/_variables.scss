@@ -5,14 +5,18 @@
 
 @use 'sass:color';
 
+$bo-main-color-default: #1ebea0;
+$bo-sidenav-text-color-default: #e4e4e4;
+$bo-sidenav-color-default: #1e1f27;
+
 :root,
 [data-bs-theme='light'] {
     --zed-spryker-logo-url: url('../img/spryker-logo-light.svg');
     --zed-spryker-logo-small-url: url('../img/spryker-logo-small-light.svg');
     --#{$prefix}breadcrumb-divider: '/';
-    --#{$prefix}primary: var(--bo-main-color, #11856e);
-    --#{$prefix}primary-rgb: 15, 133, 111;
-    --#{$prefix}sidenav-bg: var(--bo-sidenav-color, #23303c);
+    --#{$prefix}primary: var(--bo-main-color, #{$bo-main-color-default});
+    --#{$prefix}primary-rgb: 30, 190, 160;
+    --#{$prefix}sidenav-bg: var(--bo-sidenav-color, #{$bo-sidenav-color-default});
     --#{$prefix}danger: #e71c00;
 }
 
@@ -33,11 +37,19 @@ html[data-bs-theme='dark'][data-menu-color='dark'] {
 }
 
 html[data-bs-theme='light'][data-menu-color='dark'] {
-    --#{$prefix}sidenav-item-color: var(--bo-sidenav-text-color, #e4e4e4);
-    --#{$prefix}sidenav-item-active-color: color-mix(in sRGB, var(--bo-sidenav-text-color), var(--bo-main-color) 35%);
-    --#{$prefix}sidenav-bg: var(--bo-sidenav-color, #23303c);
-    --#{$prefix}sidenav-border-color: var(--bo-sidenav-color);
-    --#{$prefix}sidenav-item-active-bg: color-mix(in sRGB, var(--bo-sidenav-color), #000 20%);
+    --#{$prefix}sidenav-item-color: var(--bo-sidenav-text-color, #{$bo-sidenav-text-color-default});
+    --#{$prefix}sidenav-item-active-color: color-mix(
+        in sRGB,
+        var(--bo-sidenav-text-color, #{$bo-sidenav-text-color-default}),
+        var(--bo-main-color, #{$bo-main-color-default}) 35%
+    );
+    --#{$prefix}sidenav-bg: var(--bo-sidenav-color, #{$bo-sidenav-color-default});
+    --#{$prefix}sidenav-border-color: var(--bo-sidenav-color, #{$bo-sidenav-color-default});
+    --#{$prefix}sidenav-item-active-bg: color-mix(
+        in sRGB,
+        var(--bo-sidenav-color, #{$bo-sidenav-color-default}),
+        #000 20%
+    );
 }
 
 $zed-logo: url(https://static.spryker.com/logo.svg) !default;
