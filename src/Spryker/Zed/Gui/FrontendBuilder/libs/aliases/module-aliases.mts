@@ -1,5 +1,5 @@
-import glob from 'fast-glob';
 import type { GlobalSettings } from '../../settings.mts';
+import { glob } from '../glob.mts';
 import { dasherize, joinConfigurationPath, toConfigurationPathSegments } from '../typescript/configuration-path.mts';
 import type { AliasProvider, PathAliasMap, SourceRoots } from './alias-provider.mts';
 
@@ -19,7 +19,6 @@ const findAssetRootDirectories = async (context: string, sourceRoot: string): Pr
         cwd: context,
         onlyDirectories: true,
         onlyFiles: false,
-        unique: true,
         followSymbolicLinks: false,
         ignore: ['**/node_modules/**', '**/Zed/Gui/FrontendBuilder/**'],
     });

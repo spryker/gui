@@ -1,8 +1,8 @@
 import { sep } from 'node:path';
 import type { Stats } from 'node:fs';
-import glob from 'fast-glob';
 import { watch } from 'chokidar';
 import type { FSWatcher } from 'chokidar';
+import { glob } from '../glob.mts';
 import type { TwigVersionHolder } from './manifest-writer.mts';
 
 // One editor save can surface as `add` followed by `change`; the debounce folds them into one bump.
@@ -60,7 +60,7 @@ export interface TwigWatcherOptions {
 export const resolvePresentationWatchDirectories = async (sourceRootDirectories: string[]): Promise<string[]> => {
     const resolvedModuleDirectorySets = await Promise.all(
         sourceRootDirectories.map((directoryPattern) =>
-            glob(directoryPattern, { onlyDirectories: true, absolute: true, unique: true }),
+            glob(directoryPattern, { onlyDirectories: true, absolute: true }),
         ),
     );
 
@@ -70,7 +70,6 @@ export const resolvePresentationWatchDirectories = async (sourceRootDirectories:
                 cwd: moduleDirectory,
                 onlyDirectories: true,
                 absolute: true,
-                unique: true,
                 ignore: ['**/node_modules/**'],
             }),
         ),

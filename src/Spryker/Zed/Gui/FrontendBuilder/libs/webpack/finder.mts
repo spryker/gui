@@ -1,17 +1,17 @@
 import { basename } from 'node:path';
-import glob from 'fast-glob';
+import { glob } from '../glob.mts';
+import type { GlobOptions } from '../glob.mts';
 
 export interface FindSettings {
     dirs: string[];
     patterns: string[];
-    globSettings?: Record<string, unknown>;
+    globSettings?: GlobOptions;
 }
 
-const defaultGlobSettings = {
+const defaultGlobSettings: GlobOptions = {
     followSymbolicLinks: false,
     absolute: true,
     onlyFiles: true,
-    unique: true,
 };
 
 const LEGACY_ENTRY_SUFFIX = /\.entry\.(js|ts)$/;
@@ -33,11 +33,11 @@ export const deriveEntryName = (filePath: string): string => {
     return entryName;
 };
 
-const globAsync = async (patterns: string[], globConfiguration: Record<string, unknown>): Promise<string[]> => {
+const globAsync = async (patterns: string[], globConfiguration: GlobOptions): Promise<string[]> => {
     try {
         const files = await glob(patterns, globConfiguration);
 
-        // fast-glob returns readdir order, which differs across machines; sorting keeps the bundle deterministic.
+        // The glob returns readdir order, which differs across machines; sorting keeps the bundle deterministic.
         return files.sort();
     } catch (error) {
         const reason = error instanceof Error ? error.message : String(error);
@@ -57,7 +57,6 @@ const expandSourceDirectories = async (sourceDirectoryList: string[]): Promise<s
             const directories = await glob(sourceDirectory, {
                 onlyDirectories: true,
                 absolute: true,
-                unique: true,
                 followSymbolicLinks: false,
             });
 
