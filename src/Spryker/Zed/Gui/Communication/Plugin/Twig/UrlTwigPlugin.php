@@ -76,12 +76,20 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                     return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
                 }
             } catch (RouteNotFoundException $exception) {
+                return $this->generateUrlWithoutRouter($url, $query, $options);
             }
 
-            $url = Url::generate($url, $query, $options);
-
-            return $url->buildEscaped();
+            return $this->generateUrlWithoutRouter($url, $query, $options);
         }, ['is_safe' => ['html']]);
+    }
+
+    /**
+     * @param array<string, mixed> $query
+     * @param array<string, mixed> $options
+     */
+    protected function generateUrlWithoutRouter(string $url, array $query, array $options): string
+    {
+        return Url::generate($url, $query, $options)->buildEscaped();
     }
 
     /**
