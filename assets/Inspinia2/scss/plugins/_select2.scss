@@ -11,6 +11,11 @@
         background-color: $input-bg !important;
         outline: none !important;
 
+        .select2-selection__clear {
+            min-height: 100%;
+            margin-right: 30px !important;
+        }
+
         .select2-selection__rendered {
             line-height: 36px !important;
             padding-left: 12px !important;
